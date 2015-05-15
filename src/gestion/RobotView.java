@@ -35,6 +35,10 @@ public class RobotView extends JFrame {
 	private String html1 = "<html><body leftmargin=30 topmargin=15 marginwidth=6 marginheight=19>";
 	private JTextField textField;
 	private JTextField textField_1;
+	private JTable tableRobot;
+	private JTable tablePlanning;
+	private JTable tableEntretien;
+	private JTable tableUser;
 	private JTable table;
 
 	/**
@@ -91,39 +95,114 @@ public class RobotView extends JFrame {
 		tabbedPane.addTab(html1 + "Gestion Robots</body></html>", null, GRobots, null);
 		GRobots.setLayout(null);
 		
-		JButton btnNewButton = new JButton("Ajouter");
-		btnNewButton.setBounds(80, 90, 90, 28);
-		GRobots.add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("Modifier");
-		btnNewButton_1.setBounds(220, 90, 90, 28);
-		GRobots.add(btnNewButton_1);
-		
 		JLabel lblGestionDuParc = new JLabel("Gestion du parc de robots");
 		lblGestionDuParc.setFont(new Font("SansSerif", Font.BOLD, 20));
-		lblGestionDuParc.setBounds(130, 30, 259, 50);
+		lblGestionDuParc.setBounds(140, 30, 259, 50);
 		GRobots.add(lblGestionDuParc);
 		
-		JButton btnNewButton_2 = new JButton("Supprimer");
-		btnNewButton_2.setBounds(360, 90, 90, 28);
-		GRobots.add(btnNewButton_2);
+		JButton AddRobot = new JButton("Ajouter");
+		AddRobot.setBounds(80, 90, 90, 28);
+		GRobots.add(AddRobot);
 		
-		table = new JTable();
-		table.setBounds(50, 140, 440, 220);
-		GRobots.add(table);
+		JButton ModifyRobot = new JButton("Modifier");
+		ModifyRobot.setBounds(220, 90, 90, 28);
+		GRobots.add(ModifyRobot);
+		
+		JButton DeleteRobot = new JButton("Supprimer");
+		DeleteRobot.setBounds(360, 90, 90, 28);
+		GRobots.add(DeleteRobot);
+		
+		tableRobot = new JTable();
+		tableRobot.setBounds(50, 140, 460, 220);
+		GRobots.add(tableRobot);
 		
 		JPanel Planning = new JPanel();
 		tabbedPane.addTab(html1 + "Planning</body></html>", null, Planning, null);
 		Planning.setLayout(null);
 		
+		JLabel lblPlanning = new JLabel("Planning de la semaine");
+		lblPlanning.setFont(new Font("SansSerif", Font.BOLD, 20));
+		lblPlanning.setBounds(90, 30, 374, 50);
+		Planning.add(lblPlanning);
+		
+		JButton AddTask = new JButton("Ajouter une t\u00E2che");
+		AddTask.setBounds(50, 90, 143, 28);
+		Planning.add(AddTask);
+		
+		JButton ModifyTask = new JButton("Modifier une t\u00E2che");
+		ModifyTask.setBounds(205, 90, 143, 28);
+		Planning.add(ModifyTask);
+		
+		JButton DeleteTask = new JButton("Supprimer une t\u00E2che");
+		DeleteTask.setBounds(360, 90, 143, 28);
+		Planning.add(DeleteTask);
+		
+		tablePlanning = new JTable();
+		tablePlanning.setBounds(50, 140, 460, 220);
+		Planning.add(tablePlanning);
+		
 		JPanel Entretien = new JPanel();
 		tabbedPane.addTab(html1 + "Fiches d'entretien</body></html>", null, Entretien, null);
+		Entretien.setLayout(null);
+		
+		JLabel lblEntretien = new JLabel("Gestion des fiches d'entretien");
+		lblEntretien.setFont(new Font("SansSerif", Font.BOLD, 20));
+		lblEntretien.setBounds(130, 30, 299, 50);
+		Entretien.add(lblEntretien);
+		
+		JButton AddMaintenance = new JButton("Ajouter");
+		AddMaintenance.setBounds(80, 90, 90, 28);
+		Entretien.add(AddMaintenance);
+		
+		JButton ModifyMaintenance = new JButton("Modifier");
+		ModifyMaintenance.setBounds(220, 90, 90, 28);
+		Entretien.add(ModifyMaintenance);
+		
+		JButton DeleteMaintenance = new JButton("Supprimer");
+		DeleteMaintenance.setBounds(360, 90, 90, 28);
+		Entretien.add(DeleteMaintenance);
+		
+		tableEntretien = new JTable();
+		tableEntretien.setBounds(50, 140, 460, 220);
+		Entretien.add(tableEntretien);
 		
 		JPanel Configuration = new JPanel();
 		tabbedPane.addTab(html1 + "Configuration</body></html>", null, Configuration, null);
+		Configuration.setLayout(null);
+		
+		JLabel lblNewLabel_1 = new JLabel("Gestion des utilisateurs");
+		lblNewLabel_1.setFont(new Font("SansSerif", Font.BOLD, 20));
+		lblNewLabel_1.setBounds(150, 30, 225, 50);
+		Configuration.add(lblNewLabel_1);
+		
+		JButton AddUser = new JButton("Ajouter");
+		AddUser.setBounds(80, 90, 90, 28);
+		Configuration.add(AddUser);
+		
+		JButton ModifyUser = new JButton("Modifier");
+		ModifyUser.setBounds(220, 90, 90, 28);
+		Configuration.add(ModifyUser);
+		
+		JButton DeleteUser = new JButton("Supprimer");
+		DeleteUser.setBounds(360, 90, 90, 28);
+		Configuration.add(DeleteUser);
+		
+		tableUser = new JTable();
+		tableUser.setBounds(50, 140, 460, 220);
+		Configuration.add(tableUser);
 		
 		JPanel Historique = new JPanel();
 		tabbedPane.addTab(html1 + "Historique</body></html>", null, Historique, null);
+		Historique.setLayout(null);
+		
+		JLabel lblHistorique = new JLabel("Historique");
+		lblHistorique.setFont(new Font("SansSerif", Font.BOLD, 20));
+		lblHistorique.setBounds(210, 30, 105, 50);
+		Historique.add(lblHistorique);
+		
+		table = new JTable();
+		table.setBounds(50, 140, 460, 220);
+		Historique.add(table);
 		contentPane.add(tabbedPane);
 	}
 	
