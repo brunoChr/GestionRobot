@@ -1,7 +1,7 @@
 /**
  * 
  */
-package src.gestion;
+package gestion;
 
 /**
  * @author b.christol
