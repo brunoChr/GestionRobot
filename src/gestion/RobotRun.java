@@ -1,7 +1,7 @@
 /**
  * 
  */
-package gestion;
+package src.gestion;
 
 import java.awt.EventQueue;
 
