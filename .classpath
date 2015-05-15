@@ -3,5 +3,11 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre8"/>
 	<classpathentry kind="lib" path="D:/Documents/b.christol/Google Drive/EclipseWorkspace/GestionRobot/mysql-connector-java-5.1.12-bin.jar"/>
+	<classpathentry kind="lib" path="miglayout15-swing.jar" sourcepath="miglayout-src.zip"/>
+	<classpathentry kind="lib" path="seaglasslookandfeel-0.2.jar"/>
+	<classpathentry kind="lib" path="weblaf-complete-1.28.jar"/>
+	<classpathentry kind="lib" path="pgslookandfeel-1.1.2.jar"/>
+	<classpathentry kind="lib" path="oalnf.jar"/>
+	<classpathentry kind="lib" path="liquidlnf.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

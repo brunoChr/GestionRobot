@@ -20,7 +20,13 @@ public class RobotRun {
 	 */
 	public static void main(String[] args) {
 		try {
-			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+			UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
+			//"javax.swing.plaf.nimbus.NimbusLookAndFeel"
+			//"com.seaglasslookandfeel.SeaGlassLookAndFeel"
+			//"com.alee.laf.WebLookAndFeel"
+			//"com.pagosoft.plaf.PgsLookAndFeel"
+			//"com.oyoaha.swing.plaf.oyoaha.OyoahaLookAndFeel"
+			//"com.birosoft.liquid.LiquidLookAndFeel" 
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
