@@ -19,6 +19,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 
 public class RobotView extends JFrame {
 
@@ -26,19 +28,19 @@ public class RobotView extends JFrame {
 	private String html1 = "<html><body leftmargin=30 topmargin=15 marginwidth=6 marginheight=19>";
 	private JTextField textFieldLogin;
 	private JTextField textFieldPassword;
-	private JTable tableRobot;
-	private JTable tablePlanning;
-	private JTable tableEntretien;
-	private JTable tableUser;
 	private JTable table;
-	private JTable tableEvents;
-	private JTable tableTask;
 	private JButton btnShow;
 	private JPanel Acceuil;
 	private CardLayout cl_Acceuil;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
+	private JTable table_1;
+	private JTable tableEvent;
+	private JTable tableTask;
+	private JTable tablePlanning;
+	private JTable tableEntretien;
+	private JTable tableUser;
 
 	/**
 	 * Create the frame.
@@ -121,13 +123,51 @@ public class RobotView extends JFrame {
 		lblTaskToCome.setBounds(290, 120, 89, 16);
 		Welcome.add(lblTaskToCome);
 		
-		tableEvents = new JTable();
-		tableEvents.setBounds(40, 140, 220, 200);
-		Welcome.add(tableEvents);
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(40, 140, 220, 200);
+		Welcome.add(scrollPane_1);
+		
+		tableEvent = new JTable();
+		tableEvent.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null},
+				{null, null},
+			},
+			new String[] {
+				"New column", "New column"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, true
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		scrollPane_1.setViewportView(tableEvent);
+		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(290, 140, 220, 200);
+		Welcome.add(scrollPane_2);
 		
 		tableTask = new JTable();
-		tableTask.setBounds(290, 140, 220, 200);
-		Welcome.add(tableTask);
+		tableTask.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null},
+				{null, null},
+			},
+			new String[] {
+				"New column", "New column"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, true
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		scrollPane_2.setViewportView(tableTask);
 		
 		JPanel GRobots = new JPanel();
 		tabbedPane.addTab(html1 + "Gestion Robots</body></html>", null, GRobots, null);
@@ -154,13 +194,34 @@ public class RobotView extends JFrame {
 		btnDeleteRobot.setBounds(350, 80, 90, 28);
 		panelListe.add(btnDeleteRobot);
 		
-		tableRobot = new JTable();
-		tableRobot.setBounds(40, 140, 460, 220);
-		panelListe.add(tableRobot);
-		
 		JLabel lblListeDesRobots = new JLabel("Liste des Robots");
 		lblListeDesRobots.setBounds(40, 120, 104, 16);
 		panelListe.add(lblListeDesRobots);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(40, 139, 460, 221);
+		panelListe.add(scrollPane);
+		
+		table_1 = new JTable();
+		table_1.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+			},
+			new String[] {
+				"yo", "New column", "New column", "New column"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, true, true
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		scrollPane.setViewportView(table_1);
 		
 		JPanel panelDetail = new JPanel();
 		GRobots.add(panelDetail, "name_15515675658776");
@@ -272,9 +333,27 @@ public class RobotView extends JFrame {
 		btnDeleteTask.setBounds(360, 80, 143, 28);
 		Planning.add(btnDeleteTask);
 		
+		JScrollPane scrollPane_3 = new JScrollPane();
+		scrollPane_3.setBounds(50, 140, 460, 220);
+		Planning.add(scrollPane_3);
+		
 		tablePlanning = new JTable();
-		tablePlanning.setBounds(50, 140, 460, 220);
-		Planning.add(tablePlanning);
+		tablePlanning.setModel(new DefaultTableModel(
+			new Object[][] {
+				{"8h-9h", null, null, null, null, null},
+				{"9h10h", null, null, null, null, null},
+				{"10h-11h", null, null, null, null, null},
+				{"11h-12h", null, null, null, null, null},
+				{"12h-13h", null, null, null, null, null},
+				{"13h-14h", null, null, null, null, null},
+				{"14h-15h", null, null, null, null, null},
+				{"15h-16h", null, null, null, null, null},
+			},
+			new String[] {
+				"", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"
+			}
+		));
+		scrollPane_3.setViewportView(tablePlanning);
 		
 		JPanel Entretien = new JPanel();
 		tabbedPane.addTab(html1 + "Fiches d'entretien</body></html>", null, Entretien, null);
@@ -297,13 +376,27 @@ public class RobotView extends JFrame {
 		btnDeleteMaintenance.setBounds(360, 80, 90, 28);
 		Entretien.add(btnDeleteMaintenance);
 		
-		tableEntretien = new JTable();
-		tableEntretien.setBounds(50, 140, 460, 220);
-		Entretien.add(tableEntretien);
-		
 		JLabel lblListeDesFiches = new JLabel("Liste des fiches d'entretien");
 		lblListeDesFiches.setBounds(50, 120, 158, 16);
 		Entretien.add(lblListeDesFiches);
+		
+		JScrollPane scrollPane_4 = new JScrollPane();
+		scrollPane_4.setBounds(50, 140, 460, 220);
+		Entretien.add(scrollPane_4);
+		
+		tableEntretien = new JTable();
+		tableEntretien.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+			},
+			new String[] {
+				"New column", "New column", "New column"
+			}
+		));
+		scrollPane_4.setViewportView(tableEntretien);
 		
 		JPanel Configuration = new JPanel();
 		tabbedPane.addTab(html1 + "Configuration</body></html>", null, Configuration, null);
@@ -326,13 +419,26 @@ public class RobotView extends JFrame {
 		btnDeleteUser.setBounds(360, 80, 90, 28);
 		Configuration.add(btnDeleteUser);
 		
-		tableUser = new JTable();
-		tableUser.setBounds(50, 140, 460, 220);
-		Configuration.add(tableUser);
-		
 		JLabel lblListeDesUtilisateurs = new JLabel("Liste des utilisateurs");
 		lblListeDesUtilisateurs.setBounds(50, 120, 120, 16);
 		Configuration.add(lblListeDesUtilisateurs);
+		
+		JScrollPane scrollPane_5 = new JScrollPane();
+		scrollPane_5.setBounds(50, 140, 460, 220);
+		Configuration.add(scrollPane_5);
+		
+		tableUser = new JTable();
+		tableUser.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+			},
+			new String[] {
+				"Nom", "Pr\u00E9nom", "Grade"
+			}
+		));
+		scrollPane_5.setViewportView(tableUser);
 		
 		JPanel Historique = new JPanel();
 		tabbedPane.addTab(html1 + "Historique</body></html>", null, Historique, null);
