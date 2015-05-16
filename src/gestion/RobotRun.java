@@ -18,6 +18,10 @@ public class RobotRun {
 	/**
 	 * Launch the application.
 	 */
+	/**
+	 * @param args
+	 * @return none
+	 */
 	public static void main(String[] args) {
 		try {
 			UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");

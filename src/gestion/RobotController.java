@@ -12,7 +12,8 @@ public class RobotController {
 
 	private RobotView _robotView;
 	private RobotModel _robotModel;
-	
+
+
 	/**
 	 * 
 	 */
@@ -33,5 +34,11 @@ public class RobotController {
 	   _robotModel.fermerConnexion();
 		System.exit(1);
    }
+   
+	
+	public RobotView get_robotView() {
+		return _robotView;
+	}
+
 
 }

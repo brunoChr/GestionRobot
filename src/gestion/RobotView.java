@@ -14,6 +14,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTable;
+import java.awt.Dimension;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class RobotView extends JFrame {
 
@@ -26,11 +29,18 @@ public class RobotView extends JFrame {
 	private JTable tableEntretien;
 	private JTable tableUser;
 	private JTable table;
+	private JButton btnMotDePasse;
+	private JButton btnValider;
 
 	/**
 	 * Create the frame.
 	 */
 	public RobotView(RobotController robotController) {
+		
+		/* Ecouteur des événements sur la fenêtre */
+		this.addWindowListener(new RobotEvent(robotController));
+		
+		setResizable(false);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 430);
@@ -69,11 +79,16 @@ public class RobotView extends JFrame {
 		Acceuil.add(textFieldPassword);
 		textFieldPassword.setColumns(10);
 		
-		JButton btnMotDePasse = new JButton("Mot de passe oubli\u00E9");
+		btnMotDePasse = new JButton("Mot de passe oubli\u00E9");
+		btnMotDePasse.setName("btnMotDePasse");
+		btnMotDePasse.addActionListener(new RobotEvent(robotController));
+		
 		btnMotDePasse.setBounds(110, 274, 139, 28);
 		Acceuil.add(btnMotDePasse);
 		
-		JButton btnValider = new JButton("Valider");
+		btnValider = new JButton("Valider");
+		btnValider.setName("btnValider");
+		btnValider.addActionListener(new RobotEvent(robotController));
 		btnValider.setBounds(280, 274, 122, 28);
 		Acceuil.add(btnValider);
 		
@@ -190,10 +205,30 @@ public class RobotView extends JFrame {
 		table.setBounds(50, 140, 460, 220);
 		Historique.add(table);
 		contentPane.add(tabbedPane);
+		
+		setSize(new Dimension(800, 450));
+
 	}
 	
+	public JButton getBtnMotDePasse() {
+		return btnMotDePasse;
+	}
+
+	public void setBtnMotDePasse(JButton btnMotDePasse) {
+		this.btnMotDePasse = btnMotDePasse;
+	}
+
+	public JButton getBtnValider() {
+		return btnValider;
+	}
+
+	public void setBtnValider(JButton btnValider) {
+		this.btnValider = btnValider;
+	}
+
 	public void afficher(boolean visible)
     {
         this.setVisible(visible);
     }
+	
 }
