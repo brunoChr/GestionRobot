@@ -8,6 +8,7 @@ import java.awt.event.WindowListener;
  * 
  */
 
+
 import javax.swing.JButton;
 
 
@@ -29,6 +30,7 @@ public class RobotEvent implements ActionListener, WindowListener {
     * @param rc RobotController parameter
     * @since version 1.00
     * 
+    * 
     */
 	public RobotEvent(RobotController rc) {
 		// TODO Auto-generated constructor stub
@@ -37,14 +39,24 @@ public class RobotEvent implements ActionListener, WindowListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		JButton bouton = (JButton)e.getSource();
+		
+		if(bouton==_robotController.get_robotView().getBtnValider()){
 			
-		   String command = ((JButton) e.getSource()).getName();
-		   //System.out.println(command);
-		   
-		   if(bouton==_robotController.get_robotView().getBtnValider()) System.out.println("Bouton validé !!");
-		   //if(command.equals("btnMotDePasse")) System.out.println("Bouton mdp oublié !!");
-		   //else if (command.equals("btnValider")) System.out.println("Bouton validé !!");
-			   
+			System.out.println("Bouton validé !!");
+			try {
+				_robotController.boutonValider();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		else if(bouton==_robotController.get_robotView().getBtnMotDePasse()){
+			
+			System.out.println("Bouton mdp !!");
+			_robotController.boutonOubli();
+		}
+
+
 	}
 	/* (non-Javadoc)
 	 * @see java.awt.event.WindowListener#windowActivated(java.awt.event.WindowEvent)

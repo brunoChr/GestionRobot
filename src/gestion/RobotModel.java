@@ -22,10 +22,10 @@ public class RobotModel {
 	 */
 	public RobotModel() {
 
-		String nomUser = "root"; // Utilisateur de la BD
-		String passwd = "root"; // Password de l'utilisateur de la BD
+		String nomUser = "bruno"; // Utilisateur de la BD
+		String passwd = "Bruno@1552"; // Password de l'utilisateur de la BD
 		String url = "jdbc:mysql://localhost/"; // Serveur de la BD
-		String nomBase = "estiajdbc"; // Nom de la BD sur laquelle nous allons accÃ©der
+		String nomBase = "gestion_robot"; // Nom de la BD sur laquelle nous allons accÃ©der
 		
 		_conn = null;
 		
@@ -65,7 +65,7 @@ public class RobotModel {
 		boolean trouve=false;
 		try
 		{
-			String requete = new String("SELECT id, nom, login FROM employe WHERE login=? AND mdp=MD5(?);");
+			String requete = new String("SELECT id, name, login FROM user WHERE login=? AND password=MD5(?);");
 			PreparedStatement stmt = _conn.prepareStatement(requete);
 			stmt.setString(1, login);
 			stmt.setString(2, mdp);
@@ -91,6 +91,42 @@ public class RobotModel {
 			}	
 		}     
 		return trouve;
+	}
+	
+	public String oubliMP(String login)
+	{
+
+		try
+		{
+			String requete = new String("SELECT id, name, login,password FROM user where login=?;"); //AND mdp=MD5(?)
+			PreparedStatement stmt = _conn.prepareStatement(requete);
+			stmt.setString(1, login);
+			//stmt.setString(2, mdp);
+			ResultSet rs = stmt.executeQuery();
+			
+			//On récupère les MetaData
+		    //ResultSetMetaData resultMeta = rs.getMetaData();
+		      
+			if (rs.next ())
+			{
+				return rs.getString("password");
+			}		
+			
+			rs.close();
+			stmt.close();
+		} 
+
+		catch (SQLException ex3)
+		{
+			while (ex3 != null)
+			{
+				System.out.println(ex3.getSQLState());
+				System.out.println(ex3.getMessage());
+				System.out.println(ex3.getErrorCode());
+				ex3=ex3.getNextException();			
+			}	
+		}
+		return "yes";
 	}
 	
 }

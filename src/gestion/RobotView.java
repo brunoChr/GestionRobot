@@ -7,13 +7,17 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.JTextField;
 import javax.swing.JTabbedPane;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JTable;
+
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -230,5 +234,20 @@ public class RobotView extends JFrame {
     {
         this.setVisible(visible);
     }
+	
+	public void afficherMessage(String msg)
+	{	
+		JOptionPane.showMessageDialog(this, msg, "Information", JOptionPane.INFORMATION_MESSAGE);		
+	}
+	
+	public String getLogin()
+	{
+		return textFieldLogin.getText().toString();
+	}
+	
+	public String getPassword()
+	{
+		return textFieldPassword.getText().toString();
+	}
 	
 }
