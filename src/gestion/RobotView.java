@@ -10,22 +10,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.UIManager;
 import javax.swing.JTextField;
 import javax.swing.JTabbedPane;
-import java.awt.FlowLayout;
-import java.awt.CardLayout;
-import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import java.awt.GridLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import net.miginfocom.swing.MigLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import java.awt.Insets;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.factories.FormFactory;
-import com.jgoodies.forms.layout.RowSpec;
 import java.awt.Font;
 import javax.swing.JTable;
 
@@ -33,8 +19,8 @@ public class RobotView extends JFrame {
 
 	private JPanel contentPane;
 	private String html1 = "<html><body leftmargin=30 topmargin=15 marginwidth=6 marginheight=19>";
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField textFieldLogin;
+	private JTextField textFieldPassword;
 	private JTable tableRobot;
 	private JTable tablePlanning;
 	private JTable tableEntretien;
@@ -60,23 +46,28 @@ public class RobotView extends JFrame {
 		tabbedPane.addTab(html1 + "Acceuil</body></html>", null, Acceuil, null);
 		Acceuil.setLayout(null);
 		
+		JLabel lblAcceuil = new JLabel("Bienvenue sur votre plateforme de gestion");
+		lblAcceuil.setFont(new Font("SansSerif", Font.BOLD, 20));
+		lblAcceuil.setBounds(80, 60, 411, 50);
+		Acceuil.add(lblAcceuil);
+		
 		JLabel lblLogin = new JLabel("Login");
 		lblLogin.setBounds(140, 175, 31, 16);
 		Acceuil.add(lblLogin);
 		
-		textField = new JTextField();
-		textField.setBounds(240, 169, 122, 28);
-		Acceuil.add(textField);
-		textField.setColumns(10);
+		textFieldLogin = new JTextField();
+		textFieldLogin.setBounds(240, 169, 122, 28);
+		Acceuil.add(textFieldLogin);
+		textFieldLogin.setColumns(10);
 		
 		JLabel lblPassword = new JLabel("Password");
 		lblPassword.setBounds(140, 219, 56, 16);
 		Acceuil.add(lblPassword);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(240, 213, 122, 28);
-		Acceuil.add(textField_1);
-		textField_1.setColumns(10);
+		textFieldPassword = new JTextField();
+		textFieldPassword.setBounds(240, 213, 122, 28);
+		Acceuil.add(textFieldPassword);
+		textFieldPassword.setColumns(10);
 		
 		JButton btnMotDePasse = new JButton("Mot de passe oubli\u00E9");
 		btnMotDePasse.setBounds(110, 274, 139, 28);
@@ -85,11 +76,6 @@ public class RobotView extends JFrame {
 		JButton btnValider = new JButton("Valider");
 		btnValider.setBounds(280, 274, 122, 28);
 		Acceuil.add(btnValider);
-		
-		JLabel lblNewLabel = new JLabel("Bienvenue sur votre platforme de gestion");
-		lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
-		lblNewLabel.setBounds(80, 60, 402, 50);
-		Acceuil.add(lblNewLabel);
 		
 		JPanel GRobots = new JPanel();
 		tabbedPane.addTab(html1 + "Gestion Robots</body></html>", null, GRobots, null);
@@ -100,17 +86,17 @@ public class RobotView extends JFrame {
 		lblGestionDuParc.setBounds(140, 30, 259, 50);
 		GRobots.add(lblGestionDuParc);
 		
-		JButton AddRobot = new JButton("Ajouter");
-		AddRobot.setBounds(80, 90, 90, 28);
-		GRobots.add(AddRobot);
+		JButton btnAddRobot = new JButton("Ajouter");
+		btnAddRobot.setBounds(80, 90, 90, 28);
+		GRobots.add(btnAddRobot);
 		
-		JButton ModifyRobot = new JButton("Modifier");
-		ModifyRobot.setBounds(220, 90, 90, 28);
-		GRobots.add(ModifyRobot);
+		JButton btnModifyRobot = new JButton("Modifier");
+		btnModifyRobot.setBounds(220, 90, 90, 28);
+		GRobots.add(btnModifyRobot);
 		
-		JButton DeleteRobot = new JButton("Supprimer");
-		DeleteRobot.setBounds(360, 90, 90, 28);
-		GRobots.add(DeleteRobot);
+		JButton btnDeleteRobot = new JButton("Supprimer");
+		btnDeleteRobot.setBounds(360, 90, 90, 28);
+		GRobots.add(btnDeleteRobot);
 		
 		tableRobot = new JTable();
 		tableRobot.setBounds(50, 140, 460, 220);
@@ -125,17 +111,17 @@ public class RobotView extends JFrame {
 		lblPlanning.setBounds(90, 30, 374, 50);
 		Planning.add(lblPlanning);
 		
-		JButton AddTask = new JButton("Ajouter une t\u00E2che");
-		AddTask.setBounds(50, 90, 143, 28);
-		Planning.add(AddTask);
+		JButton btnAddTask = new JButton("Ajouter une t\u00E2che");
+		btnAddTask.setBounds(50, 90, 143, 28);
+		Planning.add(btnAddTask);
 		
-		JButton ModifyTask = new JButton("Modifier une t\u00E2che");
-		ModifyTask.setBounds(205, 90, 143, 28);
-		Planning.add(ModifyTask);
+		JButton btnModifyTask = new JButton("Modifier une t\u00E2che");
+		btnModifyTask.setBounds(205, 90, 143, 28);
+		Planning.add(btnModifyTask);
 		
-		JButton DeleteTask = new JButton("Supprimer une t\u00E2che");
-		DeleteTask.setBounds(360, 90, 143, 28);
-		Planning.add(DeleteTask);
+		JButton btnDeleteTask = new JButton("Supprimer une t\u00E2che");
+		btnDeleteTask.setBounds(360, 90, 143, 28);
+		Planning.add(btnDeleteTask);
 		
 		tablePlanning = new JTable();
 		tablePlanning.setBounds(50, 140, 460, 220);
@@ -150,17 +136,17 @@ public class RobotView extends JFrame {
 		lblEntretien.setBounds(130, 30, 299, 50);
 		Entretien.add(lblEntretien);
 		
-		JButton AddMaintenance = new JButton("Ajouter");
-		AddMaintenance.setBounds(80, 90, 90, 28);
-		Entretien.add(AddMaintenance);
+		JButton btnAddMaintenance = new JButton("Ajouter");
+		btnAddMaintenance.setBounds(80, 90, 90, 28);
+		Entretien.add(btnAddMaintenance);
 		
-		JButton ModifyMaintenance = new JButton("Modifier");
-		ModifyMaintenance.setBounds(220, 90, 90, 28);
-		Entretien.add(ModifyMaintenance);
+		JButton btnModifyMaintenance = new JButton("Modifier");
+		btnModifyMaintenance.setBounds(220, 90, 90, 28);
+		Entretien.add(btnModifyMaintenance);
 		
-		JButton DeleteMaintenance = new JButton("Supprimer");
-		DeleteMaintenance.setBounds(360, 90, 90, 28);
-		Entretien.add(DeleteMaintenance);
+		JButton btnDeleteMaintenance = new JButton("Supprimer");
+		btnDeleteMaintenance.setBounds(360, 90, 90, 28);
+		Entretien.add(btnDeleteMaintenance);
 		
 		tableEntretien = new JTable();
 		tableEntretien.setBounds(50, 140, 460, 220);
@@ -175,17 +161,17 @@ public class RobotView extends JFrame {
 		lblNewLabel_1.setBounds(150, 30, 225, 50);
 		Configuration.add(lblNewLabel_1);
 		
-		JButton AddUser = new JButton("Ajouter");
-		AddUser.setBounds(80, 90, 90, 28);
-		Configuration.add(AddUser);
+		JButton btnAddUser = new JButton("Ajouter");
+		btnAddUser.setBounds(80, 90, 90, 28);
+		Configuration.add(btnAddUser);
 		
-		JButton ModifyUser = new JButton("Modifier");
-		ModifyUser.setBounds(220, 90, 90, 28);
-		Configuration.add(ModifyUser);
+		JButton btnModifyUser = new JButton("Modifier");
+		btnModifyUser.setBounds(220, 90, 90, 28);
+		Configuration.add(btnModifyUser);
 		
-		JButton DeleteUser = new JButton("Supprimer");
-		DeleteUser.setBounds(360, 90, 90, 28);
-		Configuration.add(DeleteUser);
+		JButton btnDeleteUser = new JButton("Supprimer");
+		btnDeleteUser.setBounds(360, 90, 90, 28);
+		Configuration.add(btnDeleteUser);
 		
 		tableUser = new JTable();
 		tableUser.setBounds(50, 140, 460, 220);
