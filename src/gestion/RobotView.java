@@ -10,53 +10,186 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.UIManager;
 import javax.swing.JTextField;
 import javax.swing.JTabbedPane;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import java.awt.Component;
-import java.awt.CardLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.SwingConstants;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTable;
 
 public class RobotView extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
+	private String html1 = "<html><body leftmargin=30 topmargin=15 marginwidth=6 marginheight=19>";
+	private JTextField textFieldLogin;
+	private JTextField textFieldPassword;
+	private JTable tableRobot;
+	private JTable tablePlanning;
+	private JTable tableEntretien;
+	private JTable tableUser;
+	private JTable table;
 
 	/**
 	 * Create the frame.
 	 */
 	public RobotView(RobotController robotController) {
-		//setResizable(false);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 700, 430);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new MigLayout("", "[90px,grow][][][][][][][]", "[28px][][][][]"));
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
+		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		
-		JButton btnNewButton = new JButton("New button");
-		panel.add(btnNewButton, "cell 0 0,alignx center,aligny center");
+		JPanel Acceuil = new JPanel();
+		tabbedPane.addTab(html1 + "Acceuil</body></html>", null, Acceuil, null);
+		Acceuil.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		panel.add(lblNewLabel, "cell 1 0,grow");
+		JLabel lblAcceuil = new JLabel("Bienvenue sur votre plateforme de gestion");
+		lblAcceuil.setFont(new Font("SansSerif", Font.BOLD, 20));
+		lblAcceuil.setBounds(80, 60, 411, 50);
+		Acceuil.add(lblAcceuil);
 		
-		textField = new JTextField();
-		panel.add(textField, "cell 0 1,growx");
-		textField.setColumns(10);
+		JLabel lblLogin = new JLabel("Login");
+		lblLogin.setBounds(140, 175, 31, 16);
+		Acceuil.add(lblLogin);
+		
+		textFieldLogin = new JTextField();
+		textFieldLogin.setBounds(240, 169, 122, 28);
+		Acceuil.add(textFieldLogin);
+		textFieldLogin.setColumns(10);
+		
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setBounds(140, 219, 56, 16);
+		Acceuil.add(lblPassword);
+		
+		textFieldPassword = new JTextField();
+		textFieldPassword.setBounds(240, 213, 122, 28);
+		Acceuil.add(textFieldPassword);
+		textFieldPassword.setColumns(10);
+		
+		JButton btnMotDePasse = new JButton("Mot de passe oubli\u00E9");
+		btnMotDePasse.setBounds(110, 274, 139, 28);
+		Acceuil.add(btnMotDePasse);
+		
+		JButton btnValider = new JButton("Valider");
+		btnValider.setBounds(280, 274, 122, 28);
+		Acceuil.add(btnValider);
+		
+		JPanel GRobots = new JPanel();
+		tabbedPane.addTab(html1 + "Gestion Robots</body></html>", null, GRobots, null);
+		GRobots.setLayout(null);
+		
+		JLabel lblGestionDuParc = new JLabel("Gestion du parc de robots");
+		lblGestionDuParc.setFont(new Font("SansSerif", Font.BOLD, 20));
+		lblGestionDuParc.setBounds(140, 30, 259, 50);
+		GRobots.add(lblGestionDuParc);
+		
+		JButton btnAddRobot = new JButton("Ajouter");
+		btnAddRobot.setBounds(80, 90, 90, 28);
+		GRobots.add(btnAddRobot);
+		
+		JButton btnModifyRobot = new JButton("Modifier");
+		btnModifyRobot.setBounds(220, 90, 90, 28);
+		GRobots.add(btnModifyRobot);
+		
+		JButton btnDeleteRobot = new JButton("Supprimer");
+		btnDeleteRobot.setBounds(360, 90, 90, 28);
+		GRobots.add(btnDeleteRobot);
+		
+		tableRobot = new JTable();
+		tableRobot.setBounds(50, 140, 460, 220);
+		GRobots.add(tableRobot);
+		
+		JPanel Planning = new JPanel();
+		tabbedPane.addTab(html1 + "Planning</body></html>", null, Planning, null);
+		Planning.setLayout(null);
+		
+		JLabel lblPlanning = new JLabel("Planning de la semaine");
+		lblPlanning.setFont(new Font("SansSerif", Font.BOLD, 20));
+		lblPlanning.setBounds(90, 30, 374, 50);
+		Planning.add(lblPlanning);
+		
+		JButton btnAddTask = new JButton("Ajouter une t\u00E2che");
+		btnAddTask.setBounds(50, 90, 143, 28);
+		Planning.add(btnAddTask);
+		
+		JButton btnModifyTask = new JButton("Modifier une t\u00E2che");
+		btnModifyTask.setBounds(205, 90, 143, 28);
+		Planning.add(btnModifyTask);
+		
+		JButton btnDeleteTask = new JButton("Supprimer une t\u00E2che");
+		btnDeleteTask.setBounds(360, 90, 143, 28);
+		Planning.add(btnDeleteTask);
+		
+		tablePlanning = new JTable();
+		tablePlanning.setBounds(50, 140, 460, 220);
+		Planning.add(tablePlanning);
+		
+		JPanel Entretien = new JPanel();
+		tabbedPane.addTab(html1 + "Fiches d'entretien</body></html>", null, Entretien, null);
+		Entretien.setLayout(null);
+		
+		JLabel lblEntretien = new JLabel("Gestion des fiches d'entretien");
+		lblEntretien.setFont(new Font("SansSerif", Font.BOLD, 20));
+		lblEntretien.setBounds(130, 30, 299, 50);
+		Entretien.add(lblEntretien);
+		
+		JButton btnAddMaintenance = new JButton("Ajouter");
+		btnAddMaintenance.setBounds(80, 90, 90, 28);
+		Entretien.add(btnAddMaintenance);
+		
+		JButton btnModifyMaintenance = new JButton("Modifier");
+		btnModifyMaintenance.setBounds(220, 90, 90, 28);
+		Entretien.add(btnModifyMaintenance);
+		
+		JButton btnDeleteMaintenance = new JButton("Supprimer");
+		btnDeleteMaintenance.setBounds(360, 90, 90, 28);
+		Entretien.add(btnDeleteMaintenance);
+		
+		tableEntretien = new JTable();
+		tableEntretien.setBounds(50, 140, 460, 220);
+		Entretien.add(tableEntretien);
+		
+		JPanel Configuration = new JPanel();
+		tabbedPane.addTab(html1 + "Configuration</body></html>", null, Configuration, null);
+		Configuration.setLayout(null);
+		
+		JLabel lblNewLabel_1 = new JLabel("Gestion des utilisateurs");
+		lblNewLabel_1.setFont(new Font("SansSerif", Font.BOLD, 20));
+		lblNewLabel_1.setBounds(150, 30, 225, 50);
+		Configuration.add(lblNewLabel_1);
+		
+		JButton btnAddUser = new JButton("Ajouter");
+		btnAddUser.setBounds(80, 90, 90, 28);
+		Configuration.add(btnAddUser);
+		
+		JButton btnModifyUser = new JButton("Modifier");
+		btnModifyUser.setBounds(220, 90, 90, 28);
+		Configuration.add(btnModifyUser);
+		
+		JButton btnDeleteUser = new JButton("Supprimer");
+		btnDeleteUser.setBounds(360, 90, 90, 28);
+		Configuration.add(btnDeleteUser);
+		
+		tableUser = new JTable();
+		tableUser.setBounds(50, 140, 460, 220);
+		Configuration.add(tableUser);
+		
+		JPanel Historique = new JPanel();
+		tabbedPane.addTab(html1 + "Historique</body></html>", null, Historique, null);
+		Historique.setLayout(null);
+		
+		JLabel lblHistorique = new JLabel("Historique");
+		lblHistorique.setFont(new Font("SansSerif", Font.BOLD, 20));
+		lblHistorique.setBounds(210, 30, 105, 50);
+		Historique.add(lblHistorique);
+		
+		table = new JTable();
+		table.setBounds(50, 140, 460, 220);
+		Historique.add(table);
+		contentPane.add(tabbedPane);
 	}
 	
 	public void afficher(boolean visible)
