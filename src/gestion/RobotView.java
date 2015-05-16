@@ -30,8 +30,8 @@ public class RobotView extends JFrame {
 	private JTextField textFieldPassword;
 	private JTable table;
 	private JButton btnShow;
-	private JPanel Acceuil;
-	private CardLayout cl_Acceuil;
+	private JPanel Accueil;
+	private CardLayout cl_Accueil;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -57,19 +57,19 @@ public class RobotView extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		
-		Acceuil = new JPanel();
-		tabbedPane.addTab(html1 + "Acceuil</body></html>", null, Acceuil, null);
-		cl_Acceuil = new CardLayout(0, 0);
-		Acceuil.setLayout(cl_Acceuil);
+		Accueil = new JPanel();
+		tabbedPane.addTab(html1 + "Accueil</body></html>", null, Accueil, null);
+		cl_Accueil = new CardLayout(0, 0);
+		Accueil.setLayout(cl_Accueil);
 		
 		JPanel Login = new JPanel();
-		Acceuil.add(Login, "loginPanel");
+		Accueil.add(Login, "loginPanel");
 		Login.setLayout(null);
 		
-		JLabel lblAcceuil = new JLabel("Bienvenue sur votre plateforme de gestion");
-		lblAcceuil.setBounds(70, 30, 410, 50);
-		Login.add(lblAcceuil);
-		lblAcceuil.setFont(new Font("SansSerif", Font.BOLD, 20));
+		JLabel lblAccueil = new JLabel("Bienvenue sur votre plateforme de gestion");
+		lblAccueil.setBounds(70, 30, 410, 50);
+		Login.add(lblAccueil);
+		lblAccueil.setFont(new Font("SansSerif", Font.BOLD, 20));
 		
 		JLabel lblLogin = new JLabel("Login");
 		lblLogin.setBounds(150, 136, 31, 16);
@@ -102,12 +102,12 @@ public class RobotView extends JFrame {
 		Login.add(btnShow);
 		btnShow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				cl_Acceuil.show(Acceuil, "welcomePanel");
+				cl_Accueil.show(Accueil, "welcomePanel");
 			}
 		});
 		
 		JPanel Welcome = new JPanel();
-		Acceuil.add(Welcome, "welcomePanel");
+		Accueil.add(Welcome, "welcomePanel");
 		Welcome.setLayout(null);
 		
 		JLabel label = new JLabel("Bienvenue sur votre plateforme de gestion");
