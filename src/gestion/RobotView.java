@@ -22,6 +22,10 @@ import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.DefaultComboBoxModel;
+import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JYearChooser;
+import com.toedter.calendar.JMonthChooser;
+import javax.swing.JCheckBox;
 
 public class RobotView extends JFrame {
 
@@ -29,7 +33,6 @@ public class RobotView extends JFrame {
 	private String html1 = "<html><body leftmargin=30 topmargin=15 marginwidth=6 marginheight=19>";
 	private JTextField textFieldLogin;
 	private JTextField textFieldPassword;
-	private JButton btnShow;
 	private JPanel Accueil;
 	private CardLayout cl_Accueil;
 	private JTextField textField_NInterne;
@@ -46,6 +49,9 @@ public class RobotView extends JFrame {
 	private JTextField textField_Email;
 	private JTable tableAction;
 	private JTable tableRobots;
+	private JTextField textField_Descriptif;
+	private JTextField textField_detailEnt;
+	private JTextField textField_Lieu;
 
 	/**
 	 * Create the frame.
@@ -101,15 +107,6 @@ public class RobotView extends JFrame {
 		JButton btnValider = new JButton("Valider");
 		btnValider.setBounds(290, 235, 122, 28);
 		Login.add(btnValider);
-		
-		btnShow = new JButton("show");
-		btnShow.setBounds(322, 290, 90, 28);
-		Login.add(btnShow);
-		btnShow.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				cl_Accueil.show(Accueil, "welcomePanel");
-			}
-		});
 		
 		JPanel Welcome = new JPanel();
 		Accueil.add(Welcome, "welcomePanel");
@@ -233,21 +230,21 @@ public class RobotView extends JFrame {
 		tableRobots = new JTable();
 		tableRobots.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
-				{null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"New column", "New column", "New column", "New column"
+				"N\u00B0Interne", "Marque", "Emplacement", "Etat", "Temps d'utilisation", "Couleur", "N\u00B0 de serie"
 			}
 		));
 		scrollPane_Robots.setViewportView(tableRobots);
@@ -321,50 +318,66 @@ public class RobotView extends JFrame {
 		
 		JLabel lblDernierReparation = new JLabel("Derni\u00E8re r\u00E9paration :");
 		lblDernierReparation.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDernierReparation.setBounds(29, 341, 123, 16);
+		lblDernierReparation.setBounds(16, 341, 123, 16);
 		panelDetail.add(lblDernierReparation);
 		
 		JLabel lblDateRep = new JLabel("xx/xx/xxxx");
-		lblDateRep.setBounds(165, 341, 87, 16);
+		lblDateRep.setBounds(152, 341, 60, 16);
 		panelDetail.add(lblDateRep);
 		
 		JLabel lblProchainEntretien = new JLabel("Prochain entretien :");
 		lblProchainEntretien.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblProchainEntretien.setBounds(264, 341, 112, 16);
+		lblProchainEntretien.setBounds(224, 341, 112, 16);
 		panelDetail.add(lblProchainEntretien);
 		
 		JLabel lblDateEntretien = new JLabel("xx/xx/xxxx");
-		lblDateEntretien.setBounds(388, 341, 87, 16);
+		lblDateEntretien.setBounds(348, 341, 60, 16);
 		panelDetail.add(lblDateEntretien);
 		
 		JLabel lblImageRobot = new JLabel("New label");
 		lblImageRobot.setBounds(388, 194, 55, 16);
 		panelDetail.add(lblImageRobot);
 		
+		JButton btnValiderRobot = new JButton("Enregistrer");
+		btnValiderRobot.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnValiderRobot.setBounds(424, 305, 110, 30);
+		panelDetail.add(btnValiderRobot);
+		
+		JButton btnAnnuler = new JButton("Annuler");
+		btnAnnuler.setBounds(424, 341, 110, 30);
+		panelDetail.add(btnAnnuler);
+		
 		JPanel Planning = new JPanel();
 		tabbedPane.addTab(html1 + "Planning</body></html>", null, Planning, null);
-		Planning.setLayout(null);
+		Planning.setLayout(new CardLayout(0, 0));
+		
+		JPanel panelPlanning = new JPanel();
+		Planning.add(panelPlanning, "name_28698954943735");
+		panelPlanning.setLayout(null);
 		
 		JLabel lblPlanning = new JLabel("Planning de la semaine");
+		lblPlanning.setBounds(80, 30, 374, 50);
+		panelPlanning.add(lblPlanning);
 		lblPlanning.setFont(new Font("SansSerif", Font.BOLD, 20));
-		lblPlanning.setBounds(90, 20, 374, 50);
-		Planning.add(lblPlanning);
 		
 		JButton btnAddTask = new JButton("Ajouter une t\u00E2che");
-		btnAddTask.setBounds(50, 80, 143, 28);
-		Planning.add(btnAddTask);
+		btnAddTask.setBounds(40, 90, 143, 28);
+		panelPlanning.add(btnAddTask);
 		
 		JButton btnModifyTask = new JButton("Modifier une t\u00E2che");
-		btnModifyTask.setBounds(205, 80, 143, 28);
-		Planning.add(btnModifyTask);
+		btnModifyTask.setBounds(195, 90, 143, 28);
+		panelPlanning.add(btnModifyTask);
 		
 		JButton btnDeleteTask = new JButton("Supprimer une t\u00E2che");
-		btnDeleteTask.setBounds(360, 80, 143, 28);
-		Planning.add(btnDeleteTask);
+		btnDeleteTask.setBounds(350, 90, 143, 28);
+		panelPlanning.add(btnDeleteTask);
 		
 		JScrollPane scrollPane_Planning = new JScrollPane();
-		scrollPane_Planning.setBounds(50, 140, 460, 220);
-		Planning.add(scrollPane_Planning);
+		scrollPane_Planning.setBounds(40, 150, 460, 220);
+		panelPlanning.add(scrollPane_Planning);
 		
 		tablePlanning = new JTable();
 		tablePlanning.setModel(new DefaultTableModel(
@@ -377,6 +390,7 @@ public class RobotView extends JFrame {
 				{"13h-14h", null, null, null, null, null},
 				{"14h-15h", null, null, null, null, null},
 				{"15h-16h", null, null, null, null, null},
+				{"16h-17h", null, null, null, null, null},
 			},
 			new String[] {
 				"", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"
@@ -384,56 +398,211 @@ public class RobotView extends JFrame {
 		));
 		scrollPane_Planning.setViewportView(tablePlanning);
 		
+		JPanel panelAddEvt = new JPanel();
+		Planning.add(panelAddEvt, "name_28698986480949");
+		panelAddEvt.setLayout(null);
+		
+		JLabel lblEvenement = new JLabel("Evenement");
+		lblEvenement.setFont(new Font("SansSerif", Font.BOLD, 20));
+		lblEvenement.setBounds(200, 30, 130, 50);
+		panelAddEvt.add(lblEvenement);
+		
+		JDateChooser dateChooser_Event = new JDateChooser();
+		dateChooser_Event.setDateFormatString("dd/MM/yyyy");
+		dateChooser_Event.setBounds(121, 175, 190, 28);
+		panelAddEvt.add(dateChooser_Event);
+		
+		JLabel lblDate = new JLabel("Date :");
+		lblDate.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblDate.setBounds(40, 180, 55, 16);
+		panelAddEvt.add(lblDate);
+		
+		JLabel lblDescriptif = new JLabel("Descriptif :");
+		lblDescriptif.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblDescriptif.setBounds(26, 130, 69, 16);
+		panelAddEvt.add(lblDescriptif);
+		
+		textField_Descriptif = new JTextField();
+		textField_Descriptif.setBounds(121, 124, 190, 28);
+		panelAddEvt.add(textField_Descriptif);
+		textField_Descriptif.setColumns(10);
+		
+		JButton btnValiderEvt = new JButton("Enregistrer");
+		btnValiderEvt.setBounds(432, 289, 110, 30);
+		panelAddEvt.add(btnValiderEvt);
+		
+		JButton btnAnnulerEvt = new JButton("Annuler");
+		btnAnnulerEvt.setBounds(432, 331, 110, 30);
+		panelAddEvt.add(btnAnnulerEvt);
+		
+		JLabel lblLieu = new JLabel("Lieu :");
+		lblLieu.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblLieu.setBounds(40, 230, 55, 16);
+		panelAddEvt.add(lblLieu);
+		
+		textField_Lieu = new JTextField();
+		textField_Lieu.setBounds(121, 224, 190, 28);
+		panelAddEvt.add(textField_Lieu);
+		textField_Lieu.setColumns(10);
+		
+		JLabel lblType = new JLabel("Type :");
+		lblType.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblType.setBounds(40, 280, 55, 16);
+		panelAddEvt.add(lblType);
+		
+		JComboBox comboBox_Type = new JComboBox();
+		comboBox_Type.setBounds(121, 275, 190, 28);
+		panelAddEvt.add(comboBox_Type);
+		
 		JPanel Entretien = new JPanel();
 		tabbedPane.addTab(html1 + "Fiches d'entretien</body></html>", null, Entretien, null);
-		Entretien.setLayout(null);
+		Entretien.setLayout(new CardLayout(0, 0));
+		
+		JPanel panelViewEntretien = new JPanel();
+		Entretien.add(panelViewEntretien, "name_30212862976377");
+		panelViewEntretien.setLayout(null);
 		
 		JLabel lblEntretien = new JLabel("Gestion des fiches d'entretien");
+		lblEntretien.setBounds(130, 30, 299, 50);
+		panelViewEntretien.add(lblEntretien);
 		lblEntretien.setFont(new Font("SansSerif", Font.BOLD, 20));
-		lblEntretien.setBounds(130, 20, 299, 50);
-		Entretien.add(lblEntretien);
 		
 		JButton btnAddMaintenance = new JButton("Ajouter");
-		btnAddMaintenance.setBounds(80, 80, 90, 28);
-		Entretien.add(btnAddMaintenance);
+		btnAddMaintenance.setBounds(80, 90, 90, 28);
+		panelViewEntretien.add(btnAddMaintenance);
 		
 		JButton btnModifyMaintenance = new JButton("Modifier");
-		btnModifyMaintenance.setBounds(220, 80, 90, 28);
-		Entretien.add(btnModifyMaintenance);
+		btnModifyMaintenance.setBounds(220, 90, 90, 28);
+		panelViewEntretien.add(btnModifyMaintenance);
 		
 		JButton btnDeleteMaintenance = new JButton("Supprimer");
-		btnDeleteMaintenance.setBounds(360, 80, 90, 28);
-		Entretien.add(btnDeleteMaintenance);
+		btnDeleteMaintenance.setBounds(360, 90, 90, 28);
+		panelViewEntretien.add(btnDeleteMaintenance);
 		
 		JLabel lblListeDesFiches = new JLabel("Liste des fiches d'entretien");
-		lblListeDesFiches.setBounds(50, 120, 158, 16);
-		Entretien.add(lblListeDesFiches);
+		lblListeDesFiches.setBounds(50, 130, 158, 16);
+		panelViewEntretien.add(lblListeDesFiches);
 		
 		JScrollPane scrollPane_Entretien = new JScrollPane();
-		scrollPane_Entretien.setBounds(50, 140, 460, 220);
-		Entretien.add(scrollPane_Entretien);
+		scrollPane_Entretien.setBounds(50, 150, 460, 220);
+		panelViewEntretien.add(scrollPane_Entretien);
 		
 		tableEntretien = new JTable();
 		tableEntretien.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
 			},
 			new String[] {
-				"New column", "New column", "New column"
+				"Date", "Utilisateur", "Robot", "D\u00E9tails"
 			}
 		));
 		scrollPane_Entretien.setViewportView(tableEntretien);
+		
+		JPanel panelAddEntretien = new JPanel();
+		Entretien.add(panelAddEntretien, "name_30212894422409");
+		panelAddEntretien.setLayout(null);
+		
+		JLabel lblEntretien_1 = new JLabel("Entretien");
+		lblEntretien_1.setFont(new Font("SansSerif", Font.BOLD, 20));
+		lblEntretien_1.setBounds(210, 30, 130, 50);
+		panelAddEntretien.add(lblEntretien_1);
+		
+		JLabel lblDate_1 = new JLabel("Date Pr\u00E9vue :");
+		lblDate_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblDate_1.setBounds(281, 104, 76, 16);
+		panelAddEntretien.add(lblDate_1);
+		
+		JDateChooser dateChooser_PrevEnt = new JDateChooser();
+		dateChooser_PrevEnt.setDateFormatString("dd/MM/yyyy");
+		dateChooser_PrevEnt.setBounds(369, 99, 173, 28);
+		panelAddEntretien.add(dateChooser_PrevEnt);
+		
+		JLabel lblNewLabel_1 = new JLabel("Utilisateur :");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNewLabel_1.setBounds(6, 207, 68, 16);
+		panelAddEntretien.add(lblNewLabel_1);
+		
+		JComboBox comboBox_UserEnt = new JComboBox();
+		comboBox_UserEnt.setBounds(89, 201, 180, 28);
+		panelAddEntretien.add(comboBox_UserEnt);
+		
+		JLabel lblRobot = new JLabel("Robot :");
+		lblRobot.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblRobot.setBounds(19, 257, 55, 16);
+		panelAddEntretien.add(lblRobot);
+		
+		JLabel lblDtails = new JLabel("Intitul\u00E9 :");
+		lblDtails.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblDtails.setBounds(19, 107, 55, 16);
+		panelAddEntretien.add(lblDtails);
+		
+		JComboBox comboBox_RobotEnt = new JComboBox();
+		comboBox_RobotEnt.setBounds(89, 252, 180, 28);
+		panelAddEntretien.add(comboBox_RobotEnt);
+		
+		textField_detailEnt = new JTextField();
+		textField_detailEnt.setBounds(89, 101, 180, 28);
+		panelAddEntretien.add(textField_detailEnt);
+		textField_detailEnt.setColumns(10);
+		
+		JButton btnValiderEntretien = new JButton("Enregistrer");
+		btnValiderEntretien.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnValiderEntretien.setBounds(426, 290, 110, 30);
+		panelAddEntretien.add(btnValiderEntretien);
+		
+		JButton btnAnnulerEntretien = new JButton("Annuler");
+		btnAnnulerEntretien.setBounds(426, 330, 110, 30);
+		panelAddEntretien.add(btnAnnulerEntretien);
+		
+		JLabel lblType_1 = new JLabel("Type :");
+		lblType_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblType_1.setBounds(19, 157, 55, 16);
+		panelAddEntretien.add(lblType_1);
+		
+		JComboBox comboBox_TypeEnt = new JComboBox();
+		comboBox_TypeEnt.setBounds(89, 152, 180, 28);
+		panelAddEntretien.add(comboBox_TypeEnt);
+		
+		JLabel lblDateDbut = new JLabel("Date D\u00E9but :");
+		lblDateDbut.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblDateDbut.setBounds(281, 157, 76, 16);
+		panelAddEntretien.add(lblDateDbut);
+		
+		JDateChooser dateChooser_DebEnt = new JDateChooser();
+		dateChooser_DebEnt.setEnabled(false);
+		dateChooser_DebEnt.setDateFormatString("dd/MM/yyyy");
+		dateChooser_DebEnt.setBounds(369, 152, 173, 28);
+		panelAddEntretien.add(dateChooser_DebEnt);
+		
+		JLabel lblDateFin = new JLabel("Date fin :");
+		lblDateFin.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblDateFin.setBounds(281, 206, 76, 16);
+		panelAddEntretien.add(lblDateFin);
+		
+		JDateChooser dateChooser_FinEnt = new JDateChooser();
+		dateChooser_FinEnt.setDateFormatString("dd/MM/yyyy");
+		dateChooser_FinEnt.setEnabled(false);
+		dateChooser_FinEnt.setBounds(369, 201, 173, 28);
+		panelAddEntretien.add(dateChooser_FinEnt);
+		
+		JCheckBox chckbxTermine = new JCheckBox("Termin\u00E9");
+		chckbxTermine.setEnabled(false);
+		chckbxTermine.setBounds(369, 241, 104, 18);
+		panelAddEntretien.add(chckbxTermine);
 		
 		JPanel Configuration = new JPanel();
 		tabbedPane.addTab(html1 + "Configuration</body></html>", null, Configuration, null);
@@ -471,21 +640,21 @@ public class RobotView extends JFrame {
 		tableUsers = new JTable();
 		tableUsers.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
 			},
 			new String[] {
-				"Nom", "Pr\u00E9nom", "Grade"
+				"Nom", "Login", "Password", "Email", "Droit"
 			}
 		));
 		scrollPane_Users.setViewportView(tableUsers);
@@ -549,6 +718,14 @@ public class RobotView extends JFrame {
 		comboBRight.setBounds(130, 291, 150, 26);
 		InfoUser.add(comboBRight);
 		
+		JButton btnValiderUser = new JButton("Enregistrer");
+		btnValiderUser.setBounds(422, 282, 110, 30);
+		InfoUser.add(btnValiderUser);
+		
+		JButton btnAnnulerUser = new JButton("Annuler");
+		btnAnnulerUser.setBounds(422, 326, 110, 30);
+		InfoUser.add(btnAnnulerUser);
+		
 		JPanel Historique = new JPanel();
 		tabbedPane.addTab(html1 + "Historique</body></html>", null, Historique, null);
 		Historique.setLayout(null);
@@ -583,7 +760,7 @@ public class RobotView extends JFrame {
 				{null, null, null},
 			},
 			new String[] {
-				"New column", "New column", "New column"
+				"Date", "Utilisateur", "D\u00E9tails"
 			}
 		));
 		scrollPane.setViewportView(tableAction);
