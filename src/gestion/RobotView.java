@@ -21,6 +21,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.DefaultComboBoxModel;
 
 public class RobotView extends JFrame {
 
@@ -28,19 +29,23 @@ public class RobotView extends JFrame {
 	private String html1 = "<html><body leftmargin=30 topmargin=15 marginwidth=6 marginheight=19>";
 	private JTextField textFieldLogin;
 	private JTextField textFieldPassword;
-	private JTable table;
 	private JButton btnShow;
-	private JPanel Acceuil;
-	private CardLayout cl_Acceuil;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTable table_1;
+	private JPanel Accueil;
+	private CardLayout cl_Accueil;
+	private JTextField textField_NInterne;
+	private JTextField textField_Emplacement;
+	private JTextField textField_NSerie;
 	private JTable tableEvent;
 	private JTable tableTask;
 	private JTable tablePlanning;
 	private JTable tableEntretien;
-	private JTable tableUser;
+	private JTable tableUsers;
+	private JTextField textField_Name;
+	private JTextField textField_Login;
+	private JTextField textField_PwUser;
+	private JTextField textField_Email;
+	private JTable tableAction;
+	private JTable tableRobots;
 
 	/**
 	 * Create the frame.
@@ -57,19 +62,19 @@ public class RobotView extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		
-		Acceuil = new JPanel();
-		tabbedPane.addTab(html1 + "Acceuil</body></html>", null, Acceuil, null);
-		cl_Acceuil = new CardLayout(0, 0);
-		Acceuil.setLayout(cl_Acceuil);
+		Accueil = new JPanel();
+		tabbedPane.addTab(html1 + "Accueil</body></html>", null, Accueil, null);
+		cl_Accueil = new CardLayout(0, 0);
+		Accueil.setLayout(cl_Accueil);
 		
 		JPanel Login = new JPanel();
-		Acceuil.add(Login, "loginPanel");
+		Accueil.add(Login, "loginPanel");
 		Login.setLayout(null);
 		
-		JLabel lblAcceuil = new JLabel("Bienvenue sur votre plateforme de gestion");
-		lblAcceuil.setBounds(70, 30, 410, 50);
-		Login.add(lblAcceuil);
-		lblAcceuil.setFont(new Font("SansSerif", Font.BOLD, 20));
+		JLabel lblAccueil = new JLabel("Bienvenue sur votre plateforme de gestion");
+		lblAccueil.setBounds(70, 30, 410, 50);
+		Login.add(lblAccueil);
+		lblAccueil.setFont(new Font("SansSerif", Font.BOLD, 20));
 		
 		JLabel lblLogin = new JLabel("Login");
 		lblLogin.setBounds(150, 136, 31, 16);
@@ -102,12 +107,12 @@ public class RobotView extends JFrame {
 		Login.add(btnShow);
 		btnShow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				cl_Acceuil.show(Acceuil, "welcomePanel");
+				cl_Accueil.show(Accueil, "welcomePanel");
 			}
 		});
 		
 		JPanel Welcome = new JPanel();
-		Acceuil.add(Welcome, "welcomePanel");
+		Accueil.add(Welcome, "welcomePanel");
 		Welcome.setLayout(null);
 		
 		JLabel label = new JLabel("Bienvenue sur votre plateforme de gestion");
@@ -123,9 +128,9 @@ public class RobotView extends JFrame {
 		lblTaskToCome.setBounds(290, 120, 89, 16);
 		Welcome.add(lblTaskToCome);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(40, 140, 220, 200);
-		Welcome.add(scrollPane_1);
+		JScrollPane scrollPane_Events = new JScrollPane();
+		scrollPane_Events.setBounds(40, 140, 220, 220);
+		Welcome.add(scrollPane_Events);
 		
 		tableEvent = new JTable();
 		tableEvent.setShowVerticalLines(true);
@@ -135,6 +140,16 @@ public class RobotView extends JFrame {
 			new Object[][] {
 				{null, null},
 				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
 			},
 			new String[] {
 				"New column", "New column"
@@ -147,17 +162,27 @@ public class RobotView extends JFrame {
 				return columnEditables[column];
 			}
 		});
-		scrollPane_1.setViewportView(tableEvent);
+		scrollPane_Events.setViewportView(tableEvent);
 		
-		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(290, 140, 220, 200);
-		Welcome.add(scrollPane_2);
+		JScrollPane scrollPane_Tasks = new JScrollPane();
+		scrollPane_Tasks.setBounds(290, 140, 220, 220);
+		Welcome.add(scrollPane_Tasks);
 		
 		tableTask = new JTable();
 		tableTask.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null},
 				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
+				{null, null},
 			},
 			new String[] {
 				"New column", "New column"
@@ -170,7 +195,7 @@ public class RobotView extends JFrame {
 				return columnEditables[column];
 			}
 		});
-		scrollPane_2.setViewportView(tableTask);
+		scrollPane_Tasks.setViewportView(tableTask);
 		
 		JPanel GRobots = new JPanel();
 		tabbedPane.addTab(html1 + "Gestion Robots</body></html>", null, GRobots, null);
@@ -201,30 +226,31 @@ public class RobotView extends JFrame {
 		lblListeDesRobots.setBounds(40, 120, 104, 16);
 		panelListe.add(lblListeDesRobots);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(40, 139, 460, 221);
-		panelListe.add(scrollPane);
+		JScrollPane scrollPane_Robots = new JScrollPane();
+		scrollPane_Robots.setBounds(40, 139, 460, 221);
+		panelListe.add(scrollPane_Robots);
 		
-		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
+		tableRobots = new JTable();
+		tableRobots.setModel(new DefaultTableModel(
 			new Object[][] {
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
 				{null, null, null, null},
 				{null, null, null, null},
 				{null, null, null, null},
 				{null, null, null, null},
 			},
 			new String[] {
-				"yo", "New column", "New column", "New column"
+				"New column", "New column", "New column", "New column"
 			}
-		) {
-			boolean[] columnEditables = new boolean[] {
-				false, true, true
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
-		scrollPane.setViewportView(table_1);
+		));
+		scrollPane_Robots.setViewportView(tableRobots);
 		
 		JPanel panelDetail = new JPanel();
 		GRobots.add(panelDetail, "name_15515675658776");
@@ -260,38 +286,38 @@ public class RobotView extends JFrame {
 		lblEmplacement.setBounds(50, 234, 103, 16);
 		panelDetail.add(lblEmplacement);
 		
-		JLabel lblNDeSrie = new JLabel("N\u00B0 de s\u00E9rie :");
-		lblNDeSrie.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNDeSrie.setBounds(80, 274, 73, 16);
-		panelDetail.add(lblNDeSrie);
+		JLabel lblNDeSerie = new JLabel("N\u00B0 de s\u00E9rie :");
+		lblNDeSerie.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblNDeSerie.setBounds(80, 274, 73, 16);
+		panelDetail.add(lblNDeSerie);
 		
-		textField = new JTextField();
-		textField.setBounds(173, 108, 122, 28);
-		panelDetail.add(textField);
-		textField.setColumns(10);
+		textField_NInterne = new JTextField();
+		textField_NInterne.setBounds(173, 108, 122, 28);
+		panelDetail.add(textField_NInterne);
+		textField_NInterne.setColumns(10);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(173, 149, 122, 26);
-		panelDetail.add(comboBox_1);
+		JComboBox comboBox_Marque = new JComboBox();
+		comboBox_Marque.setBounds(173, 149, 122, 26);
+		panelDetail.add(comboBox_Marque);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(173, 189, 122, 26);
-		panelDetail.add(comboBox);
+		JComboBox comboBox_Color = new JComboBox();
+		comboBox_Color.setBounds(173, 189, 122, 26);
+		panelDetail.add(comboBox_Color);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(173, 228, 122, 28);
-		panelDetail.add(textField_1);
-		textField_1.setColumns(10);
+		textField_Emplacement = new JTextField();
+		textField_Emplacement.setBounds(173, 228, 122, 28);
+		panelDetail.add(textField_Emplacement);
+		textField_Emplacement.setColumns(10);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(173, 268, 122, 28);
-		panelDetail.add(textField_2);
-		textField_2.setColumns(10);
+		textField_NSerie = new JTextField();
+		textField_NSerie.setBounds(173, 268, 122, 28);
+		panelDetail.add(textField_NSerie);
+		textField_NSerie.setColumns(10);
 		
-		JLabel lblNewLabel_2 = new JLabel("Entretiens et r\u00E9parations");
-		lblNewLabel_2.setFont(new Font("SansSerif", Font.BOLD, 13));
-		lblNewLabel_2.setBounds(40, 310, 166, 16);
-		panelDetail.add(lblNewLabel_2);
+		JLabel lblsubtitle2 = new JLabel("Entretiens et r\u00E9parations");
+		lblsubtitle2.setFont(new Font("SansSerif", Font.BOLD, 13));
+		lblsubtitle2.setBounds(40, 310, 166, 16);
+		panelDetail.add(lblsubtitle2);
 		
 		JLabel lblDernierReparation = new JLabel("Derni\u00E8re r\u00E9paration :");
 		lblDernierReparation.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -336,9 +362,9 @@ public class RobotView extends JFrame {
 		btnDeleteTask.setBounds(360, 80, 143, 28);
 		Planning.add(btnDeleteTask);
 		
-		JScrollPane scrollPane_3 = new JScrollPane();
-		scrollPane_3.setBounds(50, 140, 460, 220);
-		Planning.add(scrollPane_3);
+		JScrollPane scrollPane_Planning = new JScrollPane();
+		scrollPane_Planning.setBounds(50, 140, 460, 220);
+		Planning.add(scrollPane_Planning);
 		
 		tablePlanning = new JTable();
 		tablePlanning.setModel(new DefaultTableModel(
@@ -356,7 +382,7 @@ public class RobotView extends JFrame {
 				"", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"
 			}
 		));
-		scrollPane_3.setViewportView(tablePlanning);
+		scrollPane_Planning.setViewportView(tablePlanning);
 		
 		JPanel Entretien = new JPanel();
 		tabbedPane.addTab(html1 + "Fiches d'entretien</body></html>", null, Entretien, null);
@@ -383,13 +409,21 @@ public class RobotView extends JFrame {
 		lblListeDesFiches.setBounds(50, 120, 158, 16);
 		Entretien.add(lblListeDesFiches);
 		
-		JScrollPane scrollPane_4 = new JScrollPane();
-		scrollPane_4.setBounds(50, 140, 460, 220);
-		Entretien.add(scrollPane_4);
+		JScrollPane scrollPane_Entretien = new JScrollPane();
+		scrollPane_Entretien.setBounds(50, 140, 460, 220);
+		Entretien.add(scrollPane_Entretien);
 		
 		tableEntretien = new JTable();
 		tableEntretien.setModel(new DefaultTableModel(
 			new Object[][] {
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
 				{null, null, null},
 				{null, null, null},
 				{null, null, null},
@@ -399,7 +433,7 @@ public class RobotView extends JFrame {
 				"New column", "New column", "New column"
 			}
 		));
-		scrollPane_4.setViewportView(tableEntretien);
+		scrollPane_Entretien.setViewportView(tableEntretien);
 		
 		JPanel Configuration = new JPanel();
 		tabbedPane.addTab(html1 + "Configuration</body></html>", null, Configuration, null);
@@ -409,34 +443,43 @@ public class RobotView extends JFrame {
 		Configuration.add(RecapUser, "name_22457550805877");
 		RecapUser.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("Gestion des utilisateurs");
-		lblNewLabel_1.setBounds(150, 25, 225, 50);
-		RecapUser.add(lblNewLabel_1);
-		lblNewLabel_1.setFont(new Font("SansSerif", Font.BOLD, 20));
+		JLabel lblTitleConfig = new JLabel("Gestion des utilisateurs");
+		lblTitleConfig.setBounds(150, 30, 225, 50);
+		RecapUser.add(lblTitleConfig);
+		lblTitleConfig.setFont(new Font("SansSerif", Font.BOLD, 20));
 		
 		JButton btnAddUser = new JButton("Ajouter");
-		btnAddUser.setBounds(80, 85, 90, 28);
+		btnAddUser.setBounds(80, 90, 90, 28);
 		RecapUser.add(btnAddUser);
 		
 		JButton btnModifyUser = new JButton("Modifier");
-		btnModifyUser.setBounds(220, 85, 90, 28);
+		btnModifyUser.setBounds(220, 90, 90, 28);
 		RecapUser.add(btnModifyUser);
 		
 		JButton btnDeleteUser = new JButton("Supprimer");
-		btnDeleteUser.setBounds(360, 85, 90, 28);
+		btnDeleteUser.setBounds(360, 90, 90, 28);
 		RecapUser.add(btnDeleteUser);
 		
 		JLabel lblListeDesUtilisateurs = new JLabel("Liste des utilisateurs");
-		lblListeDesUtilisateurs.setBounds(50, 125, 120, 16);
+		lblListeDesUtilisateurs.setBounds(50, 130, 120, 16);
 		RecapUser.add(lblListeDesUtilisateurs);
 		
-		JScrollPane scrollPane_5 = new JScrollPane();
-		scrollPane_5.setBounds(50, 145, 460, 220);
-		RecapUser.add(scrollPane_5);
+		JScrollPane scrollPane_Users = new JScrollPane();
+		scrollPane_Users.setBounds(50, 150, 460, 220);
+		RecapUser.add(scrollPane_Users);
 		
-		tableUser = new JTable();
-		tableUser.setModel(new DefaultTableModel(
+		tableUsers = new JTable();
+		tableUsers.setModel(new DefaultTableModel(
 			new Object[][] {
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
 				{null, null, null},
 				{null, null, null},
 				{null, null, null},
@@ -445,10 +488,66 @@ public class RobotView extends JFrame {
 				"Nom", "Pr\u00E9nom", "Grade"
 			}
 		));
-		scrollPane_5.setViewportView(tableUser);
+		scrollPane_Users.setViewportView(tableUsers);
 		
 		JPanel InfoUser = new JPanel();
 		Configuration.add(InfoUser, "name_22457609695790");
+		InfoUser.setLayout(null);
+		
+		JLabel lblDescriptionDeLutilisateur = new JLabel("Description de l'utilisateur");
+		lblDescriptionDeLutilisateur.setBounds(150, 30, 250, 50);
+		lblDescriptionDeLutilisateur.setFont(new Font("SansSerif", Font.BOLD, 20));
+		InfoUser.add(lblDescriptionDeLutilisateur);
+		
+		JLabel lblName = new JLabel("Nom :");
+		lblName.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblName.setBounds(60, 136, 55, 16);
+		InfoUser.add(lblName);
+		
+		JLabel lblLogin_1 = new JLabel("Login :");
+		lblLogin_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblLogin_1.setBounds(60, 176, 55, 16);
+		InfoUser.add(lblLogin_1);
+		
+		JLabel lblMotDePasse = new JLabel("Mot de passe :");
+		lblMotDePasse.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblMotDePasse.setBounds(22, 216, 93, 16);
+		InfoUser.add(lblMotDePasse);
+		
+		JLabel lblEmail = new JLabel("Email :");
+		lblEmail.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblEmail.setBounds(60, 256, 55, 16);
+		InfoUser.add(lblEmail);
+		
+		JLabel lblDroit = new JLabel("Droit :");
+		lblDroit.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblDroit.setBounds(60, 296, 55, 16);
+		InfoUser.add(lblDroit);
+		
+		textField_Name = new JTextField();
+		textField_Name.setBounds(130, 130, 150, 28);
+		InfoUser.add(textField_Name);
+		textField_Name.setColumns(10);
+		
+		textField_Login = new JTextField();
+		textField_Login.setBounds(130, 170, 150, 28);
+		InfoUser.add(textField_Login);
+		textField_Login.setColumns(10);
+		
+		textField_PwUser = new JTextField();
+		textField_PwUser.setBounds(130, 210, 150, 28);
+		InfoUser.add(textField_PwUser);
+		textField_PwUser.setColumns(10);
+		
+		textField_Email = new JTextField();
+		textField_Email.setBounds(130, 250, 150, 28);
+		InfoUser.add(textField_Email);
+		textField_Email.setColumns(10);
+		
+		JComboBox comboBRight = new JComboBox();
+		comboBRight.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3"}));
+		comboBRight.setBounds(130, 291, 150, 26);
+		InfoUser.add(comboBRight);
 		
 		JPanel Historique = new JPanel();
 		tabbedPane.addTab(html1 + "Historique</body></html>", null, Historique, null);
@@ -459,13 +558,35 @@ public class RobotView extends JFrame {
 		lblHistorique.setBounds(210, 20, 105, 50);
 		Historique.add(lblHistorique);
 		
-		table = new JTable();
-		table.setBounds(50, 140, 460, 220);
-		Historique.add(table);
+		JLabel lblListesDesActions = new JLabel("Listes des derni\u00E8res action \u00E9ffectu\u00E9es \u00E0 l'aide du logiciel");
+		lblListesDesActions.setBounds(50, 120, 400, 16);
+		Historique.add(lblListesDesActions);
 		
-		JLabel lblListesDesDernires = new JLabel("Listes des derni\u00E8res action \u00E9ffectu\u00E9es \u00E0 l'aide du logiciel");
-		lblListesDesDernires.setBounds(50, 120, 400, 16);
-		Historique.add(lblListesDesDernires);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(50, 140, 460, 220);
+		Historique.add(scrollPane);
+		
+		tableAction = new JTable();
+		tableAction.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+				{null, null, null},
+			},
+			new String[] {
+				"New column", "New column", "New column"
+			}
+		));
+		scrollPane.setViewportView(tableAction);
 		contentPane.add(tabbedPane);
 		
 		
