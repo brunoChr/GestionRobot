@@ -128,6 +128,9 @@ public class RobotView extends JFrame {
 		Welcome.add(scrollPane_1);
 		
 		tableEvent = new JTable();
+		tableEvent.setShowVerticalLines(true);
+		tableEvent.setSurrendersFocusOnKeystroke(true);
+		tableEvent.setShowHorizontalLines(true);
 		tableEvent.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null},
@@ -400,32 +403,36 @@ public class RobotView extends JFrame {
 		
 		JPanel Configuration = new JPanel();
 		tabbedPane.addTab(html1 + "Configuration</body></html>", null, Configuration, null);
-		Configuration.setLayout(null);
+		Configuration.setLayout(new CardLayout(0, 0));
+		
+		JPanel RecapUser = new JPanel();
+		Configuration.add(RecapUser, "name_22457550805877");
+		RecapUser.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Gestion des utilisateurs");
+		lblNewLabel_1.setBounds(150, 25, 225, 50);
+		RecapUser.add(lblNewLabel_1);
 		lblNewLabel_1.setFont(new Font("SansSerif", Font.BOLD, 20));
-		lblNewLabel_1.setBounds(150, 20, 225, 50);
-		Configuration.add(lblNewLabel_1);
 		
 		JButton btnAddUser = new JButton("Ajouter");
-		btnAddUser.setBounds(80, 80, 90, 28);
-		Configuration.add(btnAddUser);
+		btnAddUser.setBounds(80, 85, 90, 28);
+		RecapUser.add(btnAddUser);
 		
 		JButton btnModifyUser = new JButton("Modifier");
-		btnModifyUser.setBounds(220, 80, 90, 28);
-		Configuration.add(btnModifyUser);
+		btnModifyUser.setBounds(220, 85, 90, 28);
+		RecapUser.add(btnModifyUser);
 		
 		JButton btnDeleteUser = new JButton("Supprimer");
-		btnDeleteUser.setBounds(360, 80, 90, 28);
-		Configuration.add(btnDeleteUser);
+		btnDeleteUser.setBounds(360, 85, 90, 28);
+		RecapUser.add(btnDeleteUser);
 		
 		JLabel lblListeDesUtilisateurs = new JLabel("Liste des utilisateurs");
-		lblListeDesUtilisateurs.setBounds(50, 120, 120, 16);
-		Configuration.add(lblListeDesUtilisateurs);
+		lblListeDesUtilisateurs.setBounds(50, 125, 120, 16);
+		RecapUser.add(lblListeDesUtilisateurs);
 		
 		JScrollPane scrollPane_5 = new JScrollPane();
-		scrollPane_5.setBounds(50, 140, 460, 220);
-		Configuration.add(scrollPane_5);
+		scrollPane_5.setBounds(50, 145, 460, 220);
+		RecapUser.add(scrollPane_5);
 		
 		tableUser = new JTable();
 		tableUser.setModel(new DefaultTableModel(
@@ -439,6 +446,9 @@ public class RobotView extends JFrame {
 			}
 		));
 		scrollPane_5.setViewportView(tableUser);
+		
+		JPanel InfoUser = new JPanel();
+		Configuration.add(InfoUser, "name_22457609695790");
 		
 		JPanel Historique = new JPanel();
 		tabbedPane.addTab(html1 + "Historique</body></html>", null, Historique, null);
