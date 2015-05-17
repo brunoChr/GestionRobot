@@ -1,4 +1,7 @@
 package gestion;
+
+import java.awt.Color;
+
 /**
  * 
  */
@@ -31,32 +34,52 @@ public class RobotController {
    
 	public void boutonValider() throws Exception
 	{
-		if(_robotModel.estValide(_robotView.getLogin(),_robotView.getPassword()))
-		{
-			_robotView.afficherMessage("Login Correct !!");
-			
-			//_applicontroller = new AppliController();
-			
-			//this.stop();
-			
-			/*if ( Desktop.isDesktopSupported() ) {
-				// On récupère l'instance du desktop :
-				Desktop desktop = Desktop.getDesktop();
-			 
-				// On vérifie que la fonction browse est bien supportée :
-				if (desktop.isSupported(Desktop.Action.BROWSE)) {
-					// Et on lance l'application associé au protocole :
-					desktop.browse(new URI("https://smsapi.free-mobile.fr/sendmsg?user=10517589&pass=F79pUES5PIZu7g&msg=Conneectéé%20...%20"));
+		String login = _robotView.getLogin();
+		String password = _robotView.getPassword();
+		
+		if((!login.isEmpty())&&(!password.isEmpty())){
+			if(_robotModel.ifExistInTable("user","login", login)){			
+				if(_robotModel.estValide(login,password))
+				{
+					_robotView.afficherMessage("Login Correct !!");
+					_robotView.getLblWarningAccueil().setVisible(false);
 				}
-			}*/
+				else _robotView.afficherMessage("Login incorrect !! c'est pas ton compte");
+			}
+			else {
+				_robotView.getLblWarningAccueil().setVisible(true);
+				_robotView.getLblWarningAccueil().setForeground(Color.red);
+				_robotView.getLblWarningAccueil().setText("Compte introuvable");
+			}
 		}
-		else _robotView.afficherMessage("Login incorrect !! c'est pas ton compte");
+		else {
+			_robotView.getLblWarningAccueil().setVisible(true);
+			_robotView.getLblWarningAccueil().setForeground(Color.red);
+			_robotView.getLblWarningAccueil().setText("Tout les champs doivent être remplis");
+		}
 	}
 	
 	public void boutonOubli()
 	{
-		System.out.println("oubli");
-		_robotView.afficherMessage(_robotModel.oubliMP(_robotView.getLogin()));
+		String login = _robotView.getLogin();
+		
+		if(!login.isEmpty()){
+			if(_robotModel.ifExistInTable("user","login", login)){			
+			_robotView.getLblWarningAccueil().setVisible(false);
+			System.out.println("oubli");
+			_robotView.afficherMessage(_robotModel.oubliMP(login));
+			}
+			else {
+				_robotView.getLblWarningAccueil().setVisible(true);
+				_robotView.getLblWarningAccueil().setForeground(Color.red);
+				_robotView.getLblWarningAccueil().setText("Compte introuvable");
+			}
+		}
+		else {
+			_robotView.getLblWarningAccueil().setVisible(true);
+			_robotView.getLblWarningAccueil().setForeground(Color.red);
+			_robotView.getLblWarningAccueil().setText("Le champs login doit être rempli");
+		}
 	}
 	
    public void quitter()

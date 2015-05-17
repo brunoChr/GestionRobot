@@ -126,7 +126,51 @@ public class RobotModel {
 				ex3=ex3.getNextException();			
 			}	
 		}
-		return "yes";
+		return null;
+	}
+	
+	/**
+	 * Test si un élément est contenu dans une table
+	 * @param table
+	 * @param element
+	 * @return 
+	 */
+	public boolean ifExistInTable(String table, String row, String element) {
+		try
+		{
+			String requete = new String("SELECT " + row + " FROM "+table);
+			String requete2 = new String("SELECT id FROM "+ table +" WHERE "+ row +"=?;");
+
+			PreparedStatement stmt = _conn.prepareStatement(requete2);
+			stmt.setString(1, element);
+
+			System.out.println(requete2);
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next())
+			{
+				if(rs.getBoolean(1)) {
+					System.out.println(rs.getBoolean(1));
+					return true;
+				}
+				else return false;
+			}		
+			
+			rs.close();
+			stmt.close();
+		} 
+
+		catch (SQLException ex3)
+		{
+			while (ex3 != null)
+			{
+				System.out.println(ex3.getSQLState());
+				System.out.println(ex3.getMessage());
+				System.out.println(ex3.getErrorCode());
+				ex3=ex3.getNextException();			
+			}	
+		}
+		return false;
 	}
 	
 }

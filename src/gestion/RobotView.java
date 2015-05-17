@@ -35,6 +35,7 @@ public class RobotView extends JFrame {
 	private JTable table;
 	private JButton btnMotDePasse;
 	private JButton btnValider;
+	private JLabel lblWarningAccueil;
 
 	/**
 	 * Create the frame.
@@ -75,7 +76,7 @@ public class RobotView extends JFrame {
 		textFieldLogin.setColumns(10);
 		
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setBounds(140, 219, 56, 16);
+		lblPassword.setBounds(140, 219, 88, 16);
 		Acceuil.add(lblPassword);
 		
 		textFieldPassword = new JTextField();
@@ -84,10 +85,11 @@ public class RobotView extends JFrame {
 		textFieldPassword.setColumns(10);
 		
 		btnMotDePasse = new JButton("Mot de passe oubli\u00E9");
+		btnMotDePasse.setPreferredSize(new Dimension(140, 30));
 		btnMotDePasse.setName("btnMotDePasse");
 		btnMotDePasse.addActionListener(new RobotEvent(robotController));
 		
-		btnMotDePasse.setBounds(110, 274, 139, 28);
+		btnMotDePasse.setBounds(110, 274, 158, 28);
 		Acceuil.add(btnMotDePasse);
 		
 		btnValider = new JButton("Valider");
@@ -95,6 +97,11 @@ public class RobotView extends JFrame {
 		btnValider.addActionListener(new RobotEvent(robotController));
 		btnValider.setBounds(280, 274, 122, 28);
 		Acceuil.add(btnValider);
+		
+		lblWarningAccueil = new JLabel("");
+		lblWarningAccueil.setVisible(false);
+		lblWarningAccueil.setBounds(374, 219, 237, 16);
+		Acceuil.add(lblWarningAccueil);
 		
 		JPanel GRobots = new JPanel();
 		tabbedPane.addTab(html1 + "Gestion Robots</body></html>", null, GRobots, null);
@@ -214,6 +221,14 @@ public class RobotView extends JFrame {
 
 	}
 	
+	public JLabel getLblWarningAccueil() {
+		return lblWarningAccueil;
+	}
+
+	public void setLblWarningAccueil(JLabel lblWarningAccueil) {
+		this.lblWarningAccueil = lblWarningAccueil;
+	}
+
 	public JButton getBtnMotDePasse() {
 		return btnMotDePasse;
 	}
@@ -249,5 +264,4 @@ public class RobotView extends JFrame {
 	{
 		return textFieldPassword.getText().toString();
 	}
-	
 }
