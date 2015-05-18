@@ -66,6 +66,9 @@ public class RobotView extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	/**
+	 * @param robotController
+	 */
 	public RobotView(RobotController robotController) {
 		
 		/* Ecouteur des événements sur la fenêtre */
@@ -120,10 +123,12 @@ public class RobotView extends JFrame {
 		textFieldPassword.setColumns(10);
 		
 		btnMotDePasse = new JButton("Mot de passe oubli\u00E9");
+		btnMotDePasse.addActionListener(new RobotEvent(robotController));
 		btnMotDePasse.setBounds(120, 235, 139, 28);
 		Login.add(btnMotDePasse);
 		
 		btnValider = new JButton("Valider");
+		btnValider.addActionListener(new RobotEvent(robotController));
 		btnValider.setBounds(290, 235, 122, 28);
 		Login.add(btnValider);
 		
@@ -836,5 +841,9 @@ public class RobotView extends JFrame {
 	public String getPassword()
 	{
 		return textFieldPassword.getText().toString();
+	}
+	private class BtnMotDePasseActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
 	}
 }
