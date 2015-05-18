@@ -36,6 +36,7 @@ public class RobotEvent implements ActionListener, WindowListener {
 		// TODO Auto-generated constructor stub
 		this._robotController = rc;
 	}
+	
 	public void actionPerformed(ActionEvent e) {
 		
 		JButton bouton = (JButton)e.getSource();
@@ -55,14 +56,35 @@ public class RobotEvent implements ActionListener, WindowListener {
 			_robotController.boutonOubli();
 		}
 		else if (bouton==_robotController.get_robotView().getBtnDeconnecter()) {
+			
 			System.out.println("Bouton Deconnecter !!");
 			
-			// On ouvre la page login
-			_robotController.get_robotView().getCl_Accueil().show(_robotController.get_robotView().getAccueil(),"loginPanel" );
+			_robotController.logoutGestion();
 		}
+		
+		else if (bouton==_robotController.get_robotView().getBtnAddRobot()) {
+			
+			System.out.println("Bouton add robot !!");
 
+			// On ouvre la page login
+			_robotController.addRobot();
 
+		}
+		else if (bouton==_robotController.get_robotView().getBtnModifyRobot()) {
+			
+			System.out.println("Bouton modify robot !!");
+
+			// On ouvre la page login
+			_robotController.modRobot();
+		}
+		else if (bouton==_robotController.get_robotView().getBtnDeleteRobot()) {
+			
+			System.out.println("Bouton delete robot !!");
+
+			_robotController.delRobot();
+		}
 	}
+
 	/* (non-Javadoc)
 	 * @see java.awt.event.WindowListener#windowActivated(java.awt.event.WindowEvent)
 	 */

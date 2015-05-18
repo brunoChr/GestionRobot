@@ -33,11 +33,15 @@ public class RobotController {
     }
    
 
+	/**
+	 * 
+	 * @throws Exception
+	 */
 	public void boutonValider() throws Exception
 	{
 		// On récupére les valeurs des champs
 		String login = _robotView.getLogin();
-		String password = _robotView.getPassword();
+		String password = _robotView.getTextFieldPassword().getText();
 		
 		// Si les champs login & pass sont remplis
 		if((!login.isEmpty())&&(!password.isEmpty())){
@@ -57,13 +61,14 @@ public class RobotController {
 				// Si le login & pass ne correspondent pas, on avertit
 				else _robotView.afficherMessage("Login incorrect !! c'est pas ton compte");
 			}
-			// Si les champs sont incomplé
+			// Si le login n'existe pas dans la table
 			else {
 				_robotView.getLblWarningAccueil().setVisible(true);
 				_robotView.getLblWarningAccueil().setForeground(Color.red);
 				_robotView.getLblWarningAccueil().setText("Compte introuvable");
 			}
 		}
+		// Si les champs sont vides
 		else {
 			_robotView.getLblWarningAccueil().setVisible(true);
 			_robotView.getLblWarningAccueil().setForeground(Color.red);
@@ -94,16 +99,35 @@ public class RobotController {
 		}
 	}
 	
-   public void quitter()
+    public void quitter()
    {
 	   _robotModel.fermerConnexion();
 		System.exit(1);
    }
-   
-	
+   	
 	public RobotView get_robotView() {
 		return _robotView;
 	}
 
-
+	public void logoutGestion () {
+		// On ouvre la page login
+		get_robotView().getCl_Accueil().show(get_robotView().getAccueil(),"loginPanel" );
+		get_robotView().getTextFieldPassword().setText("");
+	}
+	
+	public void addRobot() {
+		
+		// On ouvre la page detail robot
+		get_robotView().getCl_Accueil().show(get_robotView().getAccueil(),"loginPanel" );
+	}
+	
+	public void modRobot() {
+			
+		// On ouvre la page detail robot
+		get_robotView().getCl_Accueil().show(get_robotView().getAccueil(),"loginPanel" );
+		}
+	
+	public void delRobot() {
+		
+	}
 }

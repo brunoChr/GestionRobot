@@ -34,10 +34,13 @@ import com.toedter.calendar.JMonthChooser;
 
 import javax.swing.JCheckBox;
 import javax.swing.ImageIcon;
+
 import java.awt.SystemColor;
 import java.awt.Component;
+
 import javax.swing.JPasswordField;
 
+@SuppressWarnings("serial")
 public class RobotView extends JFrame {
 
 	private JPanel contentPane;
@@ -67,6 +70,17 @@ public class RobotView extends JFrame {
 	private JButton btnValider;
 	private JPasswordField textFieldPassword;
 	private JButton btnDeconnecter;
+	private JButton btnAddRobot;
+	private JButton btnModifyRobot;
+	private JButton btnDeleteRobot;
+	private JPanel GRobots;
+	private CardLayout cl_GRobots;
+	private JPanel Planning;
+	private JPanel Configuration;
+	private CardLayout cl_Planning;
+	private JPanel Entretien;
+	private CardLayout cl_Entretien;
+	private CardLayout cl_Configuration;
 
 	/**
 	 * Create the frame.
@@ -110,7 +124,7 @@ public class RobotView extends JFrame {
 		lblAccueil.setFont(new Font("SansSerif", Font.BOLD, 20));
 		
 		JLabel lblLogin = new JLabel("Login");
-		lblLogin.setBounds(150, 136, 31, 16);
+		lblLogin.setBounds(150, 136, 88, 16);
 		Login.add(lblLogin);
 		
 		textFieldLogin = new JTextField();
@@ -119,12 +133,12 @@ public class RobotView extends JFrame {
 		textFieldLogin.setColumns(10);
 		
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setBounds(150, 180, 56, 16);
+		lblPassword.setBounds(150, 180, 88, 16);
 		Login.add(lblPassword);
 		
 		btnMotDePasse = new JButton("Mot de passe oubli\u00E9");
 		btnMotDePasse.addActionListener(new RobotEvent(robotController));
-		btnMotDePasse.setBounds(120, 235, 139, 28);
+		btnMotDePasse.setBounds(120, 235, 158, 28);
 		Login.add(btnMotDePasse);
 		
 		btnValider = new JButton("Valider");
@@ -238,12 +252,13 @@ public class RobotView extends JFrame {
 		btnDeconnecter.setBounds(585, 312, 48, 48);
 		Welcome.add(btnDeconnecter);
 		
-		JPanel GRobots = new JPanel();
+		GRobots = new JPanel();
 		tabbedPane.addTab(html1 + "Gestion Robots</body></html>", null, GRobots, null);
-		GRobots.setLayout(new CardLayout(0, 0));
+		cl_GRobots = new CardLayout(0, 0);		
+		GRobots.setLayout(cl_GRobots);
 		
 		JPanel panelListe = new JPanel();
-		GRobots.add(panelListe, "name_15482932351347");
+		GRobots.add(panelListe, "ListeRobot");
 		panelListe.setLayout(null);
 		
 		JLabel lblGestionDuParc = new JLabel("Gestion du parc de robots");
@@ -251,15 +266,18 @@ public class RobotView extends JFrame {
 		panelListe.add(lblGestionDuParc);
 		lblGestionDuParc.setFont(new Font("SansSerif", Font.BOLD, 20));
 		
-		JButton btnAddRobot = new JButton("Ajouter");
+		btnAddRobot = new JButton("Ajouter");
+		btnAddRobot.addActionListener(new BtnAddRobotActionListener());
 		btnAddRobot.setBounds(70, 80, 90, 28);
 		panelListe.add(btnAddRobot);
 		
-		JButton btnModifyRobot = new JButton("Modifier");
+		btnModifyRobot = new JButton("Modifier");
+		btnModifyRobot.addActionListener(new BtnModifyRobotActionListener());
 		btnModifyRobot.setBounds(210, 80, 90, 28);
 		panelListe.add(btnModifyRobot);
 		
-		JButton btnDeleteRobot = new JButton("Supprimer");
+		btnDeleteRobot = new JButton("Supprimer");
+		btnDeleteRobot.addActionListener(new BtnDeleteRobotActionListener());
 		btnDeleteRobot.setBounds(350, 80, 90, 28);
 		panelListe.add(btnDeleteRobot);
 		
@@ -294,7 +312,7 @@ public class RobotView extends JFrame {
 		scrollPane_Robots.setViewportView(tableRobots);
 		
 		JPanel panelDetail = new JPanel();
-		GRobots.add(panelDetail, "name_15515675658776");
+		GRobots.add(panelDetail, "DetailRobot");
 		panelDetail.setLayout(null);
 		
 		JLabel lblFicheDuRobot = new JLabel("Fiche du robot n\u00B0");
@@ -394,12 +412,13 @@ public class RobotView extends JFrame {
 		btnAnnuler.setBounds(424, 341, 110, 30);
 		panelDetail.add(btnAnnuler);
 		
-		JPanel Planning = new JPanel();
+		Planning = new JPanel();
 		tabbedPane.addTab(html1 + "Planning</body></html>", null, Planning, null);
-		Planning.setLayout(new CardLayout(0, 0));
+		cl_Planning = new CardLayout(0,0);
+		Planning.setLayout(cl_Planning);
 		
 		JPanel panelPlanning = new JPanel();
-		Planning.add(panelPlanning, "name_28698954943735");
+		Planning.add(panelPlanning, "Planning");
 		panelPlanning.setLayout(null);
 		
 		JLabel lblPlanning = new JLabel("Planning de la semaine");
@@ -443,7 +462,7 @@ public class RobotView extends JFrame {
 		scrollPane_Planning.setViewportView(tablePlanning);
 		
 		JPanel panelAddEvt = new JPanel();
-		Planning.add(panelAddEvt, "name_28698986480949");
+		Planning.add(panelAddEvt, "AddEv");
 		panelAddEvt.setLayout(null);
 		
 		JLabel lblEvenement = new JLabel("Evenement");
@@ -498,12 +517,13 @@ public class RobotView extends JFrame {
 		comboBox_Type.setBounds(121, 275, 190, 28);
 		panelAddEvt.add(comboBox_Type);
 		
-		JPanel Entretien = new JPanel();
+		Entretien = new JPanel();
 		tabbedPane.addTab(html1 + "Fiches d'entretien</body></html>", null, Entretien, null);
-		Entretien.setLayout(new CardLayout(0, 0));
+		cl_Entretien = new CardLayout(0, 0);		
+		Entretien.setLayout(cl_Entretien);
 		
 		JPanel panelViewEntretien = new JPanel();
-		Entretien.add(panelViewEntretien, "name_30212862976377");
+		Entretien.add(panelViewEntretien, "Entretien");
 		panelViewEntretien.setLayout(null);
 		
 		JLabel lblEntretien = new JLabel("Gestion des fiches d'entretien");
@@ -554,7 +574,7 @@ public class RobotView extends JFrame {
 		scrollPane_Entretien.setViewportView(tableEntretien);
 		
 		JPanel panelAddEntretien = new JPanel();
-		Entretien.add(panelAddEntretien, "name_30212894422409");
+		Entretien.add(panelAddEntretien, "AddEntretien");
 		panelAddEntretien.setLayout(null);
 		
 		JLabel lblEntretien_1 = new JLabel("Entretien");
@@ -648,12 +668,13 @@ public class RobotView extends JFrame {
 		chckbxTermine.setBounds(369, 241, 104, 18);
 		panelAddEntretien.add(chckbxTermine);
 		
-		JPanel Configuration = new JPanel();
+		Configuration = new JPanel();
 		tabbedPane.addTab(html1 + "Configuration</body></html>", null, Configuration, null);
-		Configuration.setLayout(new CardLayout(0, 0));
+		cl_Configuration = new CardLayout(0, 0);		
+		Configuration.setLayout(cl_Configuration);
 		
 		JPanel RecapUser = new JPanel();
-		Configuration.add(RecapUser, "name_22457550805877");
+		Configuration.add(RecapUser, "listeUser");
 		RecapUser.setLayout(null);
 		
 		JLabel lblTitleConfig = new JLabel("Gestion des utilisateurs");
@@ -704,7 +725,7 @@ public class RobotView extends JFrame {
 		scrollPane_Users.setViewportView(tableUsers);
 		
 		JPanel InfoUser = new JPanel();
-		Configuration.add(InfoUser, "name_22457609695790");
+		Configuration.add(InfoUser, "modifyUser");
 		InfoUser.setLayout(null);
 		
 		JLabel lblDescriptionDeLutilisateur = new JLabel("Description de l'utilisateur");
@@ -853,11 +874,20 @@ public class RobotView extends JFrame {
 		return textFieldLogin.getText().toString();
 	}
 	
-	public String getPassword()
-	{
-		return textFieldPassword.getText().toString();
-	}
+
 	private class BtnMotDePasseActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnAddRobotActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnModifyRobotActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnDeleteRobotActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 		}
 	}
@@ -881,4 +911,40 @@ public class RobotView extends JFrame {
 	public JButton getBtnDeconnecter() {
 		return btnDeconnecter;
 	}
+
+	/**
+	 * @return the btnAddRobot
+	 */
+	public JButton getBtnAddRobot() {
+		return btnAddRobot;
+	}
+
+	/**
+	 * @return the btnModifyRobot
+	 */
+	public JButton getBtnModifyRobot() {
+		return btnModifyRobot;
+	}
+
+	/**
+	 * @return the btnDeleteRobot
+	 */
+	public JButton getBtnDeleteRobot() {
+		return btnDeleteRobot;
+	}
+
+	/**
+	 * @return the textFieldPassword
+	 */
+	public JPasswordField getTextFieldPassword() {
+		return textFieldPassword;
+	}
+
+	/**
+	 * @param textFieldPassword the textFieldPassword to set
+	 */
+	public void setTextFieldPassword(JPasswordField textFieldPassword) {
+		this.textFieldPassword = textFieldPassword;
+	}
+	
 }
