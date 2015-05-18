@@ -9,7 +9,12 @@ import java.awt.event.WindowListener;
  */
 
 
+
+
+
 import javax.swing.JButton;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
 
@@ -17,10 +22,11 @@ import javax.swing.JButton;
  * @author b.christol
  *
  */
-public class RobotEvent implements ActionListener, WindowListener {
+public class RobotEvent implements ActionListener, WindowListener, ChangeListener {
 
 	RobotController _robotController;
-
+	private int TabIndex = 0;
+	
 	/**
     *
     * Event constructor
@@ -82,6 +88,15 @@ public class RobotEvent implements ActionListener, WindowListener {
 			System.out.println("Bouton delete robot !!");
 
 			_robotController.delRobot();
+		}
+	}
+	
+	public void stateChanged(ChangeEvent e) {
+
+		System.out.println(TabIndex);
+
+		if(TabIndex++ > 0){	
+			_robotController.quitAllTab();
 		}
 	}
 

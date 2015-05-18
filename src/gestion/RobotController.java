@@ -51,15 +51,27 @@ public class RobotController {
 				if(_robotModel.estValide(login,password))
 				{
 					// On avertit l'utilisateur
-					_robotView.afficherMessage("Login Correct !!");
+					_robotView.afficherMessage("Connexion","Login Correct !!");
 					// On cache le message d'avertissement
 					_robotView.getLblWarningAccueil().setVisible(false);
 					
 					// On ouvre la page bienvenue
 					_robotView.getCl_Accueil().show(_robotView.getAccueil(),"welcomePanel" );
+					
+					// On active les onglets
+				    int index = _robotView.getTabbedPane().getTabCount() - 1;
+				    System.out.println(index);
+				    
+				    for(int i=0; i<=index;i++){
+					    // Determine whether the tab is enabled
+					    boolean enabled = _robotView.getTabbedPane().isEnabledAt(i);
+
+					    // Disable the tab
+					    _robotView.getTabbedPane().setEnabledAt(i, true);	
+				    }
 				}
 				// Si le login & pass ne correspondent pas, on avertit
-				else _robotView.afficherMessage("Login incorrect !! c'est pas ton compte");
+				else _robotView.afficherMessage("Connexion","Login incorrect !! c'est pas ton compte");
 			}
 			// Si le login n'existe pas dans la table
 			else {
@@ -84,7 +96,7 @@ public class RobotController {
 			if(_robotModel.ifExistInTable("user","login", login)){			
 			_robotView.getLblWarningAccueil().setVisible(false);
 			System.out.println("oubli");
-			_robotView.afficherMessage(_robotModel.oubliMP(login));
+			_robotView.afficherMessage("Récupération password",_robotModel.oubliMP(login));
 			}
 			else {
 				_robotView.getLblWarningAccueil().setVisible(true);
@@ -105,14 +117,33 @@ public class RobotController {
 		System.exit(1);
    }
    	
-	public RobotView get_robotView() {
-		return _robotView;
-	}
 
 	public void logoutGestion () {
+		
+		// On desactive les onglets
+	    int index = _robotView.getTabbedPane().getTabCount() - 1;
+	    System.out.println(index);
+	    
+	    for(int i=0; i<=index;i++){
+		    // Determine whether the tab is enabled
+		    boolean enabled = _robotView.getTabbedPane().isEnabledAt(i);
+
+		    // Disable the tab
+		    _robotView.getTabbedPane().setEnabledAt(i, false);
+	    }
+		    
 		// On ouvre la page login
 		get_robotView().getCl_Accueil().show(get_robotView().getAccueil(),"loginPanel" );
 		get_robotView().getTextFieldPassword().setText("");
+				
+	}
+	
+		
+	public void quitAllTab() {
+		get_robotView().getCl_GRobots().show(get_robotView().getGRobots(),"ListeRobot" );
+		get_robotView().getCl_Configuration().show(get_robotView().getConfiguration(), "listeUser");
+		get_robotView().getCl_Planning().show(get_robotView().getPlanning(),"Planning" );
+		get_robotView().getCl_Entretien().show(get_robotView().getEntretien(),"Entretien" );
 	}
 	
 	public void addRobot() {
@@ -130,4 +161,9 @@ public class RobotController {
 	public void delRobot() {
 		
 	}
+	
+	public RobotView get_robotView() {
+		return _robotView;
+	}
+
 }

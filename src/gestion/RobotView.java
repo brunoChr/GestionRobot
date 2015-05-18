@@ -40,6 +40,9 @@ import java.awt.Component;
 
 import javax.swing.JPasswordField;
 import java.awt.Color;
+import java.awt.Cursor;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 @SuppressWarnings("serial")
 public class RobotView extends JFrame {
@@ -99,6 +102,7 @@ public class RobotView extends JFrame {
 	private JButton btnDeleteUser;
 	private JButton btnValiderUser;
 	private JButton btnAnnulerUser;
+	private JTabbedPane tabbedPane;
 
 	/**
 	 * Create the frame.
@@ -120,11 +124,14 @@ public class RobotView extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
+		tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
+		tabbedPane.addChangeListener(new RobotEvent(robotController));
 		tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 		contentPane.add(tabbedPane);
 		
 		setSize(new Dimension(800, 450));
+
+
 
 //=======
 		Accueil = new JPanel();
@@ -146,6 +153,7 @@ public class RobotView extends JFrame {
 		Login.add(lblLogin);
 		
 		textFieldLogin = new JTextField();
+		textFieldLogin.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		textFieldLogin.setBounds(250, 130, 122, 28);
 		Login.add(textFieldLogin);
 		textFieldLogin.setColumns(10);
@@ -155,11 +163,13 @@ public class RobotView extends JFrame {
 		Login.add(lblPassword);
 		
 		btnMotDePasse = new JButton("Mot de passe oubli\u00E9");
+		btnMotDePasse.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnMotDePasse.addActionListener(new RobotEvent(robotController));
 		btnMotDePasse.setBounds(120, 235, 158, 28);
 		Login.add(btnMotDePasse);
 		
 		btnValider = new JButton("Valider");
+		btnValider.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnValider.addActionListener(new RobotEvent(robotController));
 		btnValider.setBounds(290, 235, 122, 28);
 		Login.add(btnValider);
@@ -913,6 +923,17 @@ public class RobotView extends JFrame {
 		contentPane.add(tabbedPane);
 		
 		
+	    int index = tabbedPane.getTabCount() - 1;
+	    System.out.println(index);
+	    
+	    for(int i=0; i<=index;i++){
+		    // Determine whether the tab is enabled
+		    boolean enabled = tabbedPane.isEnabledAt(i);
+
+		    // Disable the tab
+		    tabbedPane.setEnabledAt(i, false);	
+	    }
+		
 //>>>>>>> refs/heads/viewBuilder
 	}
 	
@@ -945,9 +966,9 @@ public class RobotView extends JFrame {
         this.setVisible(visible);
     }
 	
-	public void afficherMessage(String msg)
+	public void afficherMessage(String title, String msg)
 	{	
-		JOptionPane.showMessageDialog(this, msg, "Information", JOptionPane.INFORMATION_MESSAGE);		
+		JOptionPane.showMessageDialog(this, msg, title, JOptionPane.INFORMATION_MESSAGE);		
 	}
 	
 	public String getLogin()
@@ -1042,6 +1063,10 @@ public class RobotView extends JFrame {
 	}
 	private class BtnValiderUserActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class TabbedPaneChangeListener implements ChangeListener {
+		public void stateChanged(ChangeEvent arg0) {
 		}
 	}
 
@@ -1302,5 +1327,138 @@ public class RobotView extends JFrame {
 	 */
 	public CardLayout getCl_Configuration() {
 		return cl_Configuration;
+	}
+
+	/**
+	 * @return the html1
+	 */
+	public String getHtml1() {
+		return html1;
+	}
+
+	/**
+	 * @return the btnValiderRobot
+	 */
+	public JButton getBtnValiderRobot() {
+		return btnValiderRobot;
+	}
+
+	/**
+	 * @return the btnAnnulerRobot
+	 */
+	public JButton getBtnAnnulerRobot() {
+		return btnAnnulerRobot;
+	}
+
+	/**
+	 * @return the btnAddTask
+	 */
+	public JButton getBtnAddTask() {
+		return btnAddTask;
+	}
+
+	/**
+	 * @return the btnModifyTask
+	 */
+	public JButton getBtnModifyTask() {
+		return btnModifyTask;
+	}
+
+	/**
+	 * @return the btnDeleteTask
+	 */
+	public JButton getBtnDeleteTask() {
+		return btnDeleteTask;
+	}
+
+	/**
+	 * @return the btnAnnulerEvt
+	 */
+	public JButton getBtnAnnulerEvt() {
+		return btnAnnulerEvt;
+	}
+
+	/**
+	 * @return the btnValiderEvt
+	 */
+	public JButton getBtnValiderEvt() {
+		return btnValiderEvt;
+	}
+
+	/**
+	 * @return the btnAddMaintenance
+	 */
+	public JButton getBtnAddMaintenance() {
+		return btnAddMaintenance;
+	}
+
+	/**
+	 * @return the btnModifyMaintenance
+	 */
+	public JButton getBtnModifyMaintenance() {
+		return btnModifyMaintenance;
+	}
+
+	/**
+	 * @return the btnDeleteMaintenance
+	 */
+	public JButton getBtnDeleteMaintenance() {
+		return btnDeleteMaintenance;
+	}
+
+	/**
+	 * @return the btnAnnulerEntretien
+	 */
+	public JButton getBtnAnnulerEntretien() {
+		return btnAnnulerEntretien;
+	}
+
+	/**
+	 * @return the btnValiderEntretien
+	 */
+	public JButton getBtnValiderEntretien() {
+		return btnValiderEntretien;
+	}
+
+	/**
+	 * @return the btnAddUser
+	 */
+	public JButton getBtnAddUser() {
+		return btnAddUser;
+	}
+
+	/**
+	 * @return the btnModifyUser
+	 */
+	public JButton getBtnModifyUser() {
+		return btnModifyUser;
+	}
+
+	/**
+	 * @return the btnDeleteUser
+	 */
+	public JButton getBtnDeleteUser() {
+		return btnDeleteUser;
+	}
+
+	/**
+	 * @return the btnValiderUser
+	 */
+	public JButton getBtnValiderUser() {
+		return btnValiderUser;
+	}
+
+	/**
+	 * @return the btnAnnulerUser
+	 */
+	public JButton getBtnAnnulerUser() {
+		return btnAnnulerUser;
+	}
+
+	/**
+	 * @return the tabbedPane
+	 */
+	public JTabbedPane getTabbedPane() {
+		return tabbedPane;
 	}
 }
