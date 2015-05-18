@@ -33,13 +33,16 @@ import com.toedter.calendar.JYearChooser;
 import com.toedter.calendar.JMonthChooser;
 
 import javax.swing.JCheckBox;
+import javax.swing.ImageIcon;
+import java.awt.SystemColor;
+import java.awt.Component;
+import javax.swing.JPasswordField;
 
 public class RobotView extends JFrame {
 
 	private JPanel contentPane;
 	private String html1 = "<html><body leftmargin=30 topmargin=15 marginwidth=6 marginheight=19>";
 	private JTextField textFieldLogin;
-	private JTextField textFieldPassword;
 	private JTable tablePlanning;
 	private JTable tableEntretien;
 	private JLabel lblWarningAccueil;
@@ -62,6 +65,8 @@ public class RobotView extends JFrame {
 	private JTextField textField_Lieu;
 	private JButton btnMotDePasse;
 	private JButton btnValider;
+	private JPasswordField textFieldPassword;
+	private JButton btnDeconnecter;
 
 	/**
 	 * Create the frame.
@@ -117,11 +122,6 @@ public class RobotView extends JFrame {
 		lblPassword.setBounds(150, 180, 56, 16);
 		Login.add(lblPassword);
 		
-		textFieldPassword = new JTextField();
-		textFieldPassword.setBounds(250, 174, 122, 28);
-		Login.add(textFieldPassword);
-		textFieldPassword.setColumns(10);
-		
 		btnMotDePasse = new JButton("Mot de passe oubli\u00E9");
 		btnMotDePasse.addActionListener(new RobotEvent(robotController));
 		btnMotDePasse.setBounds(120, 235, 139, 28);
@@ -135,6 +135,10 @@ public class RobotView extends JFrame {
 		lblWarningAccueil = new JLabel("");
 		lblWarningAccueil.setBounds(379, 186, 237, 16);
 		Login.add(lblWarningAccueil);
+		
+		textFieldPassword = new JPasswordField();
+		textFieldPassword.setBounds(250, 174, 122, 28);
+		Login.add(textFieldPassword);
 		lblWarningAccueil.setVisible(false);
 		
 		JPanel Welcome = new JPanel();
@@ -222,6 +226,17 @@ public class RobotView extends JFrame {
 			}
 		});
 		scrollPane_Tasks.setViewportView(tableTask);
+		
+		btnDeconnecter = new JButton("");
+		btnDeconnecter.addActionListener(new RobotEvent(robotController));
+		btnDeconnecter.setContentAreaFilled(false);
+		btnDeconnecter.setAlignmentX(Component.CENTER_ALIGNMENT);
+		btnDeconnecter.setBorderPainted(false);
+		btnDeconnecter.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnDeconnecter.setBackground(SystemColor.control);
+		btnDeconnecter.setIcon(new ImageIcon(RobotView.class.getResource("/img/deconnecter.png")));
+		btnDeconnecter.setBounds(585, 312, 48, 48);
+		Welcome.add(btnDeconnecter);
 		
 		JPanel GRobots = new JPanel();
 		tabbedPane.addTab(html1 + "Gestion Robots</body></html>", null, GRobots, null);
@@ -845,5 +860,25 @@ public class RobotView extends JFrame {
 	private class BtnMotDePasseActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 		}
+	}
+
+	public CardLayout getCl_Accueil() {
+		return cl_Accueil;
+	}
+
+	public void setCl_Accueil(CardLayout cl_Accueil) {
+		this.cl_Accueil = cl_Accueil;
+	}
+
+	public JPanel getAccueil() {
+		return Accueil;
+	}
+
+	public void setAccueil(JPanel accueil) {
+		Accueil = accueil;
+	}
+
+	public JButton getBtnDeconnecter() {
+		return btnDeconnecter;
 	}
 }
