@@ -39,6 +39,7 @@ import java.awt.SystemColor;
 import java.awt.Component;
 
 import javax.swing.JPasswordField;
+import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class RobotView extends JFrame {
@@ -81,6 +82,23 @@ public class RobotView extends JFrame {
 	private JPanel Entretien;
 	private CardLayout cl_Entretien;
 	private CardLayout cl_Configuration;
+	private JButton btnValiderRobot;
+	private JButton btnAnnulerRobot;
+	private JButton btnAddTask;
+	private JButton btnModifyTask;
+	private JButton btnDeleteTask;
+	private JButton btnAnnulerEvt;
+	private JButton btnValiderEvt;
+	private JButton btnAddMaintenance;
+	private JButton btnModifyMaintenance;
+	private JButton btnDeleteMaintenance;
+	private JButton btnAnnulerEntretien;
+	private JButton btnValiderEntretien;
+	private JButton btnAddUser;
+	private JButton btnModifyUser;
+	private JButton btnDeleteUser;
+	private JButton btnValiderUser;
+	private JButton btnAnnulerUser;
 
 	/**
 	 * Create the frame.
@@ -242,6 +260,7 @@ public class RobotView extends JFrame {
 		scrollPane_Tasks.setViewportView(tableTask);
 		
 		btnDeconnecter = new JButton("");
+		btnDeconnecter.setSelected(true);
 		btnDeconnecter.addActionListener(new RobotEvent(robotController));
 		btnDeconnecter.setContentAreaFilled(false);
 		btnDeconnecter.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -267,17 +286,17 @@ public class RobotView extends JFrame {
 		lblGestionDuParc.setFont(new Font("SansSerif", Font.BOLD, 20));
 		
 		btnAddRobot = new JButton("Ajouter");
-		btnAddRobot.addActionListener(new BtnAddRobotActionListener());
+		btnAddRobot.addActionListener(new RobotEvent(robotController));
 		btnAddRobot.setBounds(70, 80, 90, 28);
 		panelListe.add(btnAddRobot);
 		
 		btnModifyRobot = new JButton("Modifier");
-		btnModifyRobot.addActionListener(new BtnModifyRobotActionListener());
+		btnModifyRobot.addActionListener(new RobotEvent(robotController));
 		btnModifyRobot.setBounds(210, 80, 90, 28);
 		panelListe.add(btnModifyRobot);
 		
 		btnDeleteRobot = new JButton("Supprimer");
-		btnDeleteRobot.addActionListener(new BtnDeleteRobotActionListener());
+		btnDeleteRobot.addActionListener(new RobotEvent(robotController));
 		btnDeleteRobot.setBounds(350, 80, 90, 28);
 		panelListe.add(btnDeleteRobot);
 		
@@ -400,17 +419,29 @@ public class RobotView extends JFrame {
 		lblImageRobot.setBounds(388, 194, 55, 16);
 		panelDetail.add(lblImageRobot);
 		
-		JButton btnValiderRobot = new JButton("Enregistrer");
-		btnValiderRobot.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnValiderRobot.setBounds(424, 305, 110, 30);
+		btnValiderRobot = new JButton("");
+		btnValiderRobot.setSelected(true);
+		btnValiderRobot.setContentAreaFilled(false);
+		btnValiderRobot.setBorderPainted(false);
+		btnValiderRobot.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnValiderRobot.setIcon(new ImageIcon(RobotView.class.getResource("/img/Check.png")));
+		btnValiderRobot.addActionListener(new RobotEvent(robotController));
+		btnValiderRobot.setBounds(468, 323, 48, 48);
 		panelDetail.add(btnValiderRobot);
 		
-		JButton btnAnnuler = new JButton("Annuler");
-		btnAnnuler.setBounds(424, 341, 110, 30);
-		panelDetail.add(btnAnnuler);
+		
+		btnAnnulerRobot = new JButton("");
+		btnAnnulerRobot.addActionListener(new RobotEvent(robotController));
+		btnAnnulerRobot.setSelected(true);
+		btnAnnulerRobot.setForeground(SystemColor.control);
+		btnAnnulerRobot.setContentAreaFilled(false);
+		btnAnnulerRobot.setBorderPainted(false);
+		btnAnnulerRobot.setIcon(new ImageIcon(RobotView.class.getResource("/img/return.png")));
+		btnAnnulerRobot.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnAnnulerRobot.setBackground(SystemColor.control);
+		btnAnnulerRobot.setAlignmentX(0.5f);
+		btnAnnulerRobot.setBounds(546, 323, 48, 48);
+		panelDetail.add(btnAnnulerRobot);
 		
 		Planning = new JPanel();
 		tabbedPane.addTab(html1 + "Planning</body></html>", null, Planning, null);
@@ -426,15 +457,18 @@ public class RobotView extends JFrame {
 		panelPlanning.add(lblPlanning);
 		lblPlanning.setFont(new Font("SansSerif", Font.BOLD, 20));
 		
-		JButton btnAddTask = new JButton("Ajouter une t\u00E2che");
+		btnAddTask = new JButton("Ajouter une t\u00E2che");
+		btnAddTask.addActionListener(new RobotEvent(robotController));
 		btnAddTask.setBounds(40, 90, 143, 28);
 		panelPlanning.add(btnAddTask);
 		
-		JButton btnModifyTask = new JButton("Modifier une t\u00E2che");
+		btnModifyTask = new JButton("Modifier une t\u00E2che");
+		btnModifyTask.addActionListener(new RobotEvent(robotController));
 		btnModifyTask.setBounds(195, 90, 143, 28);
 		panelPlanning.add(btnModifyTask);
 		
-		JButton btnDeleteTask = new JButton("Supprimer une t\u00E2che");
+		btnDeleteTask = new JButton("Supprimer une t\u00E2che");
+		btnDeleteTask.addActionListener(new RobotEvent(robotController));
 		btnDeleteTask.setBounds(350, 90, 143, 28);
 		panelPlanning.add(btnDeleteTask);
 		
@@ -490,14 +524,6 @@ public class RobotView extends JFrame {
 		panelAddEvt.add(textField_Descriptif);
 		textField_Descriptif.setColumns(10);
 		
-		JButton btnValiderEvt = new JButton("Enregistrer");
-		btnValiderEvt.setBounds(432, 289, 110, 30);
-		panelAddEvt.add(btnValiderEvt);
-		
-		JButton btnAnnulerEvt = new JButton("Annuler");
-		btnAnnulerEvt.setBounds(432, 331, 110, 30);
-		panelAddEvt.add(btnAnnulerEvt);
-		
 		JLabel lblLieu = new JLabel("Lieu :");
 		lblLieu.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblLieu.setBounds(40, 230, 55, 16);
@@ -517,6 +543,29 @@ public class RobotView extends JFrame {
 		comboBox_Type.setBounds(121, 275, 190, 28);
 		panelAddEvt.add(comboBox_Type);
 		
+		btnAnnulerEvt = new JButton("");
+		btnAnnulerEvt.addActionListener(new RobotEvent(robotController));
+		btnAnnulerEvt.setIcon(new ImageIcon(RobotView.class.getResource("/img/return.png")));
+		btnAnnulerEvt.setSelected(true);
+		btnAnnulerEvt.setForeground(SystemColor.menu);
+		btnAnnulerEvt.setContentAreaFilled(false);
+		btnAnnulerEvt.setBorderPainted(false);
+		btnAnnulerEvt.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnAnnulerEvt.setBackground(SystemColor.menu);
+		btnAnnulerEvt.setAlignmentX(0.5f);
+		btnAnnulerEvt.setBounds(563, 280, 48, 48);
+		panelAddEvt.add(btnAnnulerEvt);
+		
+		btnValiderEvt = new JButton("");
+		btnValiderEvt.addActionListener(new RobotEvent(robotController));
+		btnValiderEvt.setIcon(new ImageIcon(RobotView.class.getResource("/img/Check.png")));
+		btnValiderEvt.setSelected(true);
+		btnValiderEvt.setContentAreaFilled(false);
+		btnValiderEvt.setBorderPainted(false);
+		btnValiderEvt.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnValiderEvt.setBounds(485, 280, 48, 48);
+		panelAddEvt.add(btnValiderEvt);
+		
 		Entretien = new JPanel();
 		tabbedPane.addTab(html1 + "Fiches d'entretien</body></html>", null, Entretien, null);
 		cl_Entretien = new CardLayout(0, 0);		
@@ -531,15 +580,18 @@ public class RobotView extends JFrame {
 		panelViewEntretien.add(lblEntretien);
 		lblEntretien.setFont(new Font("SansSerif", Font.BOLD, 20));
 		
-		JButton btnAddMaintenance = new JButton("Ajouter");
+		btnAddMaintenance = new JButton("Ajouter");
+		btnAddMaintenance.addActionListener(new RobotEvent(robotController));
 		btnAddMaintenance.setBounds(80, 90, 90, 28);
 		panelViewEntretien.add(btnAddMaintenance);
 		
-		JButton btnModifyMaintenance = new JButton("Modifier");
+		btnModifyMaintenance = new JButton("Modifier");
+		btnModifyMaintenance.addActionListener(new RobotEvent(robotController));
 		btnModifyMaintenance.setBounds(220, 90, 90, 28);
 		panelViewEntretien.add(btnModifyMaintenance);
 		
-		JButton btnDeleteMaintenance = new JButton("Supprimer");
+		btnDeleteMaintenance = new JButton("Supprimer");
+		btnDeleteMaintenance.addActionListener(new RobotEvent(robotController));
 		btnDeleteMaintenance.setBounds(360, 90, 90, 28);
 		panelViewEntretien.add(btnDeleteMaintenance);
 		
@@ -619,19 +671,7 @@ public class RobotView extends JFrame {
 		textField_detailEnt.setBounds(89, 101, 180, 28);
 		panelAddEntretien.add(textField_detailEnt);
 		textField_detailEnt.setColumns(10);
-		
-		JButton btnValiderEntretien = new JButton("Enregistrer");
-		btnValiderEntretien.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnValiderEntretien.setBounds(426, 290, 110, 30);
-		panelAddEntretien.add(btnValiderEntretien);
-		
-		JButton btnAnnulerEntretien = new JButton("Annuler");
-		btnAnnulerEntretien.setBounds(426, 330, 110, 30);
-		panelAddEntretien.add(btnAnnulerEntretien);
-		
+				
 		JLabel lblType_1 = new JLabel("Type :");
 		lblType_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblType_1.setBounds(19, 157, 55, 16);
@@ -668,6 +708,29 @@ public class RobotView extends JFrame {
 		chckbxTermine.setBounds(369, 241, 104, 18);
 		panelAddEntretien.add(chckbxTermine);
 		
+		btnAnnulerEntretien = new JButton("");
+		btnAnnulerEntretien.addActionListener(new RobotEvent(robotController));
+		btnAnnulerEntretien.setIcon(new ImageIcon(RobotView.class.getResource("/img/return.png")));
+		btnAnnulerEntretien.setSelected(true);
+		btnAnnulerEntretien.setForeground(SystemColor.menu);
+		btnAnnulerEntretien.setContentAreaFilled(false);
+		btnAnnulerEntretien.setBorderPainted(false);
+		btnAnnulerEntretien.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnAnnulerEntretien.setBackground(SystemColor.menu);
+		btnAnnulerEntretien.setAlignmentX(0.5f);
+		btnAnnulerEntretien.setBounds(494, 305, 48, 48);
+		panelAddEntretien.add(btnAnnulerEntretien);
+		
+		btnValiderEntretien = new JButton("");
+		btnValiderEntretien.addActionListener(new RobotEvent(robotController));
+		btnValiderEntretien.setIcon(new ImageIcon(RobotView.class.getResource("/img/Check.png")));
+		btnValiderEntretien.setSelected(true);
+		btnValiderEntretien.setContentAreaFilled(false);
+		btnValiderEntretien.setBorderPainted(false);
+		btnValiderEntretien.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnValiderEntretien.setBounds(416, 305, 48, 48);
+		panelAddEntretien.add(btnValiderEntretien);
+		
 		Configuration = new JPanel();
 		tabbedPane.addTab(html1 + "Configuration</body></html>", null, Configuration, null);
 		cl_Configuration = new CardLayout(0, 0);		
@@ -682,15 +745,18 @@ public class RobotView extends JFrame {
 		RecapUser.add(lblTitleConfig);
 		lblTitleConfig.setFont(new Font("SansSerif", Font.BOLD, 20));
 		
-		JButton btnAddUser = new JButton("Ajouter");
+		btnAddUser = new JButton("Ajouter");
+		btnAddUser.addActionListener(new RobotEvent(robotController));
 		btnAddUser.setBounds(80, 90, 90, 28);
 		RecapUser.add(btnAddUser);
 		
-		JButton btnModifyUser = new JButton("Modifier");
+		btnModifyUser = new JButton("Modifier");
+		btnModifyUser.addActionListener(new RobotEvent(robotController));
 		btnModifyUser.setBounds(220, 90, 90, 28);
 		RecapUser.add(btnModifyUser);
 		
-		JButton btnDeleteUser = new JButton("Supprimer");
+		btnDeleteUser = new JButton("Supprimer");
+		btnDeleteUser.addActionListener(new RobotEvent(robotController));
 		btnDeleteUser.setBounds(360, 90, 90, 28);
 		RecapUser.add(btnDeleteUser);
 		
@@ -783,12 +849,27 @@ public class RobotView extends JFrame {
 		comboBRight.setBounds(130, 291, 150, 26);
 		InfoUser.add(comboBRight);
 		
-		JButton btnValiderUser = new JButton("Enregistrer");
-		btnValiderUser.setBounds(422, 282, 110, 30);
+		btnValiderUser = new JButton("");
+		btnValiderUser.addActionListener(new RobotEvent(robotController));
+		btnValiderUser.setIcon(new ImageIcon(RobotView.class.getResource("/img/Check.png")));
+		btnValiderUser.setSelected(true);
+		btnValiderUser.setContentAreaFilled(false);
+		btnValiderUser.setBorderPainted(false);
+		btnValiderUser.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnValiderUser.setBounds(406, 224, 48, 48);
 		InfoUser.add(btnValiderUser);
 		
-		JButton btnAnnulerUser = new JButton("Annuler");
-		btnAnnulerUser.setBounds(422, 326, 110, 30);
+		btnAnnulerUser = new JButton("");
+		btnAnnulerUser.addActionListener(new RobotEvent(robotController));
+		btnAnnulerUser.setIcon(new ImageIcon(RobotView.class.getResource("/img/return.png")));
+		btnAnnulerUser.setSelected(true);
+		btnAnnulerUser.setForeground(SystemColor.menu);
+		btnAnnulerUser.setContentAreaFilled(false);
+		btnAnnulerUser.setBorderPainted(false);
+		btnAnnulerUser.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnAnnulerUser.setBackground(SystemColor.menu);
+		btnAnnulerUser.setAlignmentX(0.5f);
+		btnAnnulerUser.setBounds(484, 224, 48, 48);
 		InfoUser.add(btnAnnulerUser);
 		
 		JPanel Historique = new JPanel();
@@ -874,7 +955,7 @@ public class RobotView extends JFrame {
 		return textFieldLogin.getText().toString();
 	}
 	
-
+	
 	private class BtnMotDePasseActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 		}
@@ -891,23 +972,110 @@ public class RobotView extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 		}
 	}
+	private class BtnValiderRobotActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnAnnulerActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnAnnulerRobotActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnAddTaskActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnModifyTaskActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnDeleteTaskActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnAnnulerEvt1ActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnValiderEvt1ActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnAddMaintenanceActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnDeleteMaintenanceActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnModifyMaintenanceActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnValiderEntretien1ActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnAnnulerEntretien1ActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnDeleteUserActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnAddUserActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnModifyUserActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnAnnulerUserActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
+	private class BtnValiderUserActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+		}
+	}
 
+	/**
+	 * @return cl_Accueil
+	 */
 	public CardLayout getCl_Accueil() {
 		return cl_Accueil;
 	}
 
+	/**
+	 * @param cl_Accueil
+	 */
 	public void setCl_Accueil(CardLayout cl_Accueil) {
 		this.cl_Accueil = cl_Accueil;
 	}
 
+	/**
+	 * @return Accueil
+	 */
 	public JPanel getAccueil() {
 		return Accueil;
 	}
 
+	/**
+	 * @param accueil
+	 */
 	public void setAccueil(JPanel accueil) {
 		Accueil = accueil;
 	}
 
+	/**
+	 * @return btnDeconnecter
+	 */
 	public JButton getBtnDeconnecter() {
 		return btnDeconnecter;
 	}
@@ -946,5 +1114,193 @@ public class RobotView extends JFrame {
 	public void setTextFieldPassword(JPasswordField textFieldPassword) {
 		this.textFieldPassword = textFieldPassword;
 	}
-	
+
+	/**
+	 * @return the contentPane
+	 */
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+	/**
+	 * @return the textFieldLogin
+	 */
+	public JTextField getTextFieldLogin() {
+		return textFieldLogin;
+	}
+
+	/**
+	 * @return the tablePlanning
+	 */
+	public JTable getTablePlanning() {
+		return tablePlanning;
+	}
+
+	/**
+	 * @return the tableEntretien
+	 */
+	public JTable getTableEntretien() {
+		return tableEntretien;
+	}
+
+	/**
+	 * @return the textField_NInterne
+	 */
+	public JTextField getTextField_NInterne() {
+		return textField_NInterne;
+	}
+
+	/**
+	 * @return the textField_Emplacement
+	 */
+	public JTextField getTextField_Emplacement() {
+		return textField_Emplacement;
+	}
+
+	/**
+	 * @return the textField_NSerie
+	 */
+	public JTextField getTextField_NSerie() {
+		return textField_NSerie;
+	}
+
+	/**
+	 * @return the tableEvent
+	 */
+	public JTable getTableEvent() {
+		return tableEvent;
+	}
+
+	/**
+	 * @return the tableTask
+	 */
+	public JTable getTableTask() {
+		return tableTask;
+	}
+
+	/**
+	 * @return the tableUsers
+	 */
+	public JTable getTableUsers() {
+		return tableUsers;
+	}
+
+	/**
+	 * @return the textField_Name
+	 */
+	public JTextField getTextField_Name() {
+		return textField_Name;
+	}
+
+	/**
+	 * @return the textField_Login
+	 */
+	public JTextField getTextField_Login() {
+		return textField_Login;
+	}
+
+	/**
+	 * @return the textField_PwUser
+	 */
+	public JTextField getTextField_PwUser() {
+		return textField_PwUser;
+	}
+
+	/**
+	 * @return the textField_Email
+	 */
+	public JTextField getTextField_Email() {
+		return textField_Email;
+	}
+
+	/**
+	 * @return the tableAction
+	 */
+	public JTable getTableAction() {
+		return tableAction;
+	}
+
+	/**
+	 * @return the tableRobots
+	 */
+	public JTable getTableRobots() {
+		return tableRobots;
+	}
+
+	/**
+	 * @return the textField_Descriptif
+	 */
+	public JTextField getTextField_Descriptif() {
+		return textField_Descriptif;
+	}
+
+	/**
+	 * @return the textField_detailEnt
+	 */
+	public JTextField getTextField_detailEnt() {
+		return textField_detailEnt;
+	}
+
+	/**
+	 * @return the textField_Lieu
+	 */
+	public JTextField getTextField_Lieu() {
+		return textField_Lieu;
+	}
+
+	/**
+	 * @return the gRobots
+	 */
+	public JPanel getGRobots() {
+		return GRobots;
+	}
+
+	/**
+	 * @return the cl_GRobots
+	 */
+	public CardLayout getCl_GRobots() {
+		return cl_GRobots;
+	}
+
+	/**
+	 * @return the planning
+	 */
+	public JPanel getPlanning() {
+		return Planning;
+	}
+
+	/**
+	 * @return the configuration
+	 */
+	public JPanel getConfiguration() {
+		return Configuration;
+	}
+
+	/**
+	 * @return the cl_Planning
+	 */
+	public CardLayout getCl_Planning() {
+		return cl_Planning;
+	}
+
+	/**
+	 * @return the entretien
+	 */
+	public JPanel getEntretien() {
+		return Entretien;
+	}
+
+	/**
+	 * @return the cl_Entretien
+	 */
+	public CardLayout getCl_Entretien() {
+		return cl_Entretien;
+	}
+
+	/**
+	 * @return the cl_Configuration
+	 */
+	public CardLayout getCl_Configuration() {
+		return cl_Configuration;
+	}
 }

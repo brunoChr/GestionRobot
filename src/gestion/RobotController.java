@@ -118,7 +118,7 @@ public class RobotController {
 	public void addRobot() {
 		
 		// On ouvre la page detail robot
-		get_robotView().getCl_Accueil().show(get_robotView().getAccueil(),"loginPanel" );
+		get_robotView().getCl_GRobots().show(get_robotView().getGRobots(),"DetailRobot" );
 	}
 	
 	public void modRobot() {
