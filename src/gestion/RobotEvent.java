@@ -46,7 +46,6 @@ public class RobotEvent implements ActionListener, WindowListener {
 			try {
 				_robotController.boutonValider();
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
@@ -54,6 +53,12 @@ public class RobotEvent implements ActionListener, WindowListener {
 			
 			System.out.println("Bouton mdp !!");
 			_robotController.boutonOubli();
+		}
+		else if (bouton==_robotController.get_robotView().getBtnDeconnecter()) {
+			System.out.println("Bouton Deconnecter !!");
+			
+			// On ouvre la page login
+			_robotController.get_robotView().getCl_Accueil().show(_robotController.get_robotView().getAccueil(),"loginPanel" );
 		}
 
 

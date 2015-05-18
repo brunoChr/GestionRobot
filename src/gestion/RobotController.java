@@ -32,20 +32,32 @@ public class RobotController {
 	   _robotView.afficher(true);
     }
    
+
 	public void boutonValider() throws Exception
 	{
+		// On récupére les valeurs des champs
 		String login = _robotView.getLogin();
 		String password = _robotView.getPassword();
 		
+		// Si les champs login & pass sont remplis
 		if((!login.isEmpty())&&(!password.isEmpty())){
-			if(_robotModel.ifExistInTable("user","login", login)){			
+			// Si le login est contenu dans la base de donnée User
+			if(_robotModel.ifExistInTable("user","login", login)){		
+				// Si le login correspond au password
 				if(_robotModel.estValide(login,password))
 				{
+					// On avertit l'utilisateur
 					_robotView.afficherMessage("Login Correct !!");
+					// On cache le message d'avertissement
 					_robotView.getLblWarningAccueil().setVisible(false);
+					
+					// On ouvre la page bienvenue
+					_robotView.getCl_Accueil().show(_robotView.getAccueil(),"welcomePanel" );
 				}
+				// Si le login & pass ne correspondent pas, on avertit
 				else _robotView.afficherMessage("Login incorrect !! c'est pas ton compte");
 			}
+			// Si les champs sont incomplé
 			else {
 				_robotView.getLblWarningAccueil().setVisible(true);
 				_robotView.getLblWarningAccueil().setForeground(Color.red);
