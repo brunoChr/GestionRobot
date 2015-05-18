@@ -2,6 +2,8 @@ package gestion;
 
 import java.awt.Color;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  * 
  */
@@ -30,6 +32,11 @@ public class RobotController {
    public void start()
     {
 	   _robotView.afficher(true);
+	   
+	   
+	   _robotView.getTableauAction().setModel(new DefaultTableModel(_robotModel.recapHistorique(), new String[] {
+			"Date", "Utilisateur", "D\u00E9tails"
+		}) );
     }
    
 

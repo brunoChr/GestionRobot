@@ -21,11 +21,17 @@ public class RobotModel {
 	 * 
 	 */
 	public RobotModel() {
-
+		/*
 		String nomUser = "bruno"; // Utilisateur de la BD
 		String passwd = "Bruno@1552"; // Password de l'utilisateur de la BD
-		String url = "jdbc:mysql://localhost/"; // Serveur de la BD
+		String url = "jdbc:mysql://LISA-7336/"; // Serveur de la BD
 		String nomBase = "gestion_robot"; // Nom de la BD sur laquelle nous allons accéder
+		*/
+		
+		String nomUser = "root"; // Utilisateur de la BD
+		String passwd = "root"; // Password de l'utilisateur de la BD
+		String url = "jdbc:mysql://localhost/"; // Serveur de la BD
+		String nomBase = "gestion_robots"; // Nom de la BD sur laquelle nous allons accéder
 		
 		_conn = null;
 		
@@ -173,4 +179,45 @@ public class RobotModel {
 		return false;
 	}
 	
+	/**
+	 * @return
+	 * 
+	 * @author p.fauny
+	 */
+	public Object[][] recapHistorique()
+	{
+		Object[][] data = new Object[12][3];
+		try {
+			
+			String requeteHisto = new String("SELECT date_plan, user.name, task.name FROM task JOIN task_has_user ON task.id = task_id JOIN user ON user_id = user.id; ");
+			PreparedStatement stmt = _conn.prepareStatement(requeteHisto);
+			ResultSet rs = stmt.executeQuery();
+			
+			
+			int i=0;
+			
+			while (rs.next ())
+			{
+				for(int j=0; j<3; j++)
+				{
+					data[i][j] = rs.getObject(j+1).toString();
+					System.out.println(rs.getObject(j+1).toString());
+				}
+				i++;
+			}
+			
+			rs.close();
+			stmt.close();
+			
+		} catch (SQLException ex3)		{
+			while (ex3 != null)
+			{
+				System.out.println(ex3.getSQLState());
+				System.out.println(ex3.getMessage());
+				System.out.println(ex3.getErrorCode());
+				ex3=ex3.getNextException();			
+			}	
+		}
+		return data;
+	}
 }

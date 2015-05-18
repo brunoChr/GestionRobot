@@ -881,4 +881,9 @@ public class RobotView extends JFrame {
 	public JButton getBtnDeconnecter() {
 		return btnDeconnecter;
 	}
+	
+	public JTable getTableauAction()
+	{
+		return tableAction;
+	}
 }
