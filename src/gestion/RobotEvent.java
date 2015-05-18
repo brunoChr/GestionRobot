@@ -25,8 +25,15 @@ import javax.swing.event.ChangeListener;
 public class RobotEvent implements ActionListener, WindowListener, ChangeListener {
 
 	RobotController _robotController;
-	private int TabIndex = 0;
+	private int TabCpt = 0;
 	
+	public static final int ONGLET_Accueil = 0;
+	public static final int ONGLET_Robot = 1;
+	public static final int ONGLET_Planning = 2;
+	public static final int ONGLET_Entretien = 3;
+	public static final int ONGLET_Configuration = 4;
+	public static final int ONGLET_Historique = 5;
+
 	/**
     *
     * Event constructor
@@ -43,6 +50,10 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 		this._robotController = rc;
 	}
 	
+	/**
+	 * 
+	 * @author b.christol
+	 */
 	public void actionPerformed(ActionEvent e) {
 		
 		JButton bouton = (JButton)e.getSource();
@@ -89,14 +100,67 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 
 			_robotController.delRobot();
 		}
+		
+		else if (bouton==_robotController.get_robotView().getBtnValiderRobot()) {
+					
+					System.out.println("Bouton valider robot !!");
+		
+					_robotController.delRobot();
+				}
+				
+		else if (bouton==_robotController.get_robotView().getBtnDeleteRobot()) {
+			
+			System.out.println("Bouton delete robot !!");
+		
+			_robotController.delRobot();
+		}
 	}
 	
+	/**
+	 * 
+	 * @author b.christol
+	 */
 	public void stateChanged(ChangeEvent e) {
 
-		System.out.println(TabIndex);
-
-		if(TabIndex++ > 0){	
+		System.out.println(TabCpt);
+			
+		// On ne compte pas le premier changement d'onglet qui s'effectue au démarrage
+		if(TabCpt++ > 0){
+			
+			// On récupére l'index de l'onglet sélectionné
+			int TabIndex = _robotController.get_robotView().getTabbedPane().getSelectedIndex();
+			
+			// On restaure la premiére page de tous les onglets
 			_robotController.quitAllTab();
+			
+			// Détermine quel onglet est sélectionné
+			switch (TabIndex) {
+			case ONGLET_Accueil:
+				break;
+			
+			case ONGLET_Robot:
+				
+				// On rafraichie le tableau des robots
+				_robotController.get_robotModel().remplirTable(_robotController.get_robotView().getTableRobots(), "SELECT * FROM robot;");
+				break;
+
+			case ONGLET_Planning:				
+				break;
+				
+			case ONGLET_Entretien:				
+				break;
+				
+			case ONGLET_Configuration:						
+				break;
+				
+			case ONGLET_Historique:				
+				break;
+				
+			default:
+				break;
+			}
+			
+			System.out.println("Tab index : " + TabIndex);
 		}
 	}
 

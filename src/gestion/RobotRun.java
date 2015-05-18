@@ -40,6 +40,7 @@ public class RobotRun {
 					
 					RobotController rC = new RobotController();
 					rC.start();
+	
 					
 					//System.out.println(java.lang.Runtime.getRuntime().maxMemory());
 					//RobotView frame = new RobotView();

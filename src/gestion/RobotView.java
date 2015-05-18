@@ -7,6 +7,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.JTextField;
@@ -39,10 +40,13 @@ import java.awt.SystemColor;
 import java.awt.Component;
 
 import javax.swing.JPasswordField;
+
 import java.awt.Color;
 import java.awt.Cursor;
+
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import javax.swing.Box;
 
 @SuppressWarnings("serial")
 public class RobotView extends JFrame {
@@ -103,6 +107,8 @@ public class RobotView extends JFrame {
 	private JButton btnValiderUser;
 	private JButton btnAnnulerUser;
 	private JTabbedPane tabbedPane;
+	private JComboBox comboBox_Marque;
+	private JComboBox comboBox_Color;
 
 	/**
 	 * Create the frame.
@@ -115,7 +121,7 @@ public class RobotView extends JFrame {
 		/* Ecouteur des événements sur la fenêtre */
 		this.addWindowListener(new RobotEvent(robotController));
 		
-		setResizable(false);
+		setResizable(true);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 430);
@@ -384,11 +390,11 @@ public class RobotView extends JFrame {
 		panelDetail.add(textField_NInterne);
 		textField_NInterne.setColumns(10);
 		
-		JComboBox comboBox_Marque = new JComboBox();
+		comboBox_Marque = new JComboBox();
 		comboBox_Marque.setBounds(173, 149, 122, 26);
 		panelDetail.add(comboBox_Marque);
 		
-		JComboBox comboBox_Color = new JComboBox();
+		comboBox_Color = new JComboBox();
 		comboBox_Color.setBounds(173, 189, 122, 26);
 		panelDetail.add(comboBox_Color);
 		
@@ -976,100 +982,6 @@ public class RobotView extends JFrame {
 		return textFieldLogin.getText().toString();
 	}
 	
-	
-	private class BtnMotDePasseActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnAddRobotActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnModifyRobotActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnDeleteRobotActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnValiderRobotActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnAnnulerActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnAnnulerRobotActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnAddTaskActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnModifyTaskActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnDeleteTaskActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnAnnulerEvt1ActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnValiderEvt1ActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnAddMaintenanceActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnDeleteMaintenanceActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnModifyMaintenanceActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnValiderEntretien1ActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnAnnulerEntretien1ActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnDeleteUserActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnAddUserActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnModifyUserActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnAnnulerUserActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class BtnValiderUserActionListener implements ActionListener {
-		public void actionPerformed(ActionEvent arg0) {
-		}
-	}
-	private class TabbedPaneChangeListener implements ChangeListener {
-		public void stateChanged(ChangeEvent arg0) {
-		}
-	}
-
 	/**
 	 * @return cl_Accueil
 	 */
@@ -1460,5 +1372,12 @@ public class RobotView extends JFrame {
 	 */
 	public JTabbedPane getTabbedPane() {
 		return tabbedPane;
+	}
+
+	/**
+	 * @return the comboBox_Marque
+	 */
+	public JComboBox getComboBox_Marque() {
+		return comboBox_Marque;
 	}
 }

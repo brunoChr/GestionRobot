@@ -2,9 +2,11 @@ package gestion;
 
 import java.awt.Color;
 
+
 /**
- * 
+ * DEFINE
  */
+
 
 
 /**
@@ -19,6 +21,7 @@ public class RobotController {
 
 	/**
 	 * 
+	 * @author b.christol
 	 */
 	public RobotController() {
 		
@@ -26,7 +29,11 @@ public class RobotController {
 		_robotView = new RobotView(this);
 	}
 
-	
+
+	/**
+	 * 
+	 * @author b.christol
+	 */
    public void start()
     {
 	   _robotView.afficher(true);
@@ -35,7 +42,7 @@ public class RobotController {
 
 	/**
 	 * 
-	 * @throws Exception
+	 * @author b.christol
 	 */
 	public void boutonValider() throws Exception
 	{
@@ -88,6 +95,10 @@ public class RobotController {
 		}
 	}
 	
+	/**
+	 * 
+	 * @author b.christol
+	 */
 	public void boutonOubli()
 	{
 		String login = _robotView.getLogin();
@@ -111,6 +122,11 @@ public class RobotController {
 		}
 	}
 	
+	
+	/**
+	 * 
+	 * @author b.christol
+	 */
     public void quitter()
    {
 	   _robotModel.fermerConnexion();
@@ -118,6 +134,12 @@ public class RobotController {
    }
    	
 
+	/**
+	 * Gere la déconnexion de l'utilisateur
+	 * 
+	 * @author b.christol
+	 * 
+	 */
 	public void logoutGestion () {
 		
 		// On desactive les onglets
@@ -139,6 +161,10 @@ public class RobotController {
 	}
 	
 		
+	/**
+	 * 
+	 * @author b.christol
+	 */
 	public void quitAllTab() {
 		get_robotView().getCl_GRobots().show(get_robotView().getGRobots(),"ListeRobot" );
 		get_robotView().getCl_Configuration().show(get_robotView().getConfiguration(), "listeUser");
@@ -146,24 +172,78 @@ public class RobotController {
 		get_robotView().getCl_Entretien().show(get_robotView().getEntretien(),"Entretien" );
 	}
 	
+	
+	/**
+	 * 
+	 * @author b.christol
+	 */
 	public void addRobot() {
 		
 		// On ouvre la page detail robot
 		get_robotView().getCl_GRobots().show(get_robotView().getGRobots(),"DetailRobot" );
+		
+		// On rafraichie le tableau des robots
+		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
+		
+		/*ColorPicker picker = new ColorPicker(true,false);
+		picker.setRGBControlsVisible(true);
+		picker.setHexControlsVisible(true);
+		picker.setPreviewSwatchVisible(true);
+		//picker.addPropertyChangeListener(ColorPicker.SELECTED_COLOR_PROPERTY, this);*/
 	}
 	
+	
+	/**
+	 * 
+	 * @author b.christol
+	 */
 	public void modRobot() {
 			
 		// On ouvre la page detail robot
-		get_robotView().getCl_Accueil().show(get_robotView().getAccueil(),"loginPanel" );
+		get_robotView().getCl_GRobots().show(get_robotView().getGRobots(),"DetailRobot" );
+		
+		// On rafraichie le tableau des robots
+		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
 		}
 	
+	
+	/**
+	 * 
+	 * @author b.christol
+	 */
 	public void delRobot() {
 		
+		// On rafraichie le tableau des robots
+		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
 	}
 	
+	/**
+	 * 
+	 * @author b.christol
+	 */
+	public void validerRobot() {
+		
+		//_robotModel.insererRobot(_robotView.getTextField_NInterne(), _robo, _robotView.getComboBox_Marque(), location, time_use, state);
+		
+		// On rafraichie le tableau des robots
+		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
+	}
+	
+	
+	/**
+	 * 
+	 * @author b.christol
+	 */
 	public RobotView get_robotView() {
 		return _robotView;
+	}
+
+
+	/**
+	 * @return the _robotModel
+	 */
+	public RobotModel get_robotModel() {
+		return _robotModel;
 	}
 
 }
