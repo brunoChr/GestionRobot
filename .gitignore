@@ -4,6 +4,7 @@
 .gradle
 bin/
 tmp/
+*.html
 *.tmp
 *.bak
 *.swp
