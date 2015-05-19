@@ -5,6 +5,11 @@ package gestion;
 
 
 import java.awt.EventQueue;
+import java.awt.Image;
+import java.awt.SystemTray;
+import java.awt.Toolkit;
+import java.awt.TrayIcon;
+import java.awt.event.ActionListener;
 
 import javax.swing.UIManager;
 
@@ -38,9 +43,12 @@ public class RobotRun {
 			public void run() {
 				try {
 					
-					RobotController rC = new RobotController();
-					rC.start();
-	
+					//RobotController rC = new RobotController();
+					//rC.start();
+					
+				     TrayIcon trayIcon = null;
+				     System.out.println(SystemTray.isSupported());
+		
 					
 					//System.out.println(java.lang.Runtime.getRuntime().maxMemory());
 					//RobotView frame = new RobotView();

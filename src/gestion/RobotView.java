@@ -50,6 +50,7 @@ import javax.swing.Box;
 import com.alee.extended.colorchooser.ColorChooserFieldType;
 import java.awt.MultipleGradientPaint.ColorSpaceType;
 import com.sun.prism.j2d.paint.MultipleGradientPaint;
+import java.awt.Toolkit;
 
 
 //@SuppressWarnings("serial")
@@ -122,13 +123,14 @@ public class RobotView extends JFrame {
 	 * @param robotController
 	 */
 	public RobotView(RobotController robotController) {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Gestion de parc de robots");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RobotView.class.getResource("/img/staubli50.png")));
 		
 		/* Ecouteur des événements sur la fenêtre */
 		this.addWindowListener(new RobotEvent(robotController));
 		
 		setResizable(true);
-		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 430);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
