@@ -48,7 +48,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.Box;
 
-@SuppressWarnings("serial")
 public class RobotView extends JFrame {
 
 	private JPanel contentPane;
@@ -1055,9 +1054,10 @@ public class RobotView extends JFrame {
 	/**
 	 * @return the contentPane
 	 */
+	/*
 	public JPanel getContentPane() {
 		return contentPane;
-	}
+	}*/
 
 	/**
 	 * @return the textFieldLogin
