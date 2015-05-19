@@ -39,7 +39,7 @@ public class RobotController {
 	   _robotView.afficher(true);
     }
    
-
+   
 	/**
 	 * 
 	 * @author b.christol
@@ -95,6 +95,7 @@ public class RobotController {
 		}
 	}
 	
+	
 	/**
 	 * 
 	 * @author b.christol
@@ -132,7 +133,7 @@ public class RobotController {
 	   _robotModel.fermerConnexion();
 		System.exit(1);
    }
-   	
+    
 
 	/**
 	 * Gere la déconnexion de l'utilisateur
@@ -182,7 +183,7 @@ public class RobotController {
 		// On ouvre la page detail robot
 		get_robotView().getCl_GRobots().show(get_robotView().getGRobots(),"DetailRobot" );
 		
-		// On rafraichie le tableau des robots
+		// On rafraichit le tableau des robots
 		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
 		
 		/*ColorPicker picker = new ColorPicker(true,false);
@@ -202,9 +203,9 @@ public class RobotController {
 		// On ouvre la page detail robot
 		get_robotView().getCl_GRobots().show(get_robotView().getGRobots(),"DetailRobot" );
 		
-		// On rafraichie le tableau des robots
+		// On rafraichit le tableau des robots
 		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
-		}
+	}
 	
 	
 	/**
@@ -213,9 +214,10 @@ public class RobotController {
 	 */
 	public void delRobot() {
 		
-		// On rafraichie le tableau des robots
+		// On rafraichit le tableau des robots
 		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
 	}
+	
 	
 	/**
 	 * 
@@ -225,7 +227,7 @@ public class RobotController {
 		
 		//_robotModel.insererRobot(_robotView.getTextField_NInterne(), _robo, _robotView.getComboBox_Marque(), location, time_use, state);
 		
-		// On rafraichie le tableau des robots
+		// On rafraichit le tableau des robots
 		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
 	}
 	
@@ -237,10 +239,8 @@ public class RobotController {
 		
 		// On ouvre la page detail de l'utilisateur
 		get_robotView().getCl_Configuration().show(get_robotView().getConfiguration(),"modifyUser" );
-		
-		// On rafraichie le tableau des utilisateurs
-		//get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
 	}
+	
 	
 	/**
 	 * @author p.fauny
@@ -249,10 +249,30 @@ public class RobotController {
 		
 		// On ouvre la page detail de l'utilisateur
 		get_robotView().getCl_Configuration().show(get_robotView().getConfiguration(),"modifyUser" );
-		
-		// On rafraichie le tableau des utilisateurs
-		//get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
 	}
+	
+	
+	/**
+	 * @author p.fauny
+	 */
+	public void delUser() {
+		
+		// Recuperation de la case selectionnee
+		int ligne = get_robotView().getTableUsers().getSelectedRow();
+		int colonne = get_robotView().getTableUsers().getSelectedColumn();
+		
+		// test si la colonne selectionnee est bien celle de l'utilisateur
+		if(colonne == 0)
+		{
+			Object cellule = get_robotView().getTableUsers().getValueAt(ligne,colonne);
+			get_robotModel().deleteUser(cellule.toString());
+			System.out.println(cellule.toString());
+		}
+		// On rafraichit le tableau des robots
+		String query = "SELECT name, login, password, email, priv FROM user;";
+		get_robotModel().remplirTable(get_robotView().getTableUsers(), query);
+	}
+	
 	
 	/**
 	 * @author p.fauny
@@ -262,8 +282,9 @@ public class RobotController {
 		// On insert les donnees saisies dans la BDD
 		_robotModel.insererUser(_robotView.getTextField_Name().getText(), _robotView.getTextField_Login().getText(), _robotView.getTextField_PwUser().getText(), _robotView.getTextField_Email().getText(), _robotView.getComboBox_Right().getSelectedItem().toString());
 		
-		// On rafraichie le tableau des robots
-		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
+		// On rafraichit le tableau des robots
+		String query = "SELECT name, login, password, email, priv FROM user;";
+		get_robotModel().remplirTable(get_robotView().getTableUsers(), query);
 		
 		// On revient à l'interface de recap user
 		quitAllTab();

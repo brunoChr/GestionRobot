@@ -15,15 +15,6 @@ import javax.swing.table.DefaultTableModel;
  *
  */
 
-
-/**
- * @author p.fauny
- *
- */
-/**
- * @author p.fauny
- *
- */
 public class RobotModel {
 
 	private Connection _conn;
@@ -267,8 +258,14 @@ public class RobotModel {
 		}				
 	}
     
-    
-
+    /**
+     * @param nom
+     * @param login
+     * @param motDePasse
+     * @param Email
+     * @param right
+     * @author p.fauny
+     */
     public void insererUser(String nom, String login, String motDePasse, String Email, String right)
 	{	
     	try
@@ -299,6 +296,48 @@ public class RobotModel {
 			}
 		}				
 	}
+    
+    /**
+     * @param SelectUserToDelete
+     * @author p.fauny
+     */
+    public void deleteUser(String SelectUserToDelete) {
+    	
+    	try
+		{	
+			String requete = new String("DELETE FROM user WHERE name=?;");
+
+			PreparedStatement stmt = _conn.prepareStatement(requete);
+			stmt.setString(1, SelectUserToDelete);
+
+			System.out.println(stmt.toString());
+
+			stmt.executeUpdate(); 
+						
+		}
+				
+		catch (SQLException ex4)
+		{
+			while (ex4 !=null)
+			{
+				System.out.println(ex4.getSQLState());
+				System.out.println(ex4.getMessage());
+				System.out.println(ex4.getErrorCode());
+				ex4=ex4.getNextException();
+			}
+		}	
+    }
+    
+    /**
+     * @param tableUsers
+     * @author p.fauny
+     */
+    public void recapUsers (JTable tableUsers)
+    {
+    	String query = "SELECT name, login, password, email, priv FROM user;";
+    	
+    	remplirTable(tableUsers, query);
+    }
     
     /**
      * @param tableaction

@@ -53,6 +53,7 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 	/**
 	 * 
 	 * @author b.christol
+	 * @author p.fauny
 	 */
 	public void actionPerformed(ActionEvent e) {
 		
@@ -131,6 +132,13 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 			_robotController.modUser();
 		}
 		
+		else if (bouton== _robotController.get_robotView().getBtnDeleteUser()) {
+			
+			System.out.println("Bouton supprimer user !!");
+			
+			_robotController.delUser();
+		}
+		
 		else if (bouton== _robotController.get_robotView().getBtnValiderUser()) {
 			
 			System.out.println("Bouton valider user !!");
@@ -149,6 +157,7 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 	/**
 	 * 
 	 * @author b.christol
+	 * @author p.fauny
 	 */
 	public void stateChanged(ChangeEvent e) {
 
@@ -180,7 +189,8 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 			case ONGLET_Entretien:				
 				break;
 				
-			case ONGLET_Configuration:						
+			case ONGLET_Configuration:
+				_robotController.get_robotModel().recapUsers(_robotController.get_robotView().getTableUsers());
 				break;
 				
 			case ONGLET_Historique:
