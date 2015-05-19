@@ -9,9 +9,6 @@ import java.sql.*;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 /**
  * @author b.christol
  *
@@ -144,13 +141,12 @@ public class RobotModel {
 	public boolean ifExistInTable(String table, String row, String element) {
 		try
 		{
-			String requete = new String("SELECT " + row + " FROM "+table);
-			String requete2 = new String("SELECT id FROM "+ table +" WHERE "+ row +"=?;");
+			String requete = new String("SELECT id FROM "+ table +" WHERE "+ row +"=?;");
 
-			PreparedStatement stmt = _conn.prepareStatement(requete2);
+			PreparedStatement stmt = _conn.prepareStatement(requete);
 			stmt.setString(1, element);
 
-			System.out.println(requete2);
+			System.out.println(requete);
 			ResultSet rs = stmt.executeQuery();
 
 			if (rs.next())

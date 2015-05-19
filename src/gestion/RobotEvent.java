@@ -186,15 +186,14 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 	 */
 	public void windowClosing(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-		System.out.println("Quit the programm");
-		_robotController.quitter();
+		//System.out.println("Quit the programm");
+		//_robotController.quitter();
 	}
 	/* (non-Javadoc)
 	 * @see java.awt.event.WindowListener#windowDeactivated(java.awt.event.WindowEvent)
 	 */
 	public void windowDeactivated(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-		
 	}
 	/* (non-Javadoc)
 	 * @see java.awt.event.WindowListener#windowDeiconified(java.awt.event.WindowEvent)
@@ -208,7 +207,9 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 	 */
 	public void windowIconified(WindowEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		System.out.println("test");
+		_robotController.get_robotView().setExtendedState(_robotController.get_robotView().ICONIFIED);
+
 	}
 	/* (non-Javadoc)
 	 * @see java.awt.event.WindowListener#windowOpened(java.awt.event.WindowEvent)

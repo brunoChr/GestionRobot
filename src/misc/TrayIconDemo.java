@@ -1,85 +1,53 @@
-/*
- * Copyright (c) 1995, 2008, Oracle and/or its affiliates. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- *   - Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer.
- *
- *   - Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- *
- *   - Neither the name of Oracle or the names of its
- *     contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
- * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
- * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */ 
 
 package misc;  
 /*
  * TrayIconDemo.java
  */
 
+import gestion.RobotController;
 import java.awt.*;
 import java.awt.event.*;
 import java.net.URL;
+
 import javax.swing.*;
 
+
+
+/**
+ * @author b.christol
+ *
+ */
 public class TrayIconDemo {
-    public static void main(String[] args) {
-        /* Use an appropriate Look and Feel */
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            //UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-        } catch (UnsupportedLookAndFeelException ex) {
-            ex.printStackTrace();
-        } catch (IllegalAccessException ex) {
-            ex.printStackTrace();
-        } catch (InstantiationException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-        /* Turn off metal's use of bold fonts */
-        UIManager.put("swing.boldMetal", Boolean.FALSE);
-        //Schedule a job for the event-dispatching thread:
-        //adding TrayIcon.
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
-    }
     
+	static RobotController _robotController;
+    private static final java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(createImage("../img/staubli16.png", "tray icon"));
+    
+    /**
+	 * @param rc
+	 */
+	public TrayIconDemo(RobotController rc) {
+		// TODO Auto-generated constructor stub
+		TrayIconDemo._robotController = rc;
+	}
+	
+
+	/**
+     *  Créer la popup dans le systray
+     */
     private static void createAndShowGUI() {
+    	
         //Check the SystemTray support
         if (!SystemTray.isSupported()) {
             System.out.println("SystemTray is not supported");
             return;
         }
+        
         final PopupMenu popup = new PopupMenu();
-        final java.awt.TrayIcon trayIcon =
-                new java.awt.TrayIcon(createImage("../img/staubli16.png", "tray icon"));
+
         final SystemTray tray = SystemTray.getSystemTray();
         
         // Create a popup menu components
         MenuItem aboutItem = new MenuItem("About");
-        CheckboxMenuItem cb1 = new CheckboxMenuItem("Set auto size");
-        CheckboxMenuItem cb2 = new CheckboxMenuItem("Set tooltip");
         Menu displayMenu = new Menu("Display");
         MenuItem errorItem = new MenuItem("Error");
         MenuItem warningItem = new MenuItem("Warning");
@@ -90,8 +58,6 @@ public class TrayIconDemo {
         //Add components to popup menu
         popup.add(aboutItem);
         popup.addSeparator();
-        popup.add(cb1);
-        popup.add(cb2);
         popup.addSeparator();
         popup.add(displayMenu);
         displayMenu.add(errorItem);
@@ -101,6 +67,7 @@ public class TrayIconDemo {
         popup.add(exitItem);
         
         trayIcon.setPopupMenu(popup);
+        trayIcon.setToolTip("Gestion de robots");
         
         try {
             tray.add(trayIcon);
@@ -109,65 +76,45 @@ public class TrayIconDemo {
             return;
         }
         
-        trayIcon.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null,
-                        "This dialog box is run from System Tray");
-            }
-        });
+        trayIcon.addActionListener(new trayIconActionListener());
         
         aboutItem.addActionListener(new ActionListener() {
+            /* (non-Javadoc)
+             * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+             */
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(null,
-                        "This dialog box is run from the About menu item");
+                        "Logiciel de gestion de parc de robots");
             }
         });
         
-        cb1.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-                int cb1Id = e.getStateChange();
-                if (cb1Id == ItemEvent.SELECTED){
-                    trayIcon.setImageAutoSize(true);
-                } else {
-                    trayIcon.setImageAutoSize(false);
-                }
-            }
-        });
-        
-        cb2.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-                int cb2Id = e.getStateChange();
-                if (cb2Id == ItemEvent.SELECTED){
-                    trayIcon.setToolTip("Sun TrayIcon");
-                } else {
-                    trayIcon.setToolTip(null);
-                }
-            }
-        });
         
         ActionListener listener = new ActionListener() {
+            /* (non-Javadoc)
+             * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+             */
             public void actionPerformed(ActionEvent e) {
                 MenuItem item = (MenuItem)e.getSource();
                 //TrayIcon.MessageType type = null;
                 System.out.println(item.getLabel());
                 if ("Error".equals(item.getLabel())) {
                     //type = TrayIcon.MessageType.ERROR;
-                    trayIcon.displayMessage("Sun TrayIcon Demo",
+                    trayIcon.displayMessage("Gestion de robots",
                             "This is an error message", java.awt.TrayIcon.MessageType.ERROR);
                     
                 } else if ("Warning".equals(item.getLabel())) {
                     //type = TrayIcon.MessageType.WARNING;
-                    trayIcon.displayMessage("Sun TrayIcon Demo",
-                            "This is a warning message", java.awt.TrayIcon.MessageType.WARNING);
+                    trayIcon.displayMessage("Gestion de robots",
+                            "Vous devriez prévoir une maintenance pour le robot n°45", java.awt.TrayIcon.MessageType.WARNING);
                     
                 } else if ("Info".equals(item.getLabel())) {
                     //type = TrayIcon.MessageType.INFO;
-                    trayIcon.displayMessage("Sun TrayIcon Demo",
+                    trayIcon.displayMessage("Gestion de robots",
                             "This is an info message", java.awt.TrayIcon.MessageType.INFO);
                     
                 } else if ("None".equals(item.getLabel())) {
                     //type = TrayIcon.MessageType.NONE;
-                    trayIcon.displayMessage("Sun TrayIcon Demo",
+                    trayIcon.displayMessage("Gestion de robots",
                             "This is an ordinary message", java.awt.TrayIcon.MessageType.NONE);
                 }
             }
@@ -181,12 +128,22 @@ public class TrayIconDemo {
         exitItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 tray.remove(trayIcon);
-                System.exit(0);
+                //System.exit(0);
+                
+                System.out.println("Quit the programm");
+        		_robotController.quitter();
             }
         });
     }
     
-    //Obtain the image URL
+    
+    /**
+     * Obtain the image URL
+     * 
+     * @param path
+     * @param description
+     * @return
+     */
     protected static Image createImage(String path, String description) {
         URL imageURL = TrayIconDemo.class.getResource(path);
         
@@ -197,4 +154,50 @@ public class TrayIconDemo {
             return (new ImageIcon(imageURL, description)).getImage();
         }
     }
+    
+    /**
+     *	Créer le popup dans le systray
+     */
+    public void start()
+    {
+    	createAndShowGUI();
+    }
+    
+    
+    public void affInfoNotif(String message) {
+    	
+        trayIcon.displayMessage("Gestion de robots",
+        		message, java.awt.TrayIcon.MessageType.INFO);
+	}
+    
+
+	
+	/**
+	 * Quand on double clique sur l'icone
+	 * 
+	 * @author b.christol
+	 *
+	 */
+	private static class trayIconActionListener implements ActionListener {
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
+		public void actionPerformed(ActionEvent arg0) {
+			
+			// Si la fenetre est minimiser -> on maximise
+			if(_robotController.get_robotView().getState() == _robotController.get_robotView().NORMAL){
+			System.out.println("On restaure la fenetre");
+			_robotController.get_robotView().setState(_robotController.get_robotView().NORMAL);
+			_robotController.get_robotView().setVisible(true);
+			}
+		}
+	}
+
+
+	/**
+	 * @return the trayicon
+	 */
+	public static java.awt.TrayIcon getTrayicon() {
+		return trayIcon;
+	}
 }

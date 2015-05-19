@@ -1,8 +1,12 @@
 package gestion;
 
 import java.awt.Color;
-import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import misc.TrayIconDemo;
 
 
 /**
@@ -50,7 +54,12 @@ public class RobotController {
 	{
 		// On récupére les valeurs des champs
 		String login = _robotView.getLogin();
-		String password = _robotView.getTextFieldPassword().getText();
+		String password = new String(_robotView.getTextFieldPassword().getPassword());
+		
+		DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+		Calendar calobj = Calendar.getInstance();
+		
+		String currentDate = df.format(calobj.getTime());
 		
 		// Si les champs login & pass sont remplis
 		if((!login.isEmpty())&&(!password.isEmpty())){
@@ -60,7 +69,10 @@ public class RobotController {
 				if(_robotModel.estValide(login,password))
 				{
 					// On avertit l'utilisateur
-					_robotView.afficherMessage("Connexion","Login Correct !!");
+					//_robotView.afficherMessage("Connexion","Login Correct !!");
+					
+					RobotRun.getTi().affInfoNotif("Bienvenue "+login+" ! \r\nDate de la connexion : "+ currentDate);
+					
 					// On cache le message d'avertissement
 					_robotView.getLblWarningAccueil().setVisible(false);
 					
@@ -72,9 +84,6 @@ public class RobotController {
 				    System.out.println(index);
 				    
 				    for(int i=0; i<=index;i++){
-					    // Determine whether the tab is enabled
-					    boolean enabled = _robotView.getTabbedPane().isEnabledAt(i);
-
 					    // Disable the tab
 					    _robotView.getTabbedPane().setEnabledAt(i, true);	
 				    }
@@ -149,9 +158,6 @@ public class RobotController {
 	    System.out.println(index);
 	    
 	    for(int i=0; i<=index;i++){
-		    // Determine whether the tab is enabled
-		    boolean enabled = _robotView.getTabbedPane().isEnabledAt(i);
-
 		    // Disable the tab
 		    _robotView.getTabbedPane().setEnabledAt(i, false);
 	    }

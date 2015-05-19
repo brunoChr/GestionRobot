@@ -123,7 +123,6 @@ public class RobotView extends JFrame {
 	 * @param robotController
 	 */
 	public RobotView(RobotController robotController) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Gestion de parc de robots");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RobotView.class.getResource("/img/staubli50.png")));
 		
@@ -143,6 +142,9 @@ public class RobotView extends JFrame {
 		contentPane.add(tabbedPane);
 		
 		setSize(new Dimension(800, 450));
+
+		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
 
