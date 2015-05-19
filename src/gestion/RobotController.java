@@ -1,6 +1,8 @@
 package gestion;
 
 import java.awt.Color;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 /**
@@ -166,6 +168,7 @@ public class RobotController {
 	 * @author b.christol
 	 */
 	public void quitAllTab() {
+		
 		get_robotView().getCl_GRobots().show(get_robotView().getGRobots(),"ListeRobot" );
 		get_robotView().getCl_Configuration().show(get_robotView().getConfiguration(), "listeUser");
 		get_robotView().getCl_Planning().show(get_robotView().getPlanning(),"Planning" );
@@ -222,13 +225,40 @@ public class RobotController {
 	 * @author b.christol
 	 */
 	public void validerRobot() {
+
+		// Initialisé à la date et l'heure courrante. 
+		GregorianCalendar calendar = new java.util.GregorianCalendar(); 
 		
-		//_robotModel.insererRobot(_robotView.getTextField_NInterne(), _robo, _robotView.getComboBox_Marque(), location, time_use, state);
+		java.sql.Date time_use = null;
+		
+		// Initialisé avec une instance de Date. 
+		calendar.setTime(time_use); 
+		
+		String identifier = _robotView.getTextField_NInterne().getText();
+		String brand = _robotView.getComboBox_Marque().getSelectedItem().toString();
+		String color = _robotView.getComboBox_Color().getSelectedItem().toString();
+		String location = _robotView.getTextField_Emplacement().getText();
+		String serial_id = _robotView.getTextField_NSerie().getText();
+		Boolean state = _robotView.getChckbxEtat().isSelected(); 
+		
+		
+		_robotModel.insererRobot(identifier, brand, color, location, time_use, serial_id, state);
 		
 		// On rafraichie le tableau des robots
 		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
 	}
 	
+	
+	public void setDefaultValueRobot() {
+		
+		_robotView.getTextField_NInterne().setText("");
+		_robotView.getComboBox_Marque().setSelectedIndex(-1);
+		_robotView.getComboBox_Color().setSelectedIndex(-1);
+		_robotView.getTextField_Emplacement().setText("");
+		_robotView.getTextField_NSerie().setText("");
+		_robotView.getChckbxEtat().setSelected(true); 
+		
+	}
 	
 	/**
 	 * 

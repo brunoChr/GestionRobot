@@ -9,6 +9,9 @@ import java.sql.*;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 /**
  * @author b.christol
  *
@@ -27,7 +30,7 @@ public class RobotModel {
 
 		String nomUser = "bruno"; // Utilisateur de la BD
 		String passwd = "Bruno@1552"; // Password de l'utilisateur de la BD
-		String url = "jdbc:mysql://localhost/"; // Serveur de la BD
+		String url = "jdbc:mysql://LISA-7336/"; // Serveur de la BD
 		String nomBase = "gestion_robot"; // Nom de la BD sur laquelle nous allons accéder
 		
 		_conn = null;
@@ -222,18 +225,31 @@ public class RobotModel {
 	}
 	
 	
-    public void insererRobot(String brand, String color, String location, Date time_use, boolean state)
+    /**
+     * @param identifier
+     * @param brand
+     * @param color
+     * @param location
+     * @param time_use
+     * @param serial
+     * @param state
+     * 
+     * @author b.christol
+     */
+    public void insererRobot(String identifier, String brand, String color, String location, java.sql.Date time_use, String serial, Boolean state)
 	{	
     	try
 		{	
-			String requete = new String("INSERT INTO robot (`id`, `identifier`, `brand`, `color`, `location`,`time_use`,`serial_id`,`state` ) VALUES (NULL, ROUND(RAND()*99)+1 , ? , ? , ?, ?,ROUND(RAND()*99999)+1, ?);");
+			String requete = new String("INSERT INTO robot (`id`, `identifier`, `brand`, `color`, `location`,`time_use`,`serial_id`,`state` ) VALUES (NULL, ? , ? , ? , ?, ?, ?, ?);");
 
 			PreparedStatement stmt = _conn.prepareStatement(requete);
-			stmt.setString(1, brand);
-			stmt.setString(2, color);
-			stmt.setString(3, location);
-			stmt.setDate(4, time_use);
-			stmt.setBoolean(4, state);
+			stmt.setString(1, identifier);
+			stmt.setString(2, brand);
+			stmt.setString(3, color);
+			stmt.setString(4, location);
+			stmt.setDate(5, time_use);
+			stmt.setString(6, serial);
+			stmt.setBoolean(7, state);
 
 			System.out.println(stmt.toString());
 

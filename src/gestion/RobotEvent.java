@@ -67,6 +67,7 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 				e1.printStackTrace();
 			}
 		}
+		
 		else if(bouton==_robotController.get_robotView().getBtnMotDePasse()){
 			
 			System.out.println("Bouton mdp !!");
@@ -83,7 +84,7 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 			
 			System.out.println("Bouton add robot !!");
 
-			// On ouvre la page login
+			// On ouvre la page detail robot
 			_robotController.addRobot();
 
 		}
@@ -103,18 +104,20 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 		
 		else if (bouton==_robotController.get_robotView().getBtnValiderRobot()) {
 					
-					System.out.println("Bouton valider robot !!");
-		
-					_robotController.delRobot();
-				}
+			System.out.println("Bouton valider robot !!");
+
+			_robotController.validerRobot();
+		}
 				
-		else if (bouton==_robotController.get_robotView().getBtnDeleteRobot()) {
+		else if (bouton==_robotController.get_robotView().getBtnAnnulerRobot()) {
 			
-			System.out.println("Bouton delete robot !!");
+			System.out.println("Bouton annuler robot !!");
 		
-			_robotController.delRobot();
+			_robotController.setDefaultValueRobot();
+			_robotController.quitAllTab();
 		}
 	}
+	
 	
 	/**
 	 * 

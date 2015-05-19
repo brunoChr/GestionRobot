@@ -47,8 +47,12 @@ import java.awt.Cursor;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.Box;
+import com.alee.extended.colorchooser.ColorChooserFieldType;
+import java.awt.MultipleGradientPaint.ColorSpaceType;
+import com.sun.prism.j2d.paint.MultipleGradientPaint;
 
-@SuppressWarnings("serial")
+
+//@SuppressWarnings("serial")
 public class RobotView extends JFrame {
 
 	private JPanel contentPane;
@@ -109,6 +113,7 @@ public class RobotView extends JFrame {
 	private JTabbedPane tabbedPane;
 	private JComboBox comboBox_Marque;
 	private JComboBox comboBox_Color;
+	private JCheckBox chckbxEtat;
 
 	/**
 	 * Create the frame.
@@ -159,6 +164,7 @@ public class RobotView extends JFrame {
 		Login.add(lblLogin);
 		
 		textFieldLogin = new JTextField();
+		textFieldLogin.setDragEnabled(true);
 		textFieldLogin.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		textFieldLogin.setBounds(250, 130, 122, 28);
 		Login.add(textFieldLogin);
@@ -185,6 +191,7 @@ public class RobotView extends JFrame {
 		Login.add(lblWarningAccueil);
 		
 		textFieldPassword = new JPasswordField();
+		textFieldPassword.setDragEnabled(true);
 		textFieldPassword.setBounds(250, 174, 122, 28);
 		Login.add(textFieldPassword);
 		lblWarningAccueil.setVisible(false);
@@ -391,10 +398,12 @@ public class RobotView extends JFrame {
 		textField_NInterne.setColumns(10);
 		
 		comboBox_Marque = new JComboBox();
+		comboBox_Marque.setModel(new DefaultComboBoxModel(Brand.values()));
 		comboBox_Marque.setBounds(173, 149, 122, 26);
 		panelDetail.add(comboBox_Marque);
 		
 		comboBox_Color = new JComboBox();
+		comboBox_Color.setModel(new DefaultComboBoxModel(new String[] {"Bleu", "Rouge", "Vert", "Gris"}));
 		comboBox_Color.setBounds(173, 189, 122, 26);
 		panelDetail.add(comboBox_Color);
 		
@@ -431,8 +440,9 @@ public class RobotView extends JFrame {
 		lblDateEntretien.setBounds(348, 341, 60, 16);
 		panelDetail.add(lblDateEntretien);
 		
-		JLabel lblImageRobot = new JLabel("New label");
-		lblImageRobot.setBounds(388, 194, 55, 16);
+		JLabel lblImageRobot = new JLabel("");
+		lblImageRobot.setIcon(new ImageIcon(RobotView.class.getResource("/img/staubli50.png")));
+		lblImageRobot.setBounds(348, 58, 246, 210);
 		panelDetail.add(lblImageRobot);
 		
 		btnValiderRobot = new JButton("");
@@ -458,6 +468,11 @@ public class RobotView extends JFrame {
 		btnAnnulerRobot.setAlignmentX(0.5f);
 		btnAnnulerRobot.setBounds(546, 323, 48, 48);
 		panelDetail.add(btnAnnulerRobot);
+		
+		chckbxEtat = new JCheckBox("En fonctionnement");
+		chckbxEtat.setSelected(true);
+		chckbxEtat.setBounds(307, 273, 133, 18);
+		panelDetail.add(chckbxEtat);
 		
 		Planning = new JPanel();
 		tabbedPane.addTab(html1 + "Planning</body></html>", null, Planning, null);
@@ -1379,5 +1394,19 @@ public class RobotView extends JFrame {
 	 */
 	public JComboBox getComboBox_Marque() {
 		return comboBox_Marque;
+	}
+
+	/**
+	 * @return the comboBox_Color
+	 */
+	public JComboBox getComboBox_Color() {
+		return comboBox_Color;
+	}
+
+	/**
+	 * @return the chckbxEtat
+	 */
+	public JCheckBox getChckbxEtat() {
+		return chckbxEtat;
 	}
 }
