@@ -231,6 +231,46 @@ public class RobotController {
 	
 	
 	/**
+	 * @author p.fauny
+	 */
+	public void addUser() {
+		
+		// On ouvre la page detail de l'utilisateur
+		get_robotView().getCl_Configuration().show(get_robotView().getConfiguration(),"modifyUser" );
+		
+		// On rafraichie le tableau des utilisateurs
+		//get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
+	}
+	
+	/**
+	 * @author p.fauny
+	 */
+	public void modUser() {
+		
+		// On ouvre la page detail de l'utilisateur
+		get_robotView().getCl_Configuration().show(get_robotView().getConfiguration(),"modifyUser" );
+		
+		// On rafraichie le tableau des utilisateurs
+		//get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
+	}
+	
+	/**
+	 * @author p.fauny
+	 */
+	public void validerUser() {
+		
+		// On insert les donnees saisies dans la BDD
+		_robotModel.insererUser(_robotView.getTextField_Name().getText(), _robotView.getTextField_Login().getText(), _robotView.getTextField_PwUser().getText(), _robotView.getTextField_Email().getText(), _robotView.getComboBox_Right().getSelectedItem().toString());
+		
+		// On rafraichie le tableau des robots
+		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
+		
+		// On revient à l'interface de recap user
+		quitAllTab();
+	}
+	
+	
+	/**
 	 * 
 	 * @author b.christol
 	 */

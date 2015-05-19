@@ -48,7 +48,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.Box;
 
-@SuppressWarnings("serial")
 public class RobotView extends JFrame {
 
 	private JPanel contentPane;
@@ -109,6 +108,7 @@ public class RobotView extends JFrame {
 	private JTabbedPane tabbedPane;
 	private JComboBox comboBox_Marque;
 	private JComboBox comboBox_Color;
+	private JComboBox comboBRight;
 
 	/**
 	 * Create the frame.
@@ -860,7 +860,7 @@ public class RobotView extends JFrame {
 		InfoUser.add(textField_Email);
 		textField_Email.setColumns(10);
 		
-		JComboBox comboBRight = new JComboBox();
+		comboBRight = new JComboBox();
 		comboBRight.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3"}));
 		comboBRight.setBounds(130, 291, 150, 26);
 		InfoUser.add(comboBRight);
@@ -1055,9 +1055,10 @@ public class RobotView extends JFrame {
 	/**
 	 * @return the contentPane
 	 */
+	/*
 	public JPanel getContentPane() {
 		return contentPane;
-	}
+	}*/
 
 	/**
 	 * @return the textFieldLogin
@@ -1379,5 +1380,9 @@ public class RobotView extends JFrame {
 	 */
 	public JComboBox getComboBox_Marque() {
 		return comboBox_Marque;
+	}
+	
+	public JComboBox getComboBox_Right() {
+		return comboBRight;
 	}
 }

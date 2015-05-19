@@ -6,6 +6,7 @@ package gestion;
 
 import java.sql.*;
 
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,6 +16,14 @@ import javax.swing.table.DefaultTableModel;
  */
 
 
+/**
+ * @author p.fauny
+ *
+ */
+/**
+ * @author p.fauny
+ *
+ */
 public class RobotModel {
 
 	private Connection _conn;
@@ -24,11 +33,16 @@ public class RobotModel {
 	 * 
 	 */
 	public RobotModel() {
-
+		/*
 		String nomUser = "bruno"; // Utilisateur de la BD
 		String passwd = "Bruno@1552"; // Password de l'utilisateur de la BD
-		String url = "jdbc:mysql://localhost/"; // Serveur de la BD
+		String url = "jdbc:mysql://LISA-7336/"; // Serveur de la BD
 		String nomBase = "gestion_robot"; // Nom de la BD sur laquelle nous allons accéder
+		*/
+		String nomUser = "root"; // Utilisateur de la BD
+		String passwd = "root"; // Password de l'utilisateur de la BD
+		String url = "jdbc:mysql://localhost/"; // Serveur de la BD
+		String nomBase = "gestion_robots"; // Nom de la BD sur laquelle nous allons accéder
 		
 		_conn = null;
 		
@@ -252,4 +266,49 @@ public class RobotModel {
 			}
 		}				
 	}
+    
+    
+
+    public void insererUser(String nom, String login, String motDePasse, String Email, String right)
+	{	
+    	try
+		{	
+			String requete = new String("INSERT INTO user (`id`, `name`, `login`, `password`,`email`,`create_time`,`priv` ) VALUES (NULL, ? , ? , MD5(?) , ?, NOW() , ?);");
+
+			PreparedStatement stmt = _conn.prepareStatement(requete);
+			stmt.setString(1, nom);
+			stmt.setString(2, login);
+			stmt.setString(3, motDePasse);
+			stmt.setString(4, Email);
+			stmt.setString(5, right);
+
+			System.out.println(stmt.toString());
+
+			stmt.executeUpdate(); 
+						
+		}
+				
+		catch (SQLException ex4)
+		{
+			while (ex4 !=null)
+			{
+				System.out.println(ex4.getSQLState());
+				System.out.println(ex4.getMessage());
+				System.out.println(ex4.getErrorCode());
+				ex4=ex4.getNextException();
+			}
+		}				
+	}
+    
+    /**
+     * @param tableaction
+     * @author p.fauny
+     */
+    public void recapHistorique (JTable tableaction)
+    {
+    	String query = "SELECT date_plan, user.name, task.name FROM task JOIN task_has_user ON task.id = task_id JOIN user ON user_id = user.id; ";
+    	
+    	remplirTable(tableaction, query);
+    }
+    
 }
