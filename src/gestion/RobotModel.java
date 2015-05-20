@@ -9,6 +9,7 @@ import java.sql.*;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 
 /**
  * @author b.christol
@@ -328,13 +329,22 @@ public class RobotModel {
 		}	
     }
     
+    
+    public void recapEntretiens (JTable tableEntretien)
+    {
+    	String query = "SELECT date_plan, user.name, robot.identifier, task.name FROM task JOIN task_has_user ON task.id = task_id JOIN user ON user_id = user.id JOIN robot ON robot_id = robot.id;";
+    	
+    	remplirTable(tableEntretien, query);
+    }
+    
+    
     /**
      * @param tableUsers
      * @author p.fauny
      */
     public void recapUsers (JTable tableUsers)
     {
-    	String query = "SELECT name, login, password, email, priv FROM user;";
+    	String query = "SELECT name, login, create_time, email, priv FROM user;";
     	
     	remplirTable(tableUsers, query);
     }
@@ -348,6 +358,49 @@ public class RobotModel {
     	String query = "SELECT date_plan, user.name, task.name FROM task JOIN task_has_user ON task.id = task_id JOIN user ON user_id = user.id; ";
     	
     	remplirTable(tableaction, query);
+    }
+    
+    
+    /**
+     * @return
+     * @author p.fauny
+     */
+    public ArrayList<String> listUserOrRobot (String requete)
+    {
+    	ArrayList<String> listOfUsers = new ArrayList<String>();
+		int i = 1;
+    	
+    	try
+		{	
+			//String requete = new String("SELECT name FROM user");
+			PreparedStatement stmt = _conn.prepareStatement(requete);
+
+			System.out.println(requete);
+
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next())
+			{
+				System.out.println(rs.getObject(1));
+				listOfUsers.add(rs.getObject(1).toString());
+				i++;
+			}		
+			
+			rs.close();
+			stmt.close();		
+		}
+				
+		catch (SQLException ex4)
+		{
+			while (ex4 !=null)
+			{
+				System.out.println(ex4.getSQLState());
+				System.out.println(ex4.getMessage());
+				System.out.println(ex4.getErrorCode());
+				ex4=ex4.getNextException();
+			}
+		}
+    	return listOfUsers;
     }
     
 }

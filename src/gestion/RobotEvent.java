@@ -118,6 +118,29 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 		
 		
 		
+		
+		else if (bouton== _robotController.get_robotView().getBtnAddMaintenance()) {
+			
+			System.out.println("Bouton add entretien !!");
+			
+			_robotController.addEntretien();
+		}
+		
+		else if (bouton== _robotController.get_robotView().getBtnValiderEntretien()) {
+			
+			System.out.println("Bouton valider maintenance !!");
+			
+			_robotController.validerEntretien();
+		}
+		
+		else if (bouton== _robotController.get_robotView().getBtnAnnulerEntretien()) {
+			
+			System.out.println("Bouton annuler maintenance !!");
+			
+			_robotController.quitAllTab();
+			//_robotController.setDefaultValueEntretien();
+		}
+		
 		else if (bouton== _robotController.get_robotView().getBtnAddUser()) {
 			
 			System.out.println("Bouton add user !!");
@@ -187,7 +210,8 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 			case ONGLET_Planning:				
 				break;
 				
-			case ONGLET_Entretien:				
+			case ONGLET_Entretien:
+				_robotController.get_robotModel().recapEntretiens(_robotController.get_robotView().getTableEntretien());
 				break;
 				
 			case ONGLET_Configuration:

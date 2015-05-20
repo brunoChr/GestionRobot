@@ -109,6 +109,8 @@ public class RobotView extends JFrame {
 	private JComboBox comboBox_Marque;
 	private JComboBox comboBox_Color;
 	private JComboBox comboBRight;
+	private JComboBox comboBox_UserEnt;
+	private JComboBox comboBox_RobotEnt;
 
 	/**
 	 * Create the frame.
@@ -665,7 +667,7 @@ public class RobotView extends JFrame {
 		lblNewLabel_1.setBounds(6, 207, 68, 16);
 		panelAddEntretien.add(lblNewLabel_1);
 		
-		JComboBox comboBox_UserEnt = new JComboBox();
+		comboBox_UserEnt = new JComboBox();
 		comboBox_UserEnt.setBounds(89, 201, 180, 28);
 		panelAddEntretien.add(comboBox_UserEnt);
 		
@@ -679,7 +681,7 @@ public class RobotView extends JFrame {
 		lblDtails.setBounds(19, 107, 55, 16);
 		panelAddEntretien.add(lblDtails);
 		
-		JComboBox comboBox_RobotEnt = new JComboBox();
+		comboBox_RobotEnt = new JComboBox();
 		comboBox_RobotEnt.setBounds(89, 252, 180, 28);
 		panelAddEntretien.add(comboBox_RobotEnt);
 		
@@ -694,6 +696,7 @@ public class RobotView extends JFrame {
 		panelAddEntretien.add(lblType_1);
 		
 		JComboBox comboBox_TypeEnt = new JComboBox();
+		comboBox_TypeEnt.setModel(new DefaultComboBoxModel(TypeEntretien.values()));
 		comboBox_TypeEnt.setBounds(89, 152, 180, 28);
 		panelAddEntretien.add(comboBox_TypeEnt);
 		
@@ -1384,5 +1387,13 @@ public class RobotView extends JFrame {
 	
 	public JComboBox getComboBox_Right() {
 		return comboBRight;
+	}
+	
+	public JComboBox getComboBox_UserEnt() {
+		return comboBox_UserEnt;
+	}
+	
+	public JComboBox getComboBox_RobotEnt() {
+		return comboBox_RobotEnt;
 	}
 }

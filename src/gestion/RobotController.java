@@ -1,7 +1,9 @@
 package gestion;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 /**
  * DEFINE
@@ -242,6 +244,58 @@ public class RobotController {
 		
 		// On rafraichit le tableau des robots
 		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
+	}
+	
+	
+	/**
+	 * @author p.fauny
+	 */
+	public void addEntretien() {
+		
+		// On recupere la liste des utilisateurs
+		String requeteUsers = "SELECT name FROM user";
+		ArrayList<String> listOfUsers = new ArrayList<String>();
+		listOfUsers = _robotModel.listUserOrRobot(requeteUsers);
+		
+		// On ajoute la liste des utilisateurs dans la comboBox correspondante
+		for(int i=0; i<listOfUsers.size(); i++)
+		{
+			//System.out.println(listOfUsers.get(i));
+			_robotView.getComboBox_UserEnt().addItem((Object)listOfUsers.get(i));
+		}
+		
+		// On recupere la liste des robots
+		String requeteRobots = "SELECT identifier FROM robot";
+		ArrayList<String> listOfRobots = new ArrayList<String>();
+		listOfRobots = _robotModel.listUserOrRobot(requeteRobots);
+		
+		// On ajoute la liste des robots dans la comboBox correspondante
+		for(int i=0; i<listOfRobots.size(); i++)
+		{
+			//System.out.println(listOfRobots.get(i));
+			_robotView.getComboBox_RobotEnt().addItem((Object)listOfRobots.get(i));
+		}
+		 
+		// On ouvre la page detail de l'utilisateur
+		_robotView.getCl_Entretien().show(get_robotView().getEntretien(),"AddEntretien" );
+	}
+	
+	
+	/**
+	 * @author p.fauny
+	 */
+	public void validerEntretien() {
+		
+		// On insert les donnees saisies dans la BDD
+		//_robotModel.insererUser(_robotView.getTextField_Name().getText(), _robotView.getTextField_Login().getText(), _robotView.getTextField_PwUser().getText(), _robotView.getTextField_Email().getText(), _robotView.getComboBox_Right().getSelectedItem().toString());
+		
+		// On rafraichit le tableau des robots
+		//String query = "SELECT name, login, password, email, priv FROM user;";
+		//_robotModel.remplirTable(_robotView.getTableEntretien(), query);
+		
+		// On revient à l'interface de recap user
+		quitAllTab();
+		//setDefaultValueEntretien();
 	}
 	
 	
