@@ -9,7 +9,7 @@ package gestion;
  */
 public enum Brand {
 	
-	Staubli,
+	STAUBLI,
 	KAKA,
 	ABB;	
 }

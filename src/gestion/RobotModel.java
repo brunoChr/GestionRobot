@@ -176,6 +176,8 @@ public class RobotModel {
 	}
 	
 	/**
+	 * Remplit un tableau spécifié en paramétre avec une table en bdd
+	 * 
 	 * @param table
 	 * @param Query
 	 */
@@ -222,6 +224,8 @@ public class RobotModel {
 	
 	
     /**
+     * Ajoute des robots dans la bdd
+     * 
      * @param identifier
      * @param brand
      * @param color
@@ -291,5 +295,54 @@ public class RobotModel {
 				ex4=ex4.getNextException();
 			}
 		}				
+	}
+
+	/**
+	 * Modifie un robot sélectionné dans la bdd
+	 * 
+	 * @param identifier
+	 * @param brand
+	 * @param color
+	 * @param location
+	 * @param serial_id
+	 * @param state
+	 */
+	public void modifierRobot(String identifier, String brand, String color, String location, String serial, Boolean state) {
+		// TODO Auto-generated method stub
+    	try
+		{	
+    		String requete = new String("UPDATE `gestion_robot`.`robot` SET brand = ?, color = ?, location = ?, serial_id = ?, state = ? WHERE `robot`.`identifier` = ?;");
+
+			PreparedStatement stmt = _conn.prepareStatement(requete);
+			stmt.setString(1, brand);
+			stmt.setString(2, color);
+			stmt.setString(3, location);
+			stmt.setString(4, serial);
+			stmt.setBoolean(5, state);
+			stmt.setString(6, identifier);
+
+			System.out.println(stmt.toString());
+
+			stmt.executeUpdate(); 
+						
+		}
+				
+		catch (SQLException ex4)
+		{
+			while (ex4 !=null)
+			{
+				System.out.println(ex4.getSQLState());
+				System.out.println(ex4.getMessage());
+				System.out.println(ex4.getErrorCode());
+				ex4=ex4.getNextException();
+			}
+		}			
+	}
+	
+	
+	public void refreshRobot(JTable table)
+	{
+		// On rafraichie le tableau des robots
+		remplirTable(table, "SELECT identifier, brand, color, location, time_use, serial_id, state  FROM robot;");
 	}
 }

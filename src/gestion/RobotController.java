@@ -27,7 +27,7 @@ public class RobotController {
 
 	private RobotView _robotView;
 	private RobotModel _robotModel;
-
+	private Boolean FlagRobot;
 
 	/**
 	 * 
@@ -192,11 +192,13 @@ public class RobotController {
 	 */
 	public void addRobot() {
 		
+		FlagRobot = true;
+
 		// On ouvre la page detail robot
 		get_robotView().getCl_GRobots().show(get_robotView().getGRobots(),"DetailRobot" );
 		
 		// On rafraichie le tableau des robots
-		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
+		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT identifier, brand, color, location, time_use, serial_id, state  FROM robot;");
 		
 		/*ColorPicker picker = new ColorPicker(true,false);
 		picker.setRGBControlsVisible(true);
@@ -211,18 +213,21 @@ public class RobotController {
 	 * @author b.christol
 	 */
 	public void modRobot() {
-			
+	
+		FlagRobot = false;
+		
 		// On récupère les valeurs de la ligne du tableau selectionnee
 		int ligne = _robotView.getTableRobots().getSelectedRow();
 					
 		try {
 			if(ligne != -1){
+		
+			// On cache le message d'avertissement
+			_robotView.getLblWarningRobot().setVisible(false);
 			
 			// On ouvre la page detail robot
 			get_robotView().getCl_GRobots().show(get_robotView().getGRobots(),"DetailRobot" );
 			
-			// On cache le message d'avertissement
-			_robotView.getLblWarningRobot().setVisible(false);
 			
 		    //MODIFY THE SELECTED ROW
 		    if(ligne != -1)
@@ -264,7 +269,7 @@ public class RobotController {
 		}
 				
 		// On rafraichie le tableau des robots
-		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
+		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT identifier, brand, color, location, time_use, serial_id, state  FROM robot;");
 		}
 	
 	
@@ -274,6 +279,7 @@ public class RobotController {
 	 */
 	public void delRobot() {
 		
+
 		// On récupère les valeurs de la ligne du tableau selectionnee
 		int ligne = _robotView.getTableRobots().getSelectedRow();
 			
@@ -341,7 +347,7 @@ public class RobotController {
 		}
 		
 		// On rafraichie le tableau des robots
-		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
+		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT identifier, brand, color, location, time_use, serial_id, state  FROM robot;");
 	}
 	
 	
@@ -351,31 +357,55 @@ public class RobotController {
 	 */
 	public void validerRobot() {
 
-		GregorianCalendar calendar = new java.util.GregorianCalendar();
-		
-		Date time_use = new Date();
-		
-		// Initialisé à la date et l'heure courrante. 
-		calendar.setTime(time_use); 
-		// Initialisé avec une instance de Date. 
-		
-		System.out.println(time_use);
-		
-		String identifier = _robotView.getTextField_NInterne().getText();
-		String brand = _robotView.getComboBox_Marque().getSelectedItem().toString();
-		String color = _robotView.getComboBox_Color().getSelectedItem().toString();
-		String location = _robotView.getTextField_Emplacement().getText();
-		String serial_id = _robotView.getTextField_NSerie().getText();
-		Boolean state = _robotView.getChckbxEtat().isSelected(); 
-		
-		
-		_robotModel.insererRobot(identifier, brand, color, location, time_use, serial_id, state);
-		
-		// On rafraichie le tableau des robots
-		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
-		
-		quitAllTab();
-		setDefaultValueRobot();
+		// Si on valide un ajout de robot
+		if(FlagRobot){	
+					
+			GregorianCalendar calendar = new java.util.GregorianCalendar();
+			
+			Date time_use = new Date();
+			
+			// Initialisé à la date et l'heure courrante. 
+			calendar.setTime(time_use); 
+			// Initialisé avec une instance de Date. 
+			
+			System.out.println(time_use);
+			
+			String identifier = _robotView.getTextField_NInterne().getText();
+			String brand = _robotView.getComboBox_Marque().getSelectedItem().toString();
+			String color = _robotView.getComboBox_Color().getSelectedItem().toString();
+			String location = _robotView.getTextField_Emplacement().getText();
+			String serial_id = _robotView.getTextField_NSerie().getText();
+			Boolean state = _robotView.getChckbxEtat().isSelected(); 
+			
+			
+			_robotModel.insererRobot(identifier, brand, color, location, time_use, serial_id, state);
+			
+			// On rafraichie le tableau des robots
+			get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT identifier, brand, color, location, time_use, serial_id, state  FROM robot;");
+			
+			quitAllTab();
+			setDefaultValueRobot();
+		}
+		// Si on valide une modification de robot
+		else {
+			
+			String identifier = _robotView.getTextField_NInterne().getText();
+			String brand = _robotView.getComboBox_Marque().getSelectedItem().toString();
+			String color = _robotView.getComboBox_Color().getSelectedItem().toString();
+			String location = _robotView.getTextField_Emplacement().getText();
+			String serial_id = _robotView.getTextField_NSerie().getText();
+			Boolean state = _robotView.getChckbxEtat().isSelected(); 
+			
+			
+			_robotModel.modifierRobot(identifier, brand, color, location, serial_id, state);
+			
+			// On rafraichie le tableau des robots
+			get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT identifier, brand, color, location, time_use, serial_id, state  FROM robot;");
+			
+			quitAllTab();
+			setDefaultValueRobot();
+			
+		}
 	}
 	
 	

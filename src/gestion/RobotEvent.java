@@ -1,5 +1,7 @@
 package gestion;
 
+import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -7,6 +9,9 @@ import java.awt.event.WindowListener;
 /**
  * 
  */
+
+
+
 
 
 
@@ -57,7 +62,7 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 	public void actionPerformed(ActionEvent e) {
 		
 		JButton bouton = (JButton)e.getSource();
-		
+	    
 		if(bouton==_robotController.get_robotView().getBtnValider()){
 			
 			System.out.println("Bouton validé !!");
@@ -144,7 +149,9 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 			case ONGLET_Robot:
 				
 				// On rafraichie le tableau des robots
-				_robotController.get_robotModel().remplirTable(_robotController.get_robotView().getTableRobots(), "SELECT * FROM robot;");
+				_robotController.get_robotModel().refreshRobot(_robotController.get_robotView().getTableRobots());
+				
+				//_robotController.get_robotModel().remplirTable(_robotController.get_robotView().getTableRobots(), "SELECT * FROM robot;");
 				break;
 
 			case ONGLET_Planning:				

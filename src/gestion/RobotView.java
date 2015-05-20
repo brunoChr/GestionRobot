@@ -356,7 +356,14 @@ public class RobotView extends JFrame {
 			new String[] {
 				"N\u00B0Interne", "Marque", "Emplacement", "Etat", "Temps d'utilisation", "Couleur", "N\u00B0 de serie"
 			}
-		));
+		) {
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
 		scrollPane_Robots.setViewportView(tableRobots);
 		
 		lblWarningRobot = new JLabel("");
