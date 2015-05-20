@@ -2,7 +2,7 @@ package gestion;
 
 import java.awt.Color;
 
-
+import javax.swing.JOptionPane;
 /**
  * DEFINE
  */
@@ -175,6 +175,19 @@ public class RobotController {
 	
 	
 	/**
+	 * @author p.fauny
+	 */
+	public void setDefaultValueUser() {
+		
+		_robotView.getTextField_Name().setText("");
+		_robotView.getTextField_Login().setText("");
+		_robotView.getTextField_PwUser().setText("");
+		_robotView.getTextField_Email().setText("");
+		_robotView.getComboBox_Right().setSelectedIndex(-1);
+	}
+	
+	
+	/**
 	 * 
 	 * @author b.christol
 	 */
@@ -238,7 +251,7 @@ public class RobotController {
 	public void addUser() {
 		
 		// On ouvre la page detail de l'utilisateur
-		get_robotView().getCl_Configuration().show(get_robotView().getConfiguration(),"modifyUser" );
+		_robotView.getCl_Configuration().show(get_robotView().getConfiguration(),"modifyUser" );
 	}
 	
 	
@@ -247,8 +260,29 @@ public class RobotController {
 	 */
 	public void modUser() {
 		
-		// On ouvre la page detail de l'utilisateur
-		get_robotView().getCl_Configuration().show(get_robotView().getConfiguration(),"modifyUser" );
+		if(_robotView.getTableUsers().getSelectedRow() != -1)
+		{
+			// On récupère les valeurs de la ligne du tableau selectionnee
+			int ligne = _robotView.getTableUsers().getSelectedRow();
+			
+			String nom = _robotView.getTableUsers().getValueAt(ligne,0).toString();
+			String login = _robotView.getTableUsers().getValueAt(ligne,1).toString();
+			String password = _robotView.getTableUsers().getValueAt(ligne,2).toString();
+			String email = _robotView.getTableUsers().getValueAt(ligne,3).toString();
+			String droit = _robotView.getTableUsers().getValueAt(ligne,4).toString();
+			
+			// On remplis les champs avec l'utilisateur selectionne
+			_robotView.getTextField_Name().setText(nom);
+			_robotView.getTextField_Login().setText(login);
+			_robotView.getTextField_PwUser().setText(password);
+			_robotView.getTextField_Email().setText(email);
+			_robotView.getComboBox_Right().setSelectedItem(droit);
+			
+			// On ouvre la page detail de l'utilisateur
+			_robotView.getCl_Configuration().show(_robotView.getConfiguration(),"modifyUser" );
+		}else{
+			System.out.println("Veuillez selectionner une ligne");
+		}
 	}
 	
 	
@@ -257,20 +291,37 @@ public class RobotController {
 	 */
 	public void delUser() {
 		
-		// Recuperation de la case selectionnee
-		int ligne = get_robotView().getTableUsers().getSelectedRow();
-		int colonne = get_robotView().getTableUsers().getSelectedColumn();
-		
-		// test si la colonne selectionnee est bien celle de l'utilisateur
-		if(colonne == 0)
+		if(_robotView.getTableUsers().getSelectedRow() != -1)
 		{
-			Object cellule = get_robotView().getTableUsers().getValueAt(ligne,colonne);
-			get_robotModel().deleteUser(cellule.toString());
-			System.out.println(cellule.toString());
+			int n = JOptionPane.showConfirmDialog(null,"Etes-vous sur de vouloir supprimer – " + _robotView.getTableUsers().getValueAt(_robotView.getTableUsers().getSelectedRow(), 0) + "?","",JOptionPane.YES_NO_CANCEL_OPTION);          
+	           
+			//the user has clicked the cross
+			if(n == -1) return;
+			
+			//the user has clicked cancel
+			if(n == 2) return;
+			
+			//no
+			if(n == 1) return;
+			
+			//yes
+			if(n == 0)
+			{
+				// Recuperation de la case selectionnee
+				int ligne = _robotView.getTableUsers().getSelectedRow();
+				//int colonne = get_robotView().getTableUsers().getSelectedColumn();
+	
+				Object cellule = _robotView.getTableUsers().getValueAt(ligne,0);
+				_robotModel.deleteUser(cellule.toString());
+				System.out.println(cellule.toString());
+				
+				// On rafraichit le tableau des robots
+				String query = "SELECT name, login, password, email, priv FROM user;";
+				_robotModel.remplirTable(get_robotView().getTableUsers(), query);
+			}
+		}else{
+			System.out.println("Veuillez selectionner une ligne");
 		}
-		// On rafraichit le tableau des robots
-		String query = "SELECT name, login, password, email, priv FROM user;";
-		get_robotModel().remplirTable(get_robotView().getTableUsers(), query);
 	}
 	
 	
@@ -284,10 +335,11 @@ public class RobotController {
 		
 		// On rafraichit le tableau des robots
 		String query = "SELECT name, login, password, email, priv FROM user;";
-		get_robotModel().remplirTable(get_robotView().getTableUsers(), query);
+		_robotModel.remplirTable(_robotView.getTableUsers(), query);
 		
 		// On revient à l'interface de recap user
 		quitAllTab();
+		setDefaultValueUser();
 	}
 	
 	

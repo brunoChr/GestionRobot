@@ -151,6 +151,7 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 			System.out.println("Bouton annuler user !!");
 			
 			_robotController.quitAllTab();
+			_robotController.setDefaultValueUser();
 		}
 	}
 	
