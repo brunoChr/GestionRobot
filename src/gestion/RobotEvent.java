@@ -62,7 +62,7 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 			
 			System.out.println("Bouton validé !!");
 			try {
-				_robotController.boutonValider();
+				_robotController.boutonValiderLogin();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}

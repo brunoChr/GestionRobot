@@ -115,6 +115,7 @@ public class RobotView extends JFrame {
 	private JComboBox comboBox_Marque;
 	private JComboBox comboBox_Color;
 	private JCheckBox chckbxEtat;
+	private JLabel lblWarningRobot;
 
 	/**
 	 * Create the frame.
@@ -357,7 +358,12 @@ public class RobotView extends JFrame {
 		));
 		scrollPane_Robots.setViewportView(tableRobots);
 		
+		lblWarningRobot = new JLabel("");
+		lblWarningRobot.setBounds(210, 120, 230, 16);
+		panelListe.add(lblWarningRobot);
+		
 		JPanel panelDetail = new JPanel();
+		//panelDetail.setBackground(Color.LIGHT_GRAY);
 		GRobots.add(panelDetail, "DetailRobot");
 		panelDetail.setLayout(null);
 		
@@ -450,10 +456,9 @@ public class RobotView extends JFrame {
 		panelDetail.add(lblImageRobot);
 		
 		btnValiderRobot = new JButton("");
-		btnValiderRobot.setSelected(true);
 		btnValiderRobot.setContentAreaFilled(false);
-		btnValiderRobot.setBorderPainted(false);
-		btnValiderRobot.setBorder(new EmptyBorder(0, 0, 0, 0));
+		btnValiderRobot.setBackground(SystemColor.control);
+		btnValiderRobot.setSelected(true);
 		btnValiderRobot.setIcon(new ImageIcon(RobotView.class.getResource("/img/Check.png")));
 		btnValiderRobot.addActionListener(new RobotEvent(robotController));
 		btnValiderRobot.setBounds(468, 323, 48, 48);
@@ -1412,5 +1417,12 @@ public class RobotView extends JFrame {
 	 */
 	public JCheckBox getChckbxEtat() {
 		return chckbxEtat;
+	}
+
+	/**
+	 * @return the lblWarningRobot
+	 */
+	public JLabel getLblWarningRobot() {
+		return lblWarningRobot;
 	}
 }

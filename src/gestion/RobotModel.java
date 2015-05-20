@@ -232,20 +232,48 @@ public class RobotModel {
      * 
      * @author b.christol
      */
-    public void insererRobot(String identifier, String brand, String color, String location, java.sql.Date time_use, String serial, Boolean state)
+	
+    public void insererRobot(String identifier, String brand, String color, String location, java.util.Date time_use, String serial, Boolean state)
 	{	
     	try
 		{	
-			String requete = new String("INSERT INTO robot (`id`, `identifier`, `brand`, `color`, `location`,`time_use`,`serial_id`,`state` ) VALUES (NULL, ? , ? , ? , ?, ?, ?, ?);");
+			String requete = new String("INSERT INTO robot (`id`, `identifier`, `brand`, `color`, `location`,`time_use`,`serial_id`,`state` ) VALUES (NULL, ? , ? , ? , ?, NOW(), ?, ?);");
 
 			PreparedStatement stmt = _conn.prepareStatement(requete);
 			stmt.setString(1, identifier);
 			stmt.setString(2, brand);
 			stmt.setString(3, color);
 			stmt.setString(4, location);
-			stmt.setDate(5, time_use);
-			stmt.setString(6, serial);
-			stmt.setBoolean(7, state);
+			//stmt.setDate(5, time_use);
+			stmt.setString(5, serial);
+			stmt.setBoolean(6, state);
+
+			System.out.println(stmt.toString());
+
+			stmt.executeUpdate(); 
+						
+		}
+				
+		catch (SQLException ex4)
+		{
+			while (ex4 !=null)
+			{
+				System.out.println(ex4.getSQLState());
+				System.out.println(ex4.getMessage());
+				System.out.println(ex4.getErrorCode());
+				ex4=ex4.getNextException();
+			}
+		}				
+	}
+    
+    public void supprimerRobot(String id)
+	{	
+    	try
+		{	
+			String requete = new String("DELETE FROM `robot` WHERE `robot`.`id` =?;");
+
+			PreparedStatement stmt = _conn.prepareStatement(requete);
+			stmt.setString(1, id);
 
 			System.out.println(stmt.toString());
 

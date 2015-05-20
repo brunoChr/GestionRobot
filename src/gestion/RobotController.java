@@ -4,7 +4,11 @@ import java.awt.Color;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 import misc.TrayIconDemo;
 
@@ -50,7 +54,7 @@ public class RobotController {
 	 * 
 	 * @author b.christol
 	 */
-	public void boutonValider() throws Exception
+	public void boutonValiderLogin() throws Exception
 	{
 		// On récupére les valeurs des champs
 		String login = _robotView.getLogin();
@@ -222,6 +226,64 @@ public class RobotController {
 	 */
 	public void delRobot() {
 		
+		try {
+			if(_robotView.getTableRobots().getSelectedRow() != -1){
+			int n = JOptionPane.showConfirmDialog(null,"Etes-vous sur de vouloir supprimer – " + _robotView.getTableRobots().getValueAt(_robotView.getTableRobots().getSelectedRow(), 1) + "?","",JOptionPane.YES_NO_CANCEL_OPTION);          
+					           
+			//the user has clicked the cross
+			if(n == -1) return;
+			
+			//the user has clicked cancel
+			if(n == 2) return;
+			
+			//no
+			if(n == 1) return;
+			
+			//yes
+			if(n == 0)
+				{ 
+			    //CREATE MODEL INSTANCE FROM EXISTING TABLE
+			    DefaultTableModel model = new DefaultTableModel();
+			    model = (DefaultTableModel) _robotView.getTableRobots().getModel();
+			    Integer ligneSelec;
+			    //DELETE THE SELECTED ROW
+			    if((ligneSelec = _robotView.getTableRobots().getSelectedRow()) != -1)
+				    {
+			    	
+			    	//model.removeRow(table_1.getSelectedRow());
+			    	
+			    	// 
+			    	String id = _robotView.getTableRobots().getValueAt(ligneSelec, 0).toString();
+			    	
+			    	model.removeRow(ligneSelec);
+			    	
+			    	// On supprime le robot de la bd
+			    	_robotModel.supprimerRobot(id);
+			    	
+			    	System.out.println("La ligne : " +ligneSelec.toString()+" a été supprimer");
+				    }
+			    else System.out.println("Veuillez selectionner une ligne pour la supprimer !");
+			               
+			    //INSERT A NEW EMPTY ROW
+			    //model.addRow(new Object[]{"","",""});
+				}
+			
+			} else {
+				
+				// On avertit l'utilisateur de sélectionner une ligne
+				_robotView.getLblWarningRobot().setVisible(true);
+				_robotView.getLblWarningRobot().setForeground(Color.red);
+				_robotView.getLblWarningRobot().setText("Sélectionner un robot pour le supprimer");
+				
+				System.out.println("Veuillez selectionner une ligne pour la supprimer !");
+			}
+					
+			//_appliModel.remplirTable(table_1,"SELECT * FROM utilisateur;");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		// On rafraichie le tableau des robots
 		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
 	}
@@ -232,13 +294,15 @@ public class RobotController {
 	 */
 	public void validerRobot() {
 
+		GregorianCalendar calendar = new java.util.GregorianCalendar();
+		
+		Date time_use = new Date();
+		
 		// Initialisé à la date et l'heure courrante. 
-		GregorianCalendar calendar = new java.util.GregorianCalendar(); 
-		
-		java.sql.Date time_use = null;
-		
-		// Initialisé avec une instance de Date. 
 		calendar.setTime(time_use); 
+		// Initialisé avec une instance de Date. 
+		
+		System.out.println(time_use);
 		
 		String identifier = _robotView.getTextField_NInterne().getText();
 		String brand = _robotView.getComboBox_Marque().getSelectedItem().toString();
@@ -252,6 +316,9 @@ public class RobotController {
 		
 		// On rafraichie le tableau des robots
 		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
+		
+		quitAllTab();
+		setDefaultValueRobot();
 	}
 	
 	
