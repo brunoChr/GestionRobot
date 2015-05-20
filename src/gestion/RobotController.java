@@ -373,6 +373,7 @@ public class RobotController {
 				String query = "SELECT name, login, password, email, priv FROM user;";
 				_robotModel.remplirTable(get_robotView().getTableUsers(), query);
 			}
+
 		}else{
 			System.out.println("Veuillez selectionner une ligne");
 		}
