@@ -212,9 +212,57 @@ public class RobotController {
 	 */
 	public void modRobot() {
 			
-		// On ouvre la page detail robot
-		get_robotView().getCl_GRobots().show(get_robotView().getGRobots(),"DetailRobot" );
-		
+		// On récupère les valeurs de la ligne du tableau selectionnee
+		int ligne = _robotView.getTableRobots().getSelectedRow();
+					
+		try {
+			if(ligne != -1){
+			
+			// On ouvre la page detail robot
+			get_robotView().getCl_GRobots().show(get_robotView().getGRobots(),"DetailRobot" );
+			
+			// On cache le message d'avertissement
+			_robotView.getLblWarningRobot().setVisible(false);
+			
+		    //MODIFY THE SELECTED ROW
+		    if(ligne != -1)
+			    {
+		    	
+				String identifier = _robotView.getTextField_NInterne().getText();
+				int brand = _robotView.getComboBox_Marque().getSelectedIndex();
+				int color = _robotView.getComboBox_Color().getSelectedIndex();
+				String location = _robotView.getTextField_Emplacement().getText();
+				String serial_id = _robotView.getTextField_NSerie().getText();
+				Boolean state = _robotView.getChckbxEtat().isSelected(); 
+				
+				// On remplis les champs avec le robot selectionné
+				_robotView.getTextField_NInterne().setText(identifier);
+				_robotView.getComboBox_Marque().setSelectedIndex(brand);
+				_robotView.getComboBox_Color().setSelectedIndex(color);
+				_robotView.getTextField_Emplacement().setText(location);
+				_robotView.getTextField_NSerie().setText(serial_id);
+				_robotView.getChckbxEtat().setSelected(state);
+				
+			    //INSERT A NEW EMPTY ROW
+			    //model.addRow(new Object[]{"","",""});
+				}
+			
+			} else {
+				
+				// On avertit l'utilisateur de sélectionner une ligne
+				_robotView.getLblWarningRobot().setVisible(true);
+				_robotView.getLblWarningRobot().setForeground(Color.red);
+				_robotView.getLblWarningRobot().setText("Sélectionner un robot pour le modifier");
+				
+				System.out.println("Veuillez selectionner une ligne pour la modifier !");
+			}
+					
+			//_appliModel.remplirTable(table_1,"SELECT * FROM utilisateur;");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+				
 		// On rafraichie le tableau des robots
 		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
 		}
@@ -226,8 +274,15 @@ public class RobotController {
 	 */
 	public void delRobot() {
 		
+		// On récupère les valeurs de la ligne du tableau selectionnee
+		int ligne = _robotView.getTableRobots().getSelectedRow();
+			
 		try {
-			if(_robotView.getTableRobots().getSelectedRow() != -1){
+			if(ligne != -1){
+				
+			// On cache le message d'avertissement
+			_robotView.getLblWarningRobot().setVisible(false);
+				
 			int n = JOptionPane.showConfirmDialog(null,"Etes-vous sur de vouloir supprimer – " + _robotView.getTableRobots().getValueAt(_robotView.getTableRobots().getSelectedRow(), 1) + "?","",JOptionPane.YES_NO_CANCEL_OPTION);          
 					           
 			//the user has clicked the cross
@@ -246,15 +301,16 @@ public class RobotController {
 			    DefaultTableModel model = new DefaultTableModel();
 			    model = (DefaultTableModel) _robotView.getTableRobots().getModel();
 			    Integer ligneSelec;
+			    
 			    //DELETE THE SELECTED ROW
-			    if((ligneSelec = _robotView.getTableRobots().getSelectedRow()) != -1)
+			    if((ligneSelec = ligne) != -1)
 				    {
 			    	
 			    	//model.removeRow(table_1.getSelectedRow());
 			    	
 			    	// 
 			    	String id = _robotView.getTableRobots().getValueAt(ligneSelec, 0).toString();
-			    	
+			    	System.out.println("id : "+id);
 			    	model.removeRow(ligneSelec);
 			    	
 			    	// On supprime le robot de la bd
@@ -287,6 +343,7 @@ public class RobotController {
 		// On rafraichie le tableau des robots
 		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT * FROM robot;");
 	}
+	
 	
 	/**
 	 * 

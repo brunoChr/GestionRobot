@@ -143,6 +143,7 @@ public class RobotView extends JFrame {
 		contentPane.add(tabbedPane);
 		
 		setSize(new Dimension(800, 450));
+		setLocationRelativeTo(null);
 
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
