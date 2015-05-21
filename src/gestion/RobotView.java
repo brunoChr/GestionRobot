@@ -29,6 +29,7 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.DefaultComboBoxModel;
 
+import com.thirdnf.ResourceScheduler.Scheduler;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JYearChooser;
 import com.toedter.calendar.JMonthChooser;
@@ -47,10 +48,21 @@ import java.awt.Cursor;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.Box;
+
+import org.joda.time.LocalDate;
+
+import schedule.MyScheduler;
+import schedule.MySchedulerModel;
+
 import com.alee.extended.colorchooser.ColorChooserFieldType;
+
 import java.awt.MultipleGradientPaint.ColorSpaceType;
+
 import com.sun.prism.j2d.paint.MultipleGradientPaint;
+
 import java.awt.Toolkit;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
 
 
 //@SuppressWarnings("serial")
@@ -530,10 +542,27 @@ public class RobotView extends JFrame {
 		panelPlanning.add(btnDeleteTask);
 		
 		JScrollPane scrollPane_Planning = new JScrollPane();
-		scrollPane_Planning.setBounds(40, 150, 460, 220);
+		scrollPane_Planning.setBounds(40, 130, 554, 266);
 		panelPlanning.add(scrollPane_Planning);
 		
-		tablePlanning = new JTable();
+		JPanel panelCalendar = new JPanel();
+		scrollPane_Planning.setViewportView(panelCalendar);
+		
+		
+		Scheduler scheduler = new Scheduler();
+        scheduler.setModel(new MySchedulerModel());
+        scheduler.showDate(new LocalDate());
+        panelCalendar.setLayout(new BorderLayout(0, 0));
+
+        panelCalendar.add(scheduler);
+        
+		/*MyScheduler myScheduler = new MyScheduler();
+        myScheduler.pack();
+        myScheduler.setVisible(true);
+        
+        scrollPane_Planning.setViewportView(myScheduler);*/
+        
+		/*tablePlanning = new JTable();
 		tablePlanning.setModel(new DefaultTableModel(
 			new Object[][] {
 				{"8h-9h", null, null, null, null, null},
@@ -550,7 +579,7 @@ public class RobotView extends JFrame {
 				"", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"
 			}
 		));
-		scrollPane_Planning.setViewportView(tablePlanning);
+		scrollPane_Planning.setViewportView(tablePlanning);*/
 		
 		JPanel panelAddEvt = new JPanel();
 		Planning.add(panelAddEvt, "AddEv");
