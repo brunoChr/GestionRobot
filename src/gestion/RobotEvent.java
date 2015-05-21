@@ -130,7 +130,7 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 	 */
 	public void stateChanged(ChangeEvent e) {
 
-		System.out.println(TabCpt);
+		//System.out.println(TabCpt);
 			
 		// On ne compte pas le premier changement d'onglet qui s'effectue au démarrage
 		if(TabCpt++ > 0){

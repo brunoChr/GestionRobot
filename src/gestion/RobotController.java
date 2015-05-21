@@ -85,7 +85,7 @@ public class RobotController {
 					
 					// On active les onglets
 				    int index = _robotView.getTabbedPane().getTabCount() - 1;
-				    System.out.println(index);
+				    //System.out.println(index);
 				    
 				    for(int i=0; i<=index;i++){
 					    // Disable the tab
@@ -159,7 +159,7 @@ public class RobotController {
 		
 		// On desactive les onglets
 	    int index = _robotView.getTabbedPane().getTabCount() - 1;
-	    System.out.println(index);
+	    System.out.println("Nbr onglets : " + index);
 	    
 	    for(int i=0; i<=index;i++){
 		    // Disable the tab
@@ -198,7 +198,7 @@ public class RobotController {
 		get_robotView().getCl_GRobots().show(get_robotView().getGRobots(),"DetailRobot" );
 		
 		// On rafraichie le tableau des robots
-		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT identifier, brand, color, location, time_use, serial_id, state  FROM robot;");
+		_robotModel.refreshRobot(get_robotView().getTableRobots());
 		
 		/*ColorPicker picker = new ColorPicker(true,false);
 		picker.setRGBControlsVisible(true);
@@ -221,36 +221,36 @@ public class RobotController {
 					
 		try {
 			if(ligne != -1){
-		
+
+			String identifier = _robotView.getTableRobots().getModel().getValueAt(ligne, 0).toString();
+			String brand =  _robotView.getTableRobots().getModel().getValueAt(ligne, 1).toString();
+			String color =  _robotView.getTableRobots().getModel().getValueAt(ligne, 2).toString();
+			String location = _robotView.getTableRobots().getModel().getValueAt(ligne, 3).toString();
+			String serial_id = _robotView.getTableRobots().getModel().getValueAt(ligne, 5).toString();
+			Object state =  _robotView.getTableRobots().getModel().getValueAt(ligne, 6); 
+			
+			// On remplis les champs avec le robot selectionné
+			_robotView.getTextField_NInterne().setText(identifier);
+			_robotView.getComboBox_Marque().setSelectedItem(brand);
+			_robotView.getComboBox_Color().setSelectedItem(color);
+			_robotView.getTextField_Emplacement().setText(location);
+			_robotView.getTextField_NSerie().setText(serial_id);
+			System.out.println(state);
+			if(!(state==null)) _robotView.getChckbxEtat().setSelected((boolean)state);
+			else  _robotView.getChckbxEtat().setSelected(false);
+			
+			// On rafraichie le tableau des robots
+			_robotModel.refreshRobot(get_robotView().getTableRobots());
+			
+		    //INSERT A NEW EMPTY ROW
+		    //model.addRow(new Object[]{"","",""});
+			
 			// On cache le message d'avertissement
 			_robotView.getLblWarningRobot().setVisible(false);
 			
 			// On ouvre la page detail robot
 			get_robotView().getCl_GRobots().show(get_robotView().getGRobots(),"DetailRobot" );
 			
-			
-		    //MODIFY THE SELECTED ROW
-		    if(ligne != -1)
-			    {
-		    	
-				String identifier = _robotView.getTextField_NInterne().getText();
-				int brand = _robotView.getComboBox_Marque().getSelectedIndex();
-				int color = _robotView.getComboBox_Color().getSelectedIndex();
-				String location = _robotView.getTextField_Emplacement().getText();
-				String serial_id = _robotView.getTextField_NSerie().getText();
-				Boolean state = _robotView.getChckbxEtat().isSelected(); 
-				
-				// On remplis les champs avec le robot selectionné
-				_robotView.getTextField_NInterne().setText(identifier);
-				_robotView.getComboBox_Marque().setSelectedIndex(brand);
-				_robotView.getComboBox_Color().setSelectedIndex(color);
-				_robotView.getTextField_Emplacement().setText(location);
-				_robotView.getTextField_NSerie().setText(serial_id);
-				_robotView.getChckbxEtat().setSelected(state);
-				
-			    //INSERT A NEW EMPTY ROW
-			    //model.addRow(new Object[]{"","",""});
-				}
 			
 			} else {
 				
@@ -262,14 +262,11 @@ public class RobotController {
 				System.out.println("Veuillez selectionner une ligne pour la modifier !");
 			}
 					
-			//_appliModel.remplirTable(table_1,"SELECT * FROM utilisateur;");
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 				
-		// On rafraichie le tableau des robots
-		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT identifier, brand, color, location, time_use, serial_id, state  FROM robot;");
 		}
 	
 	
@@ -339,16 +336,14 @@ public class RobotController {
 				
 				System.out.println("Veuillez selectionner une ligne pour la supprimer !");
 			}
-					
-			//_appliModel.remplirTable(table_1,"SELECT * FROM utilisateur;");
-			
+								
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		// On rafraichie le tableau des robots
-		get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT identifier, brand, color, location, time_use, serial_id, state  FROM robot;");
-	}
+		_robotModel.refreshRobot(get_robotView().getTableRobots());
+		}
 	
 	
 	/**
@@ -381,7 +376,7 @@ public class RobotController {
 			_robotModel.insererRobot(identifier, brand, color, location, time_use, serial_id, state);
 			
 			// On rafraichie le tableau des robots
-			get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT identifier, brand, color, location, time_use, serial_id, state  FROM robot;");
+			_robotModel.refreshRobot(get_robotView().getTableRobots());
 			
 			quitAllTab();
 			setDefaultValueRobot();
@@ -400,7 +395,7 @@ public class RobotController {
 			_robotModel.modifierRobot(identifier, brand, color, location, serial_id, state);
 			
 			// On rafraichie le tableau des robots
-			get_robotModel().remplirTable(get_robotView().getTableRobots(), "SELECT identifier, brand, color, location, time_use, serial_id, state  FROM robot;");
+			_robotModel.refreshRobot(get_robotView().getTableRobots());
 			
 			quitAllTab();
 			setDefaultValueRobot();
@@ -412,8 +407,8 @@ public class RobotController {
 	public void setDefaultValueRobot() {
 		
 		_robotView.getTextField_NInterne().setText("");
-		_robotView.getComboBox_Marque().setSelectedIndex(-1);
-		_robotView.getComboBox_Color().setSelectedIndex(-1);
+		_robotView.getComboBox_Marque().setSelectedIndex(0);
+		_robotView.getComboBox_Color().setSelectedIndex(0);
 		_robotView.getTextField_Emplacement().setText("");
 		_robotView.getTextField_NSerie().setText("");
 		_robotView.getChckbxEtat().setSelected(true); 

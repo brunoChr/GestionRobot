@@ -13,5 +13,8 @@
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.22-bin.jar"/>
 	<classpathentry kind="lib" path="lib/jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/junique-1.0.4.jar"/>
+	<classpathentry kind="lib" path="migcalendar.jar"/>
+	<classpathentry kind="lib" path="lib/joda-time-2.7.jar"/>
+	<classpathentry kind="lib" path="lib/ResourceScheduler-1.0-jar-with-dependencies.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

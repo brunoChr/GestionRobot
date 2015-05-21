@@ -83,7 +83,7 @@ public class RobotRun {
 		                Ti = new TrayIconDemo(Rc);
 		                Ti.start();
 		                
-		                System.out.println(Rc.get_robotView().getOwnedWindows());
+		                //System.out.println(Rc.get_robotView().getOwnedWindows());
 						//System.out.println(java.lang.Runtime.getRuntime().maxMemory());
 		                
 						//RobotView frame = new RobotView();

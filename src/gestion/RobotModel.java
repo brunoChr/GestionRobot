@@ -274,7 +274,7 @@ public class RobotModel {
 	{	
     	try
 		{	
-			String requete = new String("DELETE FROM `robot` WHERE `robot`.`id` =?;");
+			String requete = new String("DELETE FROM `robot` WHERE `robot`.`identifier` =?;");
 
 			PreparedStatement stmt = _conn.prepareStatement(requete);
 			stmt.setString(1, id);

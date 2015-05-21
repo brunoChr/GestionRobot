@@ -334,10 +334,12 @@ public class RobotView extends JFrame {
 		panelListe.add(lblListeDesRobots);
 		
 		JScrollPane scrollPane_Robots = new JScrollPane();
-		scrollPane_Robots.setBounds(40, 139, 460, 221);
+		scrollPane_Robots.setBounds(40, 139, 577, 221);
 		panelListe.add(scrollPane_Robots);
 		
 		tableRobots = new JTable();
+		tableRobots.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		
 		tableRobots.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null, null, null, null},
@@ -354,9 +356,15 @@ public class RobotView extends JFrame {
 				{null, null, null, null, null, null, null},
 			},
 			new String[] {
-				"N\u00B0Interne", "Marque", "Emplacement", "Etat", "Temps d'utilisation", "Couleur", "N\u00B0 de serie"
+				"N\u00B0Interne", "Marque", "Couleur", "Emplacement", "Temps d'utilisation", "N\u00B0 de serie", "Etat"
 			}
 		) {
+			Class[] columnTypes = new Class[] {
+				Object.class, Object.class, Object.class, Object.class, Object.class, Object.class, Boolean.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
 			boolean[] columnEditables = new boolean[] {
 				false, false, false, false, false, false, false
 			};
@@ -365,6 +373,7 @@ public class RobotView extends JFrame {
 			}
 		});
 		scrollPane_Robots.setViewportView(tableRobots);
+		tableRobots.setFillsViewportHeight(true);
 		
 		lblWarningRobot = new JLabel("");
 		lblWarningRobot.setBounds(210, 120, 230, 16);
