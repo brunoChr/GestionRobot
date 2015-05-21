@@ -128,6 +128,8 @@ public class RobotView extends JFrame {
 	private JComboBox comboBox_Color;
 	private JCheckBox chckbxEtat;
 	private JLabel lblWarningRobot;
+	private JDateChooser dateChooser_Event;
+	private JComboBox comboBox_Type;
 
 	/**
 	 * Create the frame.
@@ -547,8 +549,7 @@ public class RobotView extends JFrame {
 		
 		JPanel panelCalendar = new JPanel();
 		scrollPane_Planning.setViewportView(panelCalendar);
-		
-		
+			
 		Scheduler scheduler = new Scheduler();
         scheduler.setModel(new MySchedulerModel());
         scheduler.showDate(new LocalDate());
@@ -590,7 +591,7 @@ public class RobotView extends JFrame {
 		lblEvenement.setBounds(200, 30, 130, 50);
 		panelAddEvt.add(lblEvenement);
 		
-		JDateChooser dateChooser_Event = new JDateChooser();
+		dateChooser_Event = new JDateChooser();
 		dateChooser_Event.setDateFormatString("dd/MM/yyyy");
 		dateChooser_Event.setBounds(121, 175, 190, 28);
 		panelAddEvt.add(dateChooser_Event);
@@ -625,7 +626,7 @@ public class RobotView extends JFrame {
 		lblType.setBounds(40, 280, 55, 16);
 		panelAddEvt.add(lblType);
 		
-		JComboBox comboBox_Type = new JComboBox();
+		comboBox_Type = new JComboBox();
 		comboBox_Type.setBounds(121, 275, 190, 28);
 		panelAddEvt.add(comboBox_Type);
 		
@@ -1470,5 +1471,19 @@ public class RobotView extends JFrame {
 	 */
 	public JLabel getLblWarningRobot() {
 		return lblWarningRobot;
+	}
+
+	/**
+	 * @return the dateChooser_Event
+	 */
+	public JDateChooser getDateChooser_Event() {
+		return dateChooser_Event;
+	}
+
+	/**
+	 * @return the comboBox_Type
+	 */
+	public JComboBox getComboBox_Type() {
+		return comboBox_Type;
 	}
 }

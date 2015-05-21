@@ -25,7 +25,6 @@ public class RobotRun {
 
 	private static TrayIconDemo Ti;
 
-	
 	/**
 	 * Launch the application.
 	 */

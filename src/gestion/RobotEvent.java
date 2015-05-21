@@ -1,21 +1,9 @@
 package gestion;
 
-import java.awt.EventQueue;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-/**
- * 
- */
-
-
-
-
-
-
-
 
 import javax.swing.JButton;
 import javax.swing.event.ChangeEvent;
@@ -78,14 +66,14 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 			System.out.println("Bouton mdp !!");
 			_robotController.boutonOubli();
 		}
-		else if (bouton==_robotController.get_robotView().getBtnDeconnecter()) {
+		else if(bouton==_robotController.get_robotView().getBtnDeconnecter()) {
 			
 			System.out.println("Bouton Deconnecter !!");
 			
 			_robotController.logoutGestion();
 		}
 		
-		else if (bouton==_robotController.get_robotView().getBtnAddRobot()) {
+		else if(bouton==_robotController.get_robotView().getBtnAddRobot()) {
 			
 			System.out.println("Bouton add robot !!");
 
@@ -93,7 +81,7 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 			_robotController.addRobot();
 
 		}
-		else if (bouton==_robotController.get_robotView().getBtnModifyRobot()) {
+		else if(bouton==_robotController.get_robotView().getBtnModifyRobot()) {
 			
 			System.out.println("Bouton modify robot !!");
 
@@ -119,6 +107,44 @@ public class RobotEvent implements ActionListener, WindowListener, ChangeListene
 			System.out.println("Bouton annuler robot !!");
 		
 			_robotController.setDefaultValueRobot();
+			_robotController.quitAllTab();
+		}
+		
+		else if (bouton==_robotController.get_robotView().getBtnAddTask()) {
+			
+			System.out.println("Bouton ajouter event !!");
+		
+			_robotController.addTask();
+		}
+		
+		// On clique sur le bouton modifier tache
+		else if (bouton==_robotController.get_robotView().getBtnModifyTask()) {
+			
+			System.out.println("Bouton modify event !!");
+		
+			_robotController.modTask();
+			_robotController.quitAllTab();
+		}	
+		
+		else if (bouton==_robotController.get_robotView().getBtnDeleteTask()) {
+			
+			System.out.println("Bouton del event !!");
+		
+			_robotController.delTask();
+		}
+		
+		else if (bouton==_robotController.get_robotView().getBtnValiderEvt()) {
+			
+			System.out.println("Bouton valider event !!");
+
+			_robotController.ValiderEvt();
+		}
+				
+		else if (bouton==_robotController.get_robotView().getBtnAnnulerEvt()) {
+			
+			System.out.println("Bouton annuler event !!");
+		
+			_robotController.setDefaultValueEvt();
 			_robotController.quitAllTab();
 		}
 	}

@@ -345,4 +345,158 @@ public class RobotModel {
 		// On rafraichie le tableau des robots
 		remplirTable(table, "SELECT identifier, brand, color, location, time_use, serial_id, state  FROM robot;");
 	}
+	
+	
+    /**
+     * @param descriptif
+     * @param date
+     * @param lieu
+     * @param type
+     * 
+     * @author b.christol
+     */
+    public void insererEvent(String descriptif, java.util.Date date, String lieu, String type, String connectedUser)
+	{	
+    	try
+		{	
+			String requete = new String("INSERT INTO event (`id`, `name`, `date`, `place`, `type`) VALUES (NULL, ? ,? , ? , ?);");
+
+			PreparedStatement stmt = _conn.prepareStatement(requete);
+			stmt.setString(1, descriptif);
+			stmt.setDate(2, (java.sql.Date)date);
+			stmt.setString(3, lieu);
+			stmt.setString(4, type);
+
+			// on affiche la requete
+			System.out.println(stmt.toString());
+
+			stmt.executeUpdate(); 
+						
+		}
+				
+		catch (SQLException ex4)
+		{
+			while (ex4 !=null)
+			{
+				System.out.println(ex4.getSQLState());
+				System.out.println(ex4.getMessage());
+				System.out.println(ex4.getErrorCode());
+				ex4=ex4.getNextException();
+			}
+		}
+    	
+    	try
+		{	
+			String requete2 = new String("INSERT INTO user_has_event (`user_id`, `event_id`) VALUES (? ,?);");
+		
+			PreparedStatement stmt = _conn.prepareStatement(requete2);
+			stmt.setString(1, getIdUser(connectedUser));
+			stmt.setString(2, getIdTask(descriptif));
+	
+			// on affiche la requete
+			System.out.println(stmt.toString());
+		
+			stmt.executeUpdate(); 
+		}
+		catch (SQLException ex4)
+		{
+			while (ex4 !=null)
+			{
+				System.out.println(ex4.getSQLState());
+				System.out.println(ex4.getMessage());
+				System.out.println(ex4.getErrorCode());
+				ex4=ex4.getNextException();
+			}
+		}
+	}
+    
+    
+    /**
+     * @param user
+     * @return
+     * 
+     * @author b.christol
+     */
+    public String getIdUser(String user) {
+    	
+    	try
+		{	
+			String requete = new String("SELECT id FROM user WHERE login=?");
+		
+			PreparedStatement stmt = _conn.prepareStatement(requete);
+			stmt.setString(1, user);
+
+			// on affiche la requete
+			System.out.println(stmt.toString());
+			
+			ResultSet rs = stmt.executeQuery();
+			
+	        while(rs.next())
+	        {  	
+	        	return rs.toString();
+	        }
+	        
+			rs.close();
+			stmt.close();
+		}
+    	
+    	
+		catch (SQLException ex4)
+		{
+			while (ex4 !=null)
+			{
+				System.out.println(ex4.getSQLState());
+				System.out.println(ex4.getMessage());
+				System.out.println(ex4.getErrorCode());
+				ex4=ex4.getNextException();
+			}
+		}
+    	
+		return null;
+	}
+    
+    
+    /**
+     * @param Nametask
+     * @return
+     * 
+     * @author b.christol
+     */
+    public String getIdTask(String Nametask) {
+    	
+    	try
+		{	
+			String requete = new String("SELECT id FROM task WHERE name=?");
+		
+			PreparedStatement stmt = _conn.prepareStatement(requete);
+			stmt.setString(1, Nametask);
+
+			// on affiche la requete
+			System.out.println(stmt.toString());
+			
+			ResultSet rs = stmt.executeQuery();
+			
+	        while(rs.next())
+	        {  	
+	        	return rs.toString();
+	        }
+	        
+			rs.close();
+			stmt.close();
+		}
+    	
+    	
+		catch (SQLException ex4)
+		{
+			while (ex4 !=null)
+			{
+				System.out.println(ex4.getSQLState());
+				System.out.println(ex4.getMessage());
+				System.out.println(ex4.getErrorCode());
+				ex4=ex4.getNextException();
+			}
+		}
+    	
+		return null;
+    }
 }

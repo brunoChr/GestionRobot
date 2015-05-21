@@ -14,12 +14,6 @@ import misc.TrayIconDemo;
 
 
 /**
- * DEFINE
- */
-
-
-
-/**
  * @author b.christol
  *
  */
@@ -28,6 +22,8 @@ public class RobotController {
 	private RobotView _robotView;
 	private RobotModel _robotModel;
 	private Boolean FlagRobot;
+	private Boolean FlagTask;
+	private String connectedUser;	// Pour savoir quelle user est connecté
 
 	/**
 	 * 
@@ -75,7 +71,9 @@ public class RobotController {
 					// On avertit l'utilisateur
 					//_robotView.afficherMessage("Connexion","Login Correct !!");
 					
-					RobotRun.getTi().affInfoNotif("Bienvenue "+login+" ! \r\nDate de la connexion : "+ currentDate);
+					connectedUser = login;
+					
+					RobotRun.getTi().affInfoNotif("Bienvenue "+connectedUser+" ! \r\nDate de la connexion : "+ currentDate);
 					
 					// On cache le message d'avertissement
 					_robotView.getLblWarningAccueil().setVisible(false);
@@ -194,17 +192,13 @@ public class RobotController {
 		
 		FlagRobot = true;
 
+		get_robotView().getTextField_NInterne().setEnabled(true);			
+
 		// On ouvre la page detail robot
 		get_robotView().getCl_GRobots().show(get_robotView().getGRobots(),"DetailRobot" );
 		
 		// On rafraichie le tableau des robots
-		_robotModel.refreshRobot(get_robotView().getTableRobots());
-		
-		/*ColorPicker picker = new ColorPicker(true,false);
-		picker.setRGBControlsVisible(true);
-		picker.setHexControlsVisible(true);
-		picker.setPreviewSwatchVisible(true);
-		//picker.addPropertyChangeListener(ColorPicker.SELECTED_COLOR_PROPERTY, this);*/
+		//_robotModel.refreshRobot(get_robotView().getTableRobots());
 	}
 	
 	
@@ -222,6 +216,8 @@ public class RobotController {
 		try {
 			if(ligne != -1){
 
+			get_robotView().getTextField_NInterne().setEnabled(false);
+			
 			String identifier = _robotView.getTableRobots().getModel().getValueAt(ligne, 0).toString();
 			String brand =  _robotView.getTableRobots().getModel().getValueAt(ligne, 1).toString();
 			String color =  _robotView.getTableRobots().getModel().getValueAt(ligne, 2).toString();
@@ -286,7 +282,7 @@ public class RobotController {
 			// On cache le message d'avertissement
 			_robotView.getLblWarningRobot().setVisible(false);
 				
-			int n = JOptionPane.showConfirmDialog(null,"Etes-vous sur de vouloir supprimer – " + _robotView.getTableRobots().getValueAt(_robotView.getTableRobots().getSelectedRow(), 1) + "?","",JOptionPane.YES_NO_CANCEL_OPTION);          
+			int n = JOptionPane.showConfirmDialog(null,"Etes-vous sur de vouloir supprimer le robot n° " + _robotView.getTableRobots().getValueAt(_robotView.getTableRobots().getSelectedRow(), 0) + "?","",JOptionPane.YES_NO_CANCEL_OPTION);          
 					           
 			//the user has clicked the cross
 			if(n == -1) return;
@@ -380,6 +376,8 @@ public class RobotController {
 			
 			quitAllTab();
 			setDefaultValueRobot();
+			
+
 		}
 		// Si on valide une modification de robot
 		else {
@@ -400,9 +398,99 @@ public class RobotController {
 			quitAllTab();
 			setDefaultValueRobot();
 			
+			get_robotView().getTextField_NInterne().setEnabled(true);			
 		}
 	}
 	
+	
+	/**
+	 * 
+	 * @author b.christol
+	 */
+	public void addTask() {
+		
+		FlagTask = true;
+
+		// On ouvre la page add tache
+		_robotView.getCl_Planning().show(_robotView.getPlanning(),"AddEv" );
+		
+	}
+	
+
+
+	/**
+	 * 
+	 * @author b.christol
+	 */
+	public void modTask() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	/**
+	 * 
+	 * @author b.christol
+	 */
+	public void delTask() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/**
+	 * 
+	 * @author b.christol
+	 */
+	public void ValiderEvt() {
+
+		// Si on valide un ajout d'évenement
+		if(FlagTask){	
+					
+			GregorianCalendar calendar = new java.util.GregorianCalendar();
+			
+			Date time_use = new Date();
+			
+			// Initialisé à la date et l'heure courrante. 
+			calendar.setTime(time_use); 
+			// Initialisé avec une instance de Date. 
+			
+			System.out.println(time_use);
+			
+			String descriptif = _robotView.getTextField_Descriptif().getText();
+			java.util.Date  date = _robotView.getDateChooser_Event().getDate();
+			String lieu = _robotView.getTextField_Lieu().toString();
+			String type = _robotView.getComboBox_Type().getSelectedItem().toString();
+			
+			
+			_robotModel.insererEvent(descriptif, date, lieu, type,connectedUser);
+			
+			// On rafraichie le tableau des robots
+			_robotModel.refreshRobot(get_robotView().getTableRobots());
+			
+			quitAllTab();
+			setDefaultValueRobot();
+		}
+		// Si on valide une modification d'evenement
+		else {
+			
+			String identifier = _robotView.getTextField_NInterne().getText();
+			String brand = _robotView.getComboBox_Marque().getSelectedItem().toString();
+			String color = _robotView.getComboBox_Color().getSelectedItem().toString();
+			String location = _robotView.getTextField_Emplacement().getText();
+			String serial_id = _robotView.getTextField_NSerie().getText();
+			Boolean state = _robotView.getChckbxEtat().isSelected(); 
+			
+			
+			_robotModel.modifierRobot(identifier, brand, color, location, serial_id, state);
+			
+			// On rafraichie le tableau des robots
+			_robotModel.refreshRobot(get_robotView().getTableRobots());
+			
+			quitAllTab();
+			setDefaultValueRobot();
+			
+		}
+	}
 	
 	public void setDefaultValueRobot() {
 		
@@ -430,5 +518,15 @@ public class RobotController {
 	public RobotModel get_robotModel() {
 		return _robotModel;
 	}
+
+
+	/**
+	 * 
+	 */
+	public void setDefaultValueEvt() {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }
