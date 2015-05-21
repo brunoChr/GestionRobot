@@ -111,6 +111,8 @@ public class RobotView extends JFrame {
 	private JComboBox comboBRight;
 	private JComboBox comboBox_UserEnt;
 	private JComboBox comboBox_RobotEnt;
+	private JComboBox comboBox_TypeEnt;
+	private JDateChooser dateChooser_PrevEnt;
 
 	/**
 	 * Create the frame.
@@ -657,7 +659,7 @@ public class RobotView extends JFrame {
 		lblDate_1.setBounds(281, 104, 76, 16);
 		panelAddEntretien.add(lblDate_1);
 		
-		JDateChooser dateChooser_PrevEnt = new JDateChooser();
+		dateChooser_PrevEnt = new JDateChooser();
 		dateChooser_PrevEnt.setDateFormatString("dd/MM/yyyy");
 		dateChooser_PrevEnt.setBounds(369, 99, 173, 28);
 		panelAddEntretien.add(dateChooser_PrevEnt);
@@ -695,7 +697,7 @@ public class RobotView extends JFrame {
 		lblType_1.setBounds(19, 157, 55, 16);
 		panelAddEntretien.add(lblType_1);
 		
-		JComboBox comboBox_TypeEnt = new JComboBox();
+		comboBox_TypeEnt = new JComboBox();
 		comboBox_TypeEnt.setModel(new DefaultComboBoxModel(TypeEntretien.values()));
 		comboBox_TypeEnt.setBounds(89, 152, 180, 28);
 		panelAddEntretien.add(comboBox_TypeEnt);
@@ -946,6 +948,10 @@ public class RobotView extends JFrame {
 //>>>>>>> refs/heads/viewBuilder
 	}
 	
+	public JDateChooser getDateChooser_PrevEnt() {
+		return dateChooser_PrevEnt;
+	}
+
 	public JLabel getLblWarningAccueil() {
 		return lblWarningAccueil;
 	}
@@ -1395,5 +1401,9 @@ public class RobotView extends JFrame {
 	
 	public JComboBox getComboBox_RobotEnt() {
 		return comboBox_RobotEnt;
+	}
+	
+	public JComboBox getComboBox_TypeEnt() {
+		return comboBox_TypeEnt;
 	}
 }

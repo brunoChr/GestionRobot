@@ -19,6 +19,7 @@ public class RobotController {
 
 	private RobotView _robotView;
 	private RobotModel _robotModel;
+	private boolean flagUser;
 
 
 	/**
@@ -257,6 +258,7 @@ public class RobotController {
 		ArrayList<String> listOfUsers = new ArrayList<String>();
 		listOfUsers = _robotModel.listUserOrRobot(requeteUsers);
 		
+		_robotView.getComboBox_UserEnt().removeAllItems();
 		// On ajoute la liste des utilisateurs dans la comboBox correspondante
 		for(int i=0; i<listOfUsers.size(); i++)
 		{
@@ -269,6 +271,7 @@ public class RobotController {
 		ArrayList<String> listOfRobots = new ArrayList<String>();
 		listOfRobots = _robotModel.listUserOrRobot(requeteRobots);
 		
+		_robotView.getComboBox_RobotEnt().removeAllItems();
 		// On ajoute la liste des robots dans la comboBox correspondante
 		for(int i=0; i<listOfRobots.size(); i++)
 		{
@@ -287,7 +290,7 @@ public class RobotController {
 	public void validerEntretien() {
 		
 		// On insert les donnees saisies dans la BDD
-		//_robotModel.insererUser(_robotView.getTextField_Name().getText(), _robotView.getTextField_Login().getText(), _robotView.getTextField_PwUser().getText(), _robotView.getTextField_Email().getText(), _robotView.getComboBox_Right().getSelectedItem().toString());
+		_robotModel.insererEntretien(_robotView.getTextField_detailEnt().getText(), _robotView.getComboBox_TypeEnt().getSelectedItem().toString(), _robotView.getComboBox_UserEnt().getSelectedItem().toString(), _robotView.getComboBox_RobotEnt().getSelectedItem().toString(), _robotView.getDateChooser_PrevEnt().getDate());
 		
 		// On rafraichit le tableau des robots
 		//String query = "SELECT name, login, password, email, priv FROM user;";
@@ -304,8 +307,13 @@ public class RobotController {
 	 */
 	public void addUser() {
 		
+		flagUser = true;
 		// On ouvre la page detail de l'utilisateur
 		_robotView.getCl_Configuration().show(get_robotView().getConfiguration(),"modifyUser" );
+		
+		// on active la case de login
+		_robotView.getTextField_Login().setEnabled(true);
+		_robotView.getTextField_PwUser().setEnabled(true);
 	}
 	
 	
@@ -313,6 +321,8 @@ public class RobotController {
 	 * @author p.fauny
 	 */
 	public void modUser() {
+		
+		flagUser = false;
 		
 		if(_robotView.getTableUsers().getSelectedRow() != -1)
 		{
@@ -328,10 +338,13 @@ public class RobotController {
 			// On remplis les champs avec l'utilisateur selectionne
 			_robotView.getTextField_Name().setText(nom);
 			_robotView.getTextField_Login().setText(login);
-			_robotView.getTextField_PwUser().setText(password);
+			//_robotView.getTextField_PwUser().setText(password);
 			_robotView.getTextField_Email().setText(email);
 			_robotView.getComboBox_Right().setSelectedItem(droit);
 			
+			// on desactive la case de login pour ne pas la modifier
+			_robotView.getTextField_Login().setEnabled(false);
+			_robotView.getTextField_PwUser().setEnabled(false);
 			// On ouvre la page detail de l'utilisateur
 			_robotView.getCl_Configuration().show(_robotView.getConfiguration(),"modifyUser" );
 		}else{
@@ -385,8 +398,14 @@ public class RobotController {
 	 */
 	public void validerUser() {
 		
-		// On insert les donnees saisies dans la BDD
-		_robotModel.insererUser(_robotView.getTextField_Name().getText(), _robotView.getTextField_Login().getText(), _robotView.getTextField_PwUser().getText(), _robotView.getTextField_Email().getText(), _robotView.getComboBox_Right().getSelectedItem().toString());
+		if(flagUser)
+		{
+			// On insert les donnees saisies dans la BDD
+			_robotModel.insererUser(_robotView.getTextField_Name().getText(), _robotView.getTextField_Login().getText(), _robotView.getTextField_PwUser().getText(), _robotView.getTextField_Email().getText(), _robotView.getComboBox_Right().getSelectedItem().toString());
+		}else{
+			// On modifie les donnees saisies dans la BDD
+			_robotModel.modifUser(_robotView.getTextField_Name().getText(), _robotView.getTextField_Email().getText(), _robotView.getComboBox_Right().getSelectedItem().toString(), _robotView.getTextField_Login().getText());
+		}
 		
 		// On rafraichit le tableau des robots
 		String query = "SELECT name, login, password, email, priv FROM user;";
