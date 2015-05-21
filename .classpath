@@ -18,3 +18,4 @@
 	<classpathentry kind="lib" path="lib/ResourceScheduler-1.0-jar-with-dependencies.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
+

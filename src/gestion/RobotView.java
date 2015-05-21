@@ -1,71 +1,40 @@
 package gestion;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JColorChooser;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-import javax.swing.JTextField;
-import javax.swing.JTabbedPane;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-
-import java.awt.Font;
-
-import javax.swing.JTable;
-
 import java.awt.CardLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.SwingConstants;
-import javax.swing.JComboBox;
-import javax.swing.JScrollPane;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.DefaultComboBoxModel;
-
-import com.thirdnf.ResourceScheduler.Scheduler;
-import com.toedter.calendar.JDateChooser;
-import com.toedter.calendar.JYearChooser;
-import com.toedter.calendar.JMonthChooser;
-
-import javax.swing.JCheckBox;
-import javax.swing.ImageIcon;
-
-import java.awt.SystemColor;
 import java.awt.Component;
-
-import javax.swing.JPasswordField;
-
-import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.Toolkit;
 
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.Box;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import org.joda.time.LocalDate;
 
-import schedule.MyScheduler;
 import schedule.MySchedulerModel;
 
-import com.alee.extended.colorchooser.ColorChooserFieldType;
-
-import java.awt.MultipleGradientPaint.ColorSpaceType;
-
-import com.sun.prism.j2d.paint.MultipleGradientPaint;
-
-import java.awt.Toolkit;
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
+import com.thirdnf.ResourceScheduler.Scheduler;
+import com.toedter.calendar.JDateChooser;
 
 
-//@SuppressWarnings("serial")
 public class RobotView extends JFrame {
 
 	private JPanel contentPane;
@@ -126,6 +95,7 @@ public class RobotView extends JFrame {
 	private JTabbedPane tabbedPane;
 	private JComboBox comboBox_Marque;
 	private JComboBox comboBox_Color;
+
 	private JCheckBox chckbxEtat;
 	private JLabel lblWarningRobot;
 	private JDateChooser dateChooser_Event;
@@ -133,6 +103,12 @@ public class RobotView extends JFrame {
 	private JLabel lblWarningAddEvent;
 	private JLabel lblWarningAddRobot;
 	private Scheduler scheduler;
+
+	private JComboBox comboBRight;
+	private JComboBox comboBox_UserEnt;
+	private JComboBox comboBox_RobotEnt;
+	private JComboBox comboBox_TypeEnt;
+	private JDateChooser dateChooser_PrevEnt;
 
 	/**
 	 * Create the frame.
@@ -165,9 +141,6 @@ public class RobotView extends JFrame {
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
-
-//=======
 		Accueil = new JPanel();
 		tabbedPane.addTab(html1 + "Accueil</body></html>", null, Accueil, null);
 		cl_Accueil = new CardLayout(0, 0);
@@ -739,7 +712,7 @@ public class RobotView extends JFrame {
 		lblDate_1.setBounds(281, 104, 76, 16);
 		panelAddEntretien.add(lblDate_1);
 		
-		JDateChooser dateChooser_PrevEnt = new JDateChooser();
+		dateChooser_PrevEnt = new JDateChooser();
 		dateChooser_PrevEnt.setDateFormatString("dd/MM/yyyy");
 		dateChooser_PrevEnt.setBounds(369, 99, 173, 28);
 		panelAddEntretien.add(dateChooser_PrevEnt);
@@ -749,7 +722,7 @@ public class RobotView extends JFrame {
 		lblNewLabel_1.setBounds(6, 207, 68, 16);
 		panelAddEntretien.add(lblNewLabel_1);
 		
-		JComboBox comboBox_UserEnt = new JComboBox();
+		comboBox_UserEnt = new JComboBox();
 		comboBox_UserEnt.setBounds(89, 201, 180, 28);
 		panelAddEntretien.add(comboBox_UserEnt);
 		
@@ -763,7 +736,7 @@ public class RobotView extends JFrame {
 		lblDtails.setBounds(19, 107, 55, 16);
 		panelAddEntretien.add(lblDtails);
 		
-		JComboBox comboBox_RobotEnt = new JComboBox();
+		comboBox_RobotEnt = new JComboBox();
 		comboBox_RobotEnt.setBounds(89, 252, 180, 28);
 		panelAddEntretien.add(comboBox_RobotEnt);
 		
@@ -777,7 +750,8 @@ public class RobotView extends JFrame {
 		lblType_1.setBounds(19, 157, 55, 16);
 		panelAddEntretien.add(lblType_1);
 		
-		JComboBox comboBox_TypeEnt = new JComboBox();
+		comboBox_TypeEnt = new JComboBox();
+		comboBox_TypeEnt.setModel(new DefaultComboBoxModel(TypeEntretien.values()));
 		comboBox_TypeEnt.setBounds(89, 152, 180, 28);
 		panelAddEntretien.add(comboBox_TypeEnt);
 		
@@ -944,7 +918,7 @@ public class RobotView extends JFrame {
 		InfoUser.add(textField_Email);
 		textField_Email.setColumns(10);
 		
-		JComboBox comboBRight = new JComboBox();
+		comboBRight = new JComboBox();
 		comboBRight.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3"}));
 		comboBRight.setBounds(130, 291, 150, 26);
 		InfoUser.add(comboBRight);
@@ -1027,6 +1001,10 @@ public class RobotView extends JFrame {
 //>>>>>>> refs/heads/viewBuilder
 	}
 	
+	public JDateChooser getDateChooser_PrevEnt() {
+		return dateChooser_PrevEnt;
+	}
+
 	public JLabel getLblWarningAccueil() {
 		return lblWarningAccueil;
 	}
@@ -1139,9 +1117,10 @@ public class RobotView extends JFrame {
 	/**
 	 * @return the contentPane
 	 */
+	/*
 	public JPanel getContentPane() {
 		return contentPane;
-	}
+	}*/
 
 	/**
 	 * @return the textFieldLogin
@@ -1526,5 +1505,21 @@ public class RobotView extends JFrame {
 	 */
 	public void setScheduler(Scheduler scheduler) {
 		this.scheduler = scheduler;
+	}
+	
+	public JComboBox getComboBox_Right() {
+		return comboBRight;
+	}
+	
+	public JComboBox getComboBox_UserEnt() {
+		return comboBox_UserEnt;
+	}
+	
+	public JComboBox getComboBox_RobotEnt() {
+		return comboBox_RobotEnt;
+	}
+	
+	public JComboBox getComboBox_TypeEnt() {
+		return comboBox_TypeEnt;
 	}
 }
