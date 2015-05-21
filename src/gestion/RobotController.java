@@ -81,6 +81,7 @@ public class RobotController {
 					// On ouvre la page bienvenue
 					_robotView.getCl_Accueil().show(_robotView.getAccueil(),"welcomePanel" );
 					
+					
 					// On active les onglets
 				    int index = _robotView.getTabbedPane().getTabCount() - 1;
 				    //System.out.println(index);
@@ -339,7 +340,7 @@ public class RobotController {
 		
 		// On rafraichie le tableau des robots
 		_robotModel.refreshRobot(get_robotView().getTableRobots());
-		}
+}
 	
 	
 	/**
@@ -368,14 +369,25 @@ public class RobotController {
 			String serial_id = _robotView.getTextField_NSerie().getText();
 			Boolean state = _robotView.getChckbxEtat().isSelected(); 
 			
+			if(!_robotModel.ifExistInTable("robot", "identifier", identifier))
+				{
+				_robotModel.insererRobot(identifier, brand, color, location, time_use, serial_id, state);
+				
+				// On rafraichie le tableau des robots
+				_robotModel.refreshRobot(get_robotView().getTableRobots());
+				
+				quitAllTab();
+				setDefaultValueRobot();
+				} 
+			else
+				{
+				// On avertit l'utilisateur de sélectionner une ligne
+				_robotView.getLblWarningAddRobot().setVisible(true);
+				_robotView.getLblWarningAddRobot().setForeground(Color.red);
+				_robotView.getLblWarningAddRobot().setText("Ce robot existe déja ! Changer l'identifier");
+				}
 			
-			_robotModel.insererRobot(identifier, brand, color, location, time_use, serial_id, state);
-			
-			// On rafraichie le tableau des robots
-			_robotModel.refreshRobot(get_robotView().getTableRobots());
-			
-			quitAllTab();
-			setDefaultValueRobot();
+
 			
 
 		}
@@ -425,6 +437,10 @@ public class RobotController {
 	public void modTask() {
 		// TODO Auto-generated method stub
 		
+		FlagTask = false;
+
+		// On ouvre la page mod tache
+		_robotView.getCl_Planning().show(_robotView.getPlanning(),"AddEv" );
 	}
 
 
@@ -434,7 +450,73 @@ public class RobotController {
 	 */
 	public void delTask() {
 		// TODO Auto-generated method stub
+
+		// On récupère les valeurs de la ligne du tableau selectionnee
+		/*int ligne = _robotView.getTableEvent().getSelectedRow();
+			
+		try {
+			if(ligne != -1){
+				
+			// On cache le message d'avertissement
+			_robotView.getLblWarningRobot().setVisible(false);
+				
+			int n = JOptionPane.showConfirmDialog(null,"Etes-vous sur de vouloir supprimer le robot n° " + _robotView.getTableRobots().getValueAt(_robotView.getTableRobots().getSelectedRow(), 0) + "?","",JOptionPane.YES_NO_CANCEL_OPTION);          
+					           
+			//the user has clicked the cross
+			if(n == -1) return;
+			
+			//the user has clicked cancel
+			if(n == 2) return;
+			
+			//no
+			if(n == 1) return;
+			
+			//yes
+			if(n == 0)
+				{ 
+			    //CREATE MODEL INSTANCE FROM EXISTING TABLE
+			    DefaultTableModel model = new DefaultTableModel();
+			    model = (DefaultTableModel) _robotView.getTableRobots().getModel();
+			    Integer ligneSelec;
+			    
+			    //DELETE THE SELECTED ROW
+			    if((ligneSelec = ligne) != -1)
+				    {
+			    	
+			    	//model.removeRow(table_1.getSelectedRow());
+			    	
+			    	// 
+			    	String id = _robotView.getTableRobots().getValueAt(ligneSelec, 0).toString();
+			    	System.out.println("id : "+id);
+			    	model.removeRow(ligneSelec);
+			    	
+			    	// On supprime le robot de la bd
+			    	_robotModel.supprimerRobot(id);
+			    	
+			    	System.out.println("La ligne : " +ligneSelec.toString()+" a été supprimer");
+				    }
+			    else System.out.println("Veuillez selectionner une ligne pour la supprimer !");
+			               
+			    //INSERT A NEW EMPTY ROW
+			    //model.addRow(new Object[]{"","",""});
+				}
+			
+			} else {
+				
+				// On avertit l'utilisateur de sélectionner une ligne
+				_robotView.getLblWarningRobot().setVisible(true);
+				_robotView.getLblWarningRobot().setForeground(Color.red);
+				_robotView.getLblWarningRobot().setText("Sélectionner un robot pour le supprimer");
+				
+				System.out.println("Veuillez selectionner une ligne pour la supprimer !");
+			}
+								
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
+		// On rafraichie le tableau des robots
+		_robotModel.refreshRobot(get_robotView().getTableRobots());*/
 	}
 	
 	/**
@@ -443,52 +525,33 @@ public class RobotController {
 	 */
 	public void ValiderEvt() {
 
+		String descriptif = _robotView.getTextField_Descriptif().getText();
+		java.util.Date  date = _robotView.getDateChooser_Event().getDate();
+		String lieu = _robotView.getTextField_Lieu().getText();
+		String type = _robotView.getComboBox_Type().getSelectedItem().toString();
+		
+		System.out.println(lieu);
 		// Si on valide un ajout d'évenement
 		if(FlagTask){	
-					
-			GregorianCalendar calendar = new java.util.GregorianCalendar();
-			
-			Date time_use = new Date();
-			
-			// Initialisé à la date et l'heure courrante. 
-			calendar.setTime(time_use); 
-			// Initialisé avec une instance de Date. 
-			
-			System.out.println(time_use);
-			
-			String descriptif = _robotView.getTextField_Descriptif().getText();
-			java.util.Date  date = _robotView.getDateChooser_Event().getDate();
-			String lieu = _robotView.getTextField_Lieu().toString();
-			String type = _robotView.getComboBox_Type().getSelectedItem().toString();
-			
 			
 			_robotModel.insererEvent(descriptif, date, lieu, type,connectedUser);
 			
 			// On rafraichie le tableau des robots
-			_robotModel.refreshRobot(get_robotView().getTableRobots());
+			//_robotModel.refreshRobot(get_robotView().getTableRobots());
 			
 			quitAllTab();
-			setDefaultValueRobot();
+			setDefaultValueEvt();
 		}
 		// Si on valide une modification d'evenement
 		else {
 			
-			String identifier = _robotView.getTextField_NInterne().getText();
-			String brand = _robotView.getComboBox_Marque().getSelectedItem().toString();
-			String color = _robotView.getComboBox_Color().getSelectedItem().toString();
-			String location = _robotView.getTextField_Emplacement().getText();
-			String serial_id = _robotView.getTextField_NSerie().getText();
-			Boolean state = _robotView.getChckbxEtat().isSelected(); 
-			
-			
-			_robotModel.modifierRobot(identifier, brand, color, location, serial_id, state);
+			_robotModel.modifierEvent(descriptif, date, lieu, type);
 			
 			// On rafraichie le tableau des robots
-			_robotModel.refreshRobot(get_robotView().getTableRobots());
+			//_robotModel.refreshRobot(get_robotView().getTableRobots());
 			
 			quitAllTab();
-			setDefaultValueRobot();
-			
+			setDefaultValueEvt();	
 		}
 	}
 	

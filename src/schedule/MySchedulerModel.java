@@ -50,6 +50,48 @@ public class MySchedulerModel extends AbstractScheduleModel
     {
         return new LocalTime(17,0,0);
     }
+
+	/**
+	 * @return the resource1
+	 */
+	public Resource getResource1() {
+		return Resource1;
+	}
+
+	/**
+	 * @param resource1 the resource1 to set
+	 */
+	public void setResource1(Resource resource1) {
+		Resource1 = resource1;
+	}
+
+	/**
+	 * @return the appointment1
+	 */
+	public Appointment getAppointment1() {
+		return Appointment1;
+	}
+
+	/**
+	 * @param appointment1 the appointment1 to set
+	 */
+	public void setAppointment1(Appointment appointment1) {
+		Appointment1 = appointment1;
+	}
+
+	/**
+	 * @return the appointment2
+	 */
+	public Appointment getAppointment2() {
+		return Appointment2;
+	}
+
+	/**
+	 * @param appointment2 the appointment2 to set
+	 */
+	public void setAppointment2(Appointment appointment2) {
+		Appointment2 = appointment2;
+	}
 }
 
 class MyResource implements Resource

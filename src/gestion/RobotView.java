@@ -130,6 +130,9 @@ public class RobotView extends JFrame {
 	private JLabel lblWarningRobot;
 	private JDateChooser dateChooser_Event;
 	private JComboBox comboBox_Type;
+	private JLabel lblWarningAddEvent;
+	private JLabel lblWarningAddRobot;
+	private Scheduler scheduler;
 
 	/**
 	 * Create the frame.
@@ -483,7 +486,7 @@ public class RobotView extends JFrame {
 		
 		JLabel lblImageRobot = new JLabel("");
 		lblImageRobot.setIcon(new ImageIcon(RobotView.class.getResource("/img/staubli50.png")));
-		lblImageRobot.setBounds(348, 58, 246, 210);
+		lblImageRobot.setBounds(390, 61, 246, 210);
 		panelDetail.add(lblImageRobot);
 		
 		btnValiderRobot = new JButton("");
@@ -513,6 +516,10 @@ public class RobotView extends JFrame {
 		chckbxEtat.setSelected(true);
 		chckbxEtat.setBounds(307, 273, 133, 18);
 		panelDetail.add(chckbxEtat);
+		
+		lblWarningAddRobot = new JLabel("");
+		lblWarningAddRobot.setBounds(299, 114, 109, 16);
+		panelDetail.add(lblWarningAddRobot);
 		
 		Planning = new JPanel();
 		tabbedPane.addTab(html1 + "Planning</body></html>", null, Planning, null);
@@ -550,7 +557,7 @@ public class RobotView extends JFrame {
 		JPanel panelCalendar = new JPanel();
 		scrollPane_Planning.setViewportView(panelCalendar);
 			
-		Scheduler scheduler = new Scheduler();
+		scheduler = new Scheduler();
         scheduler.setModel(new MySchedulerModel());
         scheduler.showDate(new LocalDate());
         panelCalendar.setLayout(new BorderLayout(0, 0));
@@ -627,6 +634,8 @@ public class RobotView extends JFrame {
 		panelAddEvt.add(lblType);
 		
 		comboBox_Type = new JComboBox();
+		comboBox_Type.setModel(new DefaultComboBoxModel(typeEvent.values()));
+		comboBox_Type.setSelectedIndex(0);
 		comboBox_Type.setBounds(121, 275, 190, 28);
 		panelAddEvt.add(comboBox_Type);
 		
@@ -652,6 +661,10 @@ public class RobotView extends JFrame {
 		btnValiderEvt.setBorder(new EmptyBorder(0, 0, 0, 0));
 		btnValiderEvt.setBounds(485, 280, 48, 48);
 		panelAddEvt.add(btnValiderEvt);
+		
+		lblWarningAddEvent = new JLabel("");
+		lblWarningAddEvent.setBounds(341, 136, 177, 16);
+		panelAddEvt.add(lblWarningAddEvent);
 		
 		Entretien = new JPanel();
 		tabbedPane.addTab(html1 + "Fiches d'entretien</body></html>", null, Entretien, null);
@@ -1485,5 +1498,33 @@ public class RobotView extends JFrame {
 	 */
 	public JComboBox getComboBox_Type() {
 		return comboBox_Type;
+	}
+
+	/**
+	 * @return the lblWarningAddEvent
+	 */
+	public JLabel getLblWarningAddEvent() {
+		return lblWarningAddEvent;
+	}
+
+	/**
+	 * @return the lblWarningAddRobot
+	 */
+	public JLabel getLblWarningAddRobot() {
+		return lblWarningAddRobot;
+	}
+
+	/**
+	 * @return the scheduler
+	 */
+	public Scheduler getScheduler() {
+		return scheduler;
+	}
+
+	/**
+	 * @param scheduler the scheduler to set
+	 */
+	public void setScheduler(Scheduler scheduler) {
+		this.scheduler = scheduler;
 	}
 }

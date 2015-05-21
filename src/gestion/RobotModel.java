@@ -5,6 +5,7 @@ package gestion;
 
 
 import java.sql.*;
+import java.util.Date;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -359,19 +360,49 @@ public class RobotModel {
 	{	
     	try
 		{	
-			String requete = new String("INSERT INTO event (`id`, `name`, `date`, `place`, `type`) VALUES (NULL, ? ,? , ? , ?);");
+			String requete = new String("INSERT INTO event (`id`, `name`, `date`, `place`, `type`) VALUES (LAST_INSERT_ID(), ? ,NOW() , ? , ?);");
 
-			PreparedStatement stmt = _conn.prepareStatement(requete);
+			PreparedStatement stmt = _conn.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, descriptif);
-			stmt.setDate(2, (java.sql.Date)date);
-			stmt.setString(3, lieu);
-			stmt.setString(4, type);
+			//stmt.setDate(2, new java.sql.Date(date.getDate()));
+			stmt.setString(2, lieu);
+			stmt.setString(3, type);
 
 			// on affiche la requete
-			System.out.println(stmt.toString());
+			System.out.println("insererEvent : " + stmt.toString());
 
 			stmt.executeUpdate(); 
-						
+			
+			ResultSet idEvent = stmt.getGeneratedKeys();    
+
+			idEvent.next();  
+			int idTaskKeys = idEvent.getInt(1);
+			System.out.println("Id returner : " + idTaskKeys);
+			
+			try
+			{	
+				String requete2 = new String("INSERT INTO user_has_event (`user_id`, `event_id`) VALUES (?, ?);");
+			
+				PreparedStatement stmt2 = _conn.prepareStatement(requete2);
+				stmt2.setInt(1, getIdUser(connectedUser));
+				stmt2.setInt(2, idTaskKeys);
+		
+				// on affiche la requete
+				System.out.println("insererUserHasEvent : " + stmt2.toString());
+			
+				stmt2.executeUpdate(); 
+			}
+			catch (SQLException ex4)
+			{
+				while (ex4 !=null)
+				{
+					System.out.println(ex4.getSQLState());
+					System.out.println(ex4.getMessage());
+					System.out.println(ex4.getErrorCode());
+					ex4=ex4.getNextException();
+				}
+			} 
+
 		}
 				
 		catch (SQLException ex4)
@@ -384,56 +415,34 @@ public class RobotModel {
 				ex4=ex4.getNextException();
 			}
 		}
-    	
-    	try
-		{	
-			String requete2 = new String("INSERT INTO user_has_event (`user_id`, `event_id`) VALUES (? ,?);");
-		
-			PreparedStatement stmt = _conn.prepareStatement(requete2);
-			stmt.setString(1, getIdUser(connectedUser));
-			stmt.setString(2, getIdTask(descriptif));
-	
-			// on affiche la requete
-			System.out.println(stmt.toString());
-		
-			stmt.executeUpdate(); 
-		}
-		catch (SQLException ex4)
-		{
-			while (ex4 !=null)
-			{
-				System.out.println(ex4.getSQLState());
-				System.out.println(ex4.getMessage());
-				System.out.println(ex4.getErrorCode());
-				ex4=ex4.getNextException();
-			}
-		}
+
 	}
     
     
+  
     /**
      * @param user
      * @return
      * 
      * @author b.christol
      */
-    public String getIdUser(String user) {
+    public int getIdUser(String user) {
     	
     	try
 		{	
-			String requete = new String("SELECT id FROM user WHERE login=?");
+			String requete = new String("SELECT `id` FROM user WHERE `login`=?;");
 		
 			PreparedStatement stmt = _conn.prepareStatement(requete);
 			stmt.setString(1, user);
 
 			// on affiche la requete
-			System.out.println(stmt.toString());
+			System.out.println("getIdUser query : " + stmt.toString());
 			
 			ResultSet rs = stmt.executeQuery();
 			
 	        while(rs.next())
 	        {  	
-	        	return rs.toString();
+	        	return rs.getInt("id");
 	        }
 	        
 			rs.close();
@@ -451,9 +460,8 @@ public class RobotModel {
 				ex4=ex4.getNextException();
 			}
 		}
-    	
-		return null;
-	}
+		return 0;
+  	}
     
     
     /**
@@ -462,23 +470,23 @@ public class RobotModel {
      * 
      * @author b.christol
      */
-    public String getIdTask(String Nametask) {
+    public int getIdTask(String Nametask) {
     	
     	try
 		{	
-			String requete = new String("SELECT id FROM task WHERE name=?");
+			String requete = new String("SELECT `id` FROM event WHERE `name`=?;");
 		
 			PreparedStatement stmt = _conn.prepareStatement(requete);
 			stmt.setString(1, Nametask);
 
 			// on affiche la requete
-			System.out.println(stmt.toString());
+			System.out.println("getIdTask query : " + stmt.toString());
 			
 			ResultSet rs = stmt.executeQuery();
 			
 	        while(rs.next())
 	        {  	
-	        	return rs.toString();
+	        	return rs.getInt("id");
 	        }
 	        
 			rs.close();
@@ -497,6 +505,41 @@ public class RobotModel {
 			}
 		}
     	
-		return null;
+		return 0;
     }
+
+	/**
+	 * @param descriptif
+	 * @param date
+	 * @param lieu
+	 * @param type
+	 */
+	public void modifierEvent(String name, java.util.Date date, String place,String type) {
+		// TODO Auto-generated method stub
+	   	try
+			{	
+	    		String requete = new String("UPDATE `gestion_robot`.`event` SET date = ?, place = ?, type = ? WHERE `name` = ?;");
+
+				PreparedStatement stmt = _conn.prepareStatement(requete);
+				stmt.setDate(1, (java.sql.Date)date);
+				stmt.setString(2, place);
+				stmt.setString(3, type);
+				
+				System.out.println(stmt.toString());
+
+				stmt.executeUpdate(); 
+							
+			}
+					
+			catch (SQLException ex4)
+			{
+				while (ex4 !=null)
+				{
+					System.out.println(ex4.getSQLState());
+					System.out.println(ex4.getMessage());
+					System.out.println(ex4.getErrorCode());
+					ex4=ex4.getNextException();
+				}
+			}		
+	}
 }
